@@ -1,0 +1,17 @@
+{
+  "typography": {
+    "$type": "typography",
+    "display": { "$value": { "fontSize": 40, "fontWeight": 700 } },
+    "title1": { "$value": { "fontSize": 24, "fontWeight": 700 } },
+    "title2": { "$value": { "fontSize": 18, "fontWeight": 700 } },
+    "headline": { "$value": { "fontSize": 17, "fontWeight": 600 } },
+    "body": { "$value": { "fontSize": 15, "fontWeight": 400 } },
+    "bodyMedium": { "$value": { "fontSize": 15, "fontWeight": 500 } },
+    "callout": { "$value": { "fontSize": 14, "fontWeight": 500 }, "$description": "[제안] 14 medium. 검색창·칩·보조 버튼. 현재 하드코딩 다수" },
+    "label": { "$value": { "fontSize": 13, "fontWeight": 600 }, "$description": "[제안] 13 semibold. iOS에서 가장 많이 하드코딩된 조합" },
+    "caption": { "$value": { "fontSize": 12, "fontWeight": 400 } },
+    "captionStrong": { "$value": { "fontSize": 12, "fontWeight": 600 }, "$description": "[제안] 12 semibold. 배지·메타 강조" },
+    "micro": { "$value": { "fontSize": 10.5, "fontWeight": 400 } },
+    "title": { "$value": "{typography.title1}", "$description": "title1 별칭(기존 코드 호환)" }
+  }
+}

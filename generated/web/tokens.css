@@ -1,0 +1,48 @@
+/* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
+:root {
+  --color-brand: #4B3FD8;
+  --color-brand-light: #EEF0FF;
+  --color-brand-deep: #2A2350;
+  --color-background: #FFFFFF;
+  --color-surface: #F3F4F6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-tertiary: #9CA3AF;
+  --color-border: #D1D5DB;
+  --color-border-light: #E5E7EB;
+  --color-divider: #F3F4F6;
+  --color-destructive: #EF4444;
+  --color-pick-background: #141420;
+  --color-pick-surface: #1E1E2A;
+  --color-pick-elevated: #282836;
+  --color-pick-accent: #8F86FF;
+  --typography-display: 700 40px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title1: 700 24px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title2: 700 18px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-headline: 600 17px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-body: 400 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-body-medium: 500 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-callout: 500 14px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-label: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-caption: 400 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-caption-strong: 600 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-micro: 400 10.5px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title: var(--typography-title1);
+  --radius-small: 12px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+  --radius-extra-large: 28px;
+  --radius-full: 999px;
+  --spacing-x0-5: 2px;
+  --spacing-x1: 4px;
+  --spacing-x1-5: 6px;
+  --spacing-x2: 8px;
+  --spacing-x2-5: 10px;
+  --spacing-x3: 12px;
+  --spacing-x3-5: 14px;
+  --spacing-x4: 16px;
+  --spacing-x5: 20px;
+  --spacing-x6: 24px;
+  --spacing-x8: 32px;
+  --spacing-x10: 40px;
+}

@@ -1,0 +1,21 @@
+{
+  "color": {
+    "$type": "color",
+    "brand": { "$value": "#4B3FD8", "$description": "주 액션·선택 상태·하입" },
+    "brandLight": { "$value": "#EEF0FF", "$description": "brand 위 옅은 지면(브랜드마크 배경 등)" },
+    "brandDeep": { "$value": "#2A2350", "$description": "[제안] 공유 카드 그라데이션 끝색. 현재 iOS 3곳 하드코딩" },
+    "background": { "$value": "#FFFFFF" },
+    "surface": { "$value": "#F3F4F6", "$description": "카드·입력창 지면" },
+    "textPrimary": { "$value": "#111827" },
+    "textSecondary": { "$value": "#6B7280" },
+    "textTertiary": { "$value": "#9CA3AF", "$description": "placeholder·비활성 텍스트" },
+    "border": { "$value": "#D1D5DB" },
+    "borderLight": { "$value": "#E5E7EB" },
+    "divider": { "$value": "#F3F4F6" },
+    "destructive": { "$value": "#EF4444" },
+    "pickBackground": { "$value": "#141420", "$description": "Picks 다크 지면. 앱은 라이트 고정, Picks만 예외" },
+    "pickSurface": { "$value": "#1E1E2A", "$description": "Picks 카드" },
+    "pickElevated": { "$value": "#282836", "$description": "Picks 카드 위에 뜨는 시트. 카드와 같으면 지면에 눌어붙어 보인다" },
+    "pickAccent": { "$value": "#8F86FF", "$description": "다크 위 brand. #4B3FD8은 다크에 묻혀서 밝기만 올림" }
+  }
+}
