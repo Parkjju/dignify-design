@@ -5,6 +5,6 @@ export default {
   parameters: {
     layout: 'centered',
     controls: { expanded: true },
-    options: { storySort: { order: ['소개', 'Foundations', 'Components', 'Screens'] } },
+    options: { storySort: { order: ['소개', '가이드', 'Foundations', 'Components', ['Inputs', 'Navigation', 'Content', 'Overlays'], 'Screens', 'Flows'] } },
   },
 }

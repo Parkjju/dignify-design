@@ -1,4 +1,4 @@
-// tokens/*.json → generated/{ios,android,web} + screens/*.html 공통 블록. 의존성 없음 (node 18+).
+// tokens/*.json → generated/{ios,android,web}. 의존성 없음 (node 18+).
 //   node scripts/build.mjs           생성
 //   node scripts/build.mjs --check   생성물이 tokens와 어긋나면 exit 1 (커밋 전·CI용)
 // ponytail: 포맷이 4종뿐이라 Style Dictionary 대신 직접 쓴다. 그림자·모션 토큰이 생기면 그때 갈아탈 것.
@@ -92,8 +92,7 @@ const outputs = {
   'generated/web/tokens.css': css(),
 }
 
-// 시안 HTML은 <style id="ds"> 안에 토큰 + 애셋 + screens/_shared.css 를 인라인으로 품는다.
-// 외부 CSS·이미지 참조는 뷰어·단독 공유에서 끊긴다. 앨범 커버만 네트워크(iTunes CDN)에서 받는다.
+// Storybook용 CSS 한 벌: 토큰 + 애셋(data URI) + screens/_shared.css + 컴포넌트 CSS. 앨범 커버만 네트워크(iTunes CDN)에서 받는다.
 const assets = ':root {\n' + readdirSync(join(root, 'assets')).filter(f => f.endsWith('.png')).sort().map(f =>
   `  --asset-${f.replace('.png', '')}: url(data:image/png;base64,${readFileSync(join(root, 'assets', f)).toString('base64')});\n`).join('') + '}\n'
 // 컴포넌트 CSS(components/*/*.css)도 같이 묶는다 — 시안과 Storybook이 같은 CSS 한 벌을 쓴다.
@@ -101,12 +100,6 @@ const componentCss = readdirSync(join(root, 'components'), { withFileTypes: true
   .flatMap(n => readdirSync(join(root, 'components', n)).filter(f => f.endsWith('.css')).map(f => readFileSync(join(root, 'components', n, f), 'utf8')))
 const ds = css() + assets + readFileSync(join(root, 'screens', '_shared.css'), 'utf8') + componentCss.join('')
 outputs['generated/web/ds.css'] = `/* ${HEADER} — 토큰 + 애셋 + screens/_shared.css + 컴포넌트별 css. Storybook preview가 이 파일을 쓴다 */\n` + ds
-const DS_BLOCK = /<style id="ds">[\s\S]*?<\/style>/
-for (const f of readdirSync(join(root, 'screens')).filter(f => f.endsWith('.html'))) {
-  const src = readFileSync(join(root, 'screens', f), 'utf8')
-  if (!DS_BLOCK.test(src)) throw new Error(`screens/${f}: <style id="ds"></style> 자리가 없습니다`)
-  outputs[`screens/${f}`] = src.replace(DS_BLOCK, () => `<style id="ds">\n${ds}</style>`)
-}
 
 if (process.argv.includes('--check')) {
   const stale = Object.entries(outputs).filter(([p, s]) => {
