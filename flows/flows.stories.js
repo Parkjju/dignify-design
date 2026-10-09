@@ -28,7 +28,7 @@ export const FirstLaunchGuest = { name: '첫 실행 — 로그인 없이 둘러�
   { screen: 'onboarding-signin-gate', note: '로그인 → 「둘러보기 후 로그인」으로' },
 ] } }
 
-export const FirstLaunchSignIn = { name: '첫 실행 — 바로 로그인', args: { steps: [
+export const FirstLaunch = { name: '첫 실행 — 바로 로그인', args: { steps: [
   { screen: 'onboarding-signin', note: 'Apple로 계속하기' },
   ...coach,
   { screen: 'onboarding-seed', note: '곡 선택 (최대 3곡 → 피드 기준)' },
