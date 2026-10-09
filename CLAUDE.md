@@ -1,21 +1,19 @@
 # dignify-design — 에이전트 규칙
 
-Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Storybook(`npm run dev`, 배포 https://parkjju.github.io/dignify-design/)이 토큰·컴포넌트·화면을 다 보여 준다. 팀에 디자이너가 없으니 **시안의 품질 = 앱과 얼마나 똑같이 생겼나**다.
+Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Storybook(`npm run dev`, 배포 https://parkjju.github.io/dignify-design/)이 토큰·컴포넌트·화면·흐름을 다 보여 준다. 사용자용 수정 안내는 `guide.mdx`(사이트 「가이드 › 시안 수정하기」) — 절차를 바꾸면 거기도 같이 고친다. 팀에 디자이너가 없으니 **시안의 품질 = 앱과 얼마나 똑같이 생겼나**다.
 
 ## 시안을 만들 때 (필수 순서)
 
 1. **앱 코드부터 읽는다.** 기존 화면을 고치는 시안이면 `../dignify-iOS/dignify/dignify/Features/`의 해당 View에서 수치·문구를 읽는다. 문구는 `Localizable.xcstrings`의 한국어 값을 쓴다. 기억이나 상식으로 채우지 않는다.
 2. `patterns/`에서 지면 규칙을, `components/<이름>/<이름>.md`에서 쓰는 컴포넌트 명세를 **전부 읽는다.**
-3. **컴포넌트를 조립한 스토리로 만든다.** `screens/composed.stories.js`가 예시다.
-   ```js
-   import { Device } from './device.js'
-   import { PickCard } from '../components/pick-card/pick-card.js'
-   export const NewThing = { name: '새 화면', render: () => Device({ surface: 'dark', tab: 'picks', children: `…${PickCard({ … })}…` }) }
-   ```
-   - 기능 단위로 `screens/<기능>.stories.js` 새 파일, `title: 'Screens/<기능>'`.
-   - 컴포넌트 함수가 이미 있는 건 반드시 그걸 쓴다. 비슷하게 다시 그리지 않는다.
-   - 기존 화면을 살짝 바꾸는 거라 조립이 과하면 `screens/<화면>.html`을 복사해 고쳐도 된다(그 경우 `screens/<흐름>.stories.js`에 `frame('<파일>')` 한 줄 추가).
-4. **명세에 없는 컴포넌트가 필요하면** `components/<이름>/`에 한 벌을 만든다: `<이름>.md`(`components/_template.md` 형식) · `<이름>.js`(마크업 함수) · `<이름>.css`(`.ds-<이름>` 접두) · `<이름>.stories.js`(상태별 스토리 + Controls).
+3. **화면은 컴포넌트를 조립한 함수다.** 연결 구조는 토큰 → 컴포넌트 → 화면 → 흐름이고, 화면에 HTML·CSS를 직접 그리지 않는다.
+   - 화면 함수: `screens/<흐름>.js` (feed · picks · my · onboarding). `Device({ surface, tab, children, overlay })`로 감싸고, 스크롤은 `Scroll`, 내비는 `NavLayer`, 시트는 `Sheet`(전부 `screens/device.js`).
+   - 화면이 받는 값(곡, 상태, 목록, `scroll`)은 **전부 인자로** 둔다 → 그대로 Controls가 된다.
+   - 새 화면은 `screens/registry.js`의 `SCREENS`에 `[이름, 함수, 기본 args]` 한 줄 → 스토리(`story('<id>')`)와 플로우(`{ screen: '<id>' }`)에서 바로 쓴다.
+   - 스토리: `screens/<흐름>.stories.js`에 `export const X = story('<id>', { 덮어쓸 args }, { argTypes }, '이름')`.
+   - 흐름: `flows/flows.stories.js`에 `steps` 배열 하나. 사용자가 Controls에서 만든 `steps` JSON을 주면 그대로 붙여 저장한다.
+   - 사용자가 `steps`에 없는 화면 id(빨간 점선 칸)를 넣었다면 그게 새로 만들 화면 목록이다.
+4. **컴포넌트 함수가 있으면 반드시 그걸 쓴다.** 없으면 `components/<이름>/`에 한 벌을 먼저 만든다: `<이름>.md`(`components/_template.md` 형식) · `<이름>.js`(마크업 함수) · `<이름>.css`(`.ds-<이름>` 접두) · `<이름>.stories.js`(`title: 'Components/<Inputs|Navigation|Content|Overlays>/<이름>'`, 상태별 스토리 + Controls).
 5. 빌드하고 **렌더해서 직접 확인한 뒤** 넘긴다. 확인 안 한 시안은 넘기지 않는다.
    ```bash
    npm run build && (cd storybook-static && python3 -m http.server 6007 &)
@@ -65,6 +63,7 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Story
 
 ## 주의
 
+- `.mdx` 문서에 마크다운 표(`| a | b |`)를 쓰지 않는다. remark-gfm이 없어 글자 그대로 나온다 — 표는 JSX `<table>`로. 컴포넌트 명세 `.md`(Docs 설명)의 표는 정상이다.
 - CSS 주석 안에 `*/`가 들어가는 경로(`components/*/*.css` 같은 글로브)를 쓰지 않는다. 주석이 일찍 닫혀 바로 뒤 `:root` 규칙이 통째로 무시된다(실제로 한 번 터졌다).
 
 ## 커밋

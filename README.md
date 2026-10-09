@@ -1,60 +1,58 @@
 # dignify-design
 
-Dignify iOS·Android가 같이 쓰는 디자인 시스템이다. **Storybook**에서 토큰·컴포넌트·화면을 다 본다.
+Dignify iOS·Android가 같이 쓰는 디자인 시스템이다. **Storybook**에서 토큰 → 컴포넌트 → 화면 → 흐름을 다 본다.
 
 - 사이트: https://parkjju.github.io/dignify-design/ — main에 머지되면 자동 배포(GitHub Actions, 2~3분)
 - 로컬: `npm i && npm run dev` → http://localhost:6006
+- **시안을 고치는 방법은 사이트의 「가이드 › 시안 수정하기」에 있다.**
 
 ## Storybook 메뉴
 
 | 메뉴 | 내용 | 정본 |
 |---|---|---|
+| **가이드** | 시안 수정하기 — Controls · 흐름 설계 · Claude에게 요청 · 직접 고치기 | `guide.mdx` |
 | **Foundations** | 색·타이포그래피·라운드·여백·아이콘·커버 | `tokens/*.json` |
-| **Components** | 컴포넌트 16개. Docs 탭 = 명세, 각 스토리 = 상태별 모습, Controls = 값 바꿔 보기 | `components/<이름>/` |
-| **Screens** | 지금 앱(iOS 1.2.1)의 28개 화면 + 컴포넌트로 조립한 화면 | `screens/` |
+| **Components** | 35개 — Inputs · Navigation · Content · Overlays. Docs 탭 = 명세, Controls = 상태 바꿔 보기 | `components/<이름>/` |
+| **Screens** | 앱(iOS 1.2.1) 화면 34개. 전부 컴포넌트로 조립돼 있고, 화면마다 Controls로 내용·상태를 바꾼다 | `screens/<흐름>.js` |
+| **Flows** | 사용자 흐름 8개 + 전체 화면. Controls의 `steps`로 순서·화면·값을 바꾼다 | `flows/flows.stories.js` |
 
 ## 구조
 
 ```
 tokens/                 정본 JSON (W3C DTCG). 여기서 iOS·Android 코드를 생성한다
-components/<이름>/       <이름>.md 명세 · .js 마크업 · .css 스타일 · .stories.js 스토리
-foundations/            Foundations 스토리 (tokens/*.json 을 읽어 그린다)
+components/<이름>/       <이름>.md 명세 · .js 마크업 함수 · .css 스타일 · .stories.js 스토리
 screens/
-  *.html                앱 화면 시안 28개 (파일 하나로도 열린다)
-  *.stories.js          Screens 메뉴. composed.stories.js = 컴포넌트 조립 화면
-  device.js             iPhone 프레임 — 새 화면을 조립할 때 쓴다
+  feed.js · picks.js · my.js · onboarding.js   흐름별 화면 함수 (컴포넌트 조립)
+  registry.js           화면 목록 + 기본값 — 스토리와 플로우가 같이 쓴다
+  data.js               샘플 곡·픽·하입 데이터
+  device.js             iPhone 프레임 · 스크롤 · 내비 · 시트 헬퍼
+  *.stories.js          Screens 메뉴
   _shared.css           기기 프레임·탭바·아이콘·커버 공통 CSS
+flows/                  플로우 보드 + 흐름 정의
+foundations/            Foundations 스토리 (tokens/*.json 을 읽어 그린다)
 patterns/               지면 규칙 (피드 미디어 지면 · Picks 다크 · 공유 카드)
 assets/                 앱 애셋 사본 (HypeIcon, BrandMark)
 generated/              자동 생성물 — ios/DSTokens.swift · android/DSTokens.kt · web/ds.css
-scripts/build.mjs       tokens·애셋·CSS → generated + screens/*.html
-.storybook/             Storybook 설정
-.github/workflows/      배포
+scripts/build.mjs       tokens·애셋·CSS → generated
+guide.mdx · intro.mdx   Storybook 문서 페이지
 CLAUDE.md               Claude가 시안을 만들 때 지키는 규칙
 ```
 
-## 시안 만들기 (디자이너 없이)
-
-Claude에게 말로 요청한다. 예:
-
-> 디깅 프로필에 '이번 달 많이 들은 아티스트' 섹션을 추가한 시안 만들어줘
-
-Claude는 `CLAUDE.md` 규칙대로 **기존 컴포넌트를 조립한 스토리**로 시안을 만들고, 빌드해서 렌더를 확인한 뒤 PR을 올린다. 머지되면 사이트에 바로 뜨니 링크만 공유하면 된다.
-
-- 새 색·크기가 필요하면 토큰 변경이, 새 컴포넌트가 필요하면 `components/<이름>/` 한 벌(명세·마크업·스타일·스토리)이 같은 PR에 들어간다.
-- Figma는 쓰지 않는다. 정본이 이 레포 하나여야 값이 갈라지지 않는다.
+연결 구조: **토큰 → 컴포넌트 → 화면 → 흐름.** 아래 층을 고치면 위 층이 전부 따라 바뀐다.
 
 ## 시안에서 개발까지
 
-1. **시안 PR** — 화면 스토리 추가·수정. 리뷰에서 확정한다.
-2. **토큰·컴포넌트 변경**이 있으면 같은 PR에서 함께 리뷰한다.
+1. **흐름·배치 설계** — Flows·Screens의 Controls로 직접 만져 보고, 정한 것을 Claude에게 넘긴다(가이드 참고).
+2. **시안 PR** — Claude가 화면 함수·흐름·필요하면 컴포넌트와 토큰까지 고쳐 PR을 올린다. 머지되면 사이트에 반영된다.
 3. **앱 반영** — 생성물을 앱에 복사하고(아래), 컴포넌트 명세의 플랫폼 표를 보고 iOS·Android를 같이 구현한다.
+
+Figma는 쓰지 않는다. 정본이 이 레포 하나여야 값이 갈라지지 않는다.
 
 ## 토큰 고치기
 
 ```bash
 # tokens/*.json 수정 후
-npm run tokens   # generated/ + screens/*.html 재생성
+npm run tokens   # generated/ 재생성
 npm run check    # 커밋 전: 생성물이 최신인지 (CI에서도 돈다 — 안 맞으면 배포 실패)
 ```
 
