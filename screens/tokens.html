@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 시안 갤러리: 모든 화면을 흐름별로 한 장에. 각 칸은 해당 파일을 iframe으로 띄운다(파일을 고치면 새로고침만). 새 화면을 만들면 아래 SCREENS에 한 줄 추가 -->
+<!-- 토큰 목록: tokens/*.json 을 그대로 그린다. build.mjs가 아래 두 블록을 채우므로 토큰을 고치고 빌드하면 이 페이지도 따라 바뀐다 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dignify 시안</title>
+<title>Dignify 토큰</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -211,58 +211,77 @@ body.embed { padding: 0; background: transparent; }
 .a-tomboy { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/20/de/43/20de43fe-733e-3734-cab9-7bd787411260/Cover_HYUKOH_23.jpg/300x300bb.jpg), linear-gradient(135deg,#3B4A5C,#9AA7B4); }  /* TOMBOY — HYUKOH */
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
+<script id="tokens" type="application/json">{"color":{"$type":"color","brand":{"$value":"#4B3FD8","$description":"주 액션·선택 상태·하입"},"brandLight":{"$value":"#EEF0FF","$description":"brand 위 옅은 지면(브랜드마크 배경 등)"},"brandDeep":{"$value":"#2A2350","$description":"[제안] 공유 카드 그라데이션 끝색. 현재 iOS 3곳 하드코딩"},"background":{"$value":"#FFFFFF"},"surface":{"$value":"#F3F4F6","$description":"카드·입력창 지면"},"textPrimary":{"$value":"#111827"},"textSecondary":{"$value":"#6B7280"},"textTertiary":{"$value":"#9CA3AF","$description":"placeholder·비활성 텍스트"},"border":{"$value":"#D1D5DB"},"borderLight":{"$value":"#E5E7EB"},"divider":{"$value":"#F3F4F6"},"destructive":{"$value":"#EF4444"},"pickBackground":{"$value":"#141420","$description":"Picks 다크 지면. 앱은 라이트 고정, Picks만 예외"},"pickSurface":{"$value":"#1E1E2A","$description":"Picks 카드"},"pickElevated":{"$value":"#282836","$description":"Picks 카드 위에 뜨는 시트. 카드와 같으면 지면에 눌어붙어 보인다"},"pickAccent":{"$value":"#8F86FF","$description":"다크 위 brand. #4B3FD8은 다크에 묻혀서 밝기만 올림"},"textOnDark":{"$value":"#FFFFFF","$description":"[제안] 피드·Picks 같은 어두운 지면 위 주 텍스트"},"textOnDarkSecondary":{"$value":{"hex":"#FFFFFF","alpha":0.75},"$description":"[제안] 어두운 지면 위 보조 텍스트(피드 아티스트명)"},"textOnDarkTertiary":{"$value":{"hex":"#FFFFFF","alpha":0.45},"$description":"[제안] 어두운 지면 위 메타(Picks 시간·곡 수)"},"iconOnDark":{"$value":{"hex":"#FFFFFF","alpha":0.82},"$description":"[제안] 어두운 지면 위 액션 아이콘(피드 상세·공유)"},"fillOnDark":{"$value":{"hex":"#FFFFFF","alpha":0.15},"$description":"[제안] 어두운 지면 위 칩 지면"},"fillOnDarkSubtle":{"$value":{"hex":"#FFFFFF","alpha":0.07},"$description":"[제안] Picks 반응·공유 버튼 지면"},"strokeOnDark":{"$value":{"hex":"#FFFFFF","alpha":0.2},"$description":"[제안] 어두운 지면 위 칩 테두리"},"scrim":{"$value":{"hex":"#000000","alpha":0.45},"$description":"[제안] 아트워크 위 어둡게 까는 막(Picks 미디어)"},"scrimStrong":{"$value":{"hex":"#000000","alpha":0.55},"$description":"[제안] 아트워크 위 배지·남은 곡 수"}},"radius":{"$type":"dimension","small":{"$value":12,"$description":"[제안] 썸네일·작은 카드. 현재 하드코딩 최다값"},"medium":{"$value":16,"$description":"버튼·입력창"},"large":{"$value":24,"$description":"카드·아트워크"},"extraLarge":{"$value":28,"$description":"시트"},"full":{"$value":999,"$description":"캡슐·원형"}},"spacing":{"$description":"[제안] 4pt 그리드. 이름의 숫자 × 4 = pt (x1_5 = 6pt). 현행 하드코딩 값을 전부 담도록 2·6·10·14 반 칸을 둔다","$type":"dimension","x0_5":{"$value":2},"x1":{"$value":4},"x1_5":{"$value":6},"x2":{"$value":8},"x2_5":{"$value":10},"x3":{"$value":12},"x3_5":{"$value":14},"x4":{"$value":16},"x5":{"$value":20},"x6":{"$value":24},"x8":{"$value":32},"x10":{"$value":40}},"typography":{"$type":"typography","display":{"$value":{"fontSize":40,"fontWeight":700}},"title1":{"$value":{"fontSize":24,"fontWeight":700}},"title2":{"$value":{"fontSize":18,"fontWeight":700}},"headline":{"$value":{"fontSize":17,"fontWeight":600}},"body":{"$value":{"fontSize":15,"fontWeight":400}},"bodyMedium":{"$value":{"fontSize":15,"fontWeight":500}},"callout":{"$value":{"fontSize":14,"fontWeight":500},"$description":"[제안] 14 medium. 검색창·칩·보조 버튼. 현재 하드코딩 다수"},"label":{"$value":{"fontSize":13,"fontWeight":600},"$description":"[제안] 13 semibold. iOS에서 가장 많이 하드코딩된 조합"},"caption":{"$value":{"fontSize":12,"fontWeight":400}},"captionStrong":{"$value":{"fontSize":12,"fontWeight":600},"$description":"[제안] 12 semibold. 배지·메타 강조"},"micro":{"$value":{"fontSize":10.5,"fontWeight":400}},"title":{"$value":"{typography.title1}","$description":"title1 별칭(기존 코드 호환)"}}}</script>
 <style>
-  body { display: block; padding: 40px 32px 80px; background: #E5E5EA; }
-  header { max-width: 1400px; margin: 0 auto 32px; }
-  header h1 { font-size: 28px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-  header .mark { width: 32px; height: 32px; border-radius: 8px; background: var(--color-brand-light); display: grid; place-items: center; }
-  header .mark .brand-mark { width: 21px; height: 21px; }
-  header p { color: var(--color-text-secondary); font-size: 14px; margin-top: 8px; line-height: 1.5; }
-  section { max-width: 1400px; margin: 0 auto 40px; }
-  section h2 { font: var(--typography-title2); margin-bottom: 16px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 28px 20px; }
-  .tile { display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; }
-  .frame { position: relative; width: 230px; height: 470px; overflow: hidden; border-radius: 8px; }
-  .frame iframe { position: absolute; left: 0; top: 0; width: 440px; height: 900px; border: 0; transform: scale(.523); transform-origin: 0 0; pointer-events: none; }
-  .tile b { font-size: 14px; font-weight: 600; }
-  .tile span { font-size: 12px; color: var(--color-text-tertiary); font-family: ui-monospace, Menlo, monospace; }
-  .tile:hover b { color: var(--color-brand); }
+  body { display: block; padding: 40px 32px 80px; background: #F2F2F7; }
+  main { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 28px; font-weight: 700; }
+  .lead { color: var(--color-text-secondary); font-size: 14px; margin: 8px 0 20px; line-height: 1.6; }
+  .filter { display: inline-flex; gap: 4px; padding: 3px; border-radius: 10px; background: rgba(118,118,128,.12); margin-bottom: 28px; }
+  .filter button { border: 0; background: none; padding: 6px 14px; border-radius: 8px; font: inherit; font-size: 13px; cursor: pointer; }
+  .filter button.on { background: #fff; font-weight: 600; box-shadow: 0 2px 6px rgba(0,0,0,.1); }
+  section { margin-bottom: 36px; }
+  h2 { font: var(--typography-title2); margin-bottom: 4px; }
+  h2 + p { font-size: 13px; color: var(--color-text-tertiary); margin-bottom: 12px; }
+  .table { background: #fff; border-radius: 14px; overflow: hidden; }
+  .row { display: grid; grid-template-columns: 170px 200px 1fr; gap: 16px; align-items: center; padding: 12px 16px; border-top: 1px solid var(--color-divider); }
+  .row:first-child { border-top: 0; }
+  .row.proposed { background: #FFFBEB; }
+  .name { font-family: ui-monospace, Menlo, monospace; font-size: 13px; font-weight: 600; }
+  .name small { display: block; font-weight: 400; color: var(--color-text-tertiary); margin-top: 3px; }
+  .desc { font-size: 13px; color: var(--color-text-secondary); line-height: 1.5; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; color: #B45309; background: #FEF3C7; padding: 2px 7px; border-radius: 999px; margin-right: 6px; }
+  .swatch { width: 60px; height: 40px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08);
+    background-image: linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%), linear-gradient(45deg,#ddd 25%,#fff 25%,#fff 75%,#ddd 75%);
+    background-size: 10px 10px; background-position: 0 0, 5px 5px; position: relative; overflow: hidden; }
+  .swatch i { position: absolute; inset: 0; }
+  .swatch.on-dark { background: var(--color-pick-background); }   /* 어두운 지면용 색은 어두운 바탕 위에서 보여 준다 */
+  .type-sample { white-space: nowrap; overflow: hidden; }
+  .radius-sample { width: 60px; height: 40px; background: var(--color-brand-light); border: 1.5px solid var(--color-brand); }
+  .space-sample { height: 14px; background: var(--color-brand); border-radius: 2px; }
 </style>
 </head>
 <body>
-<header>
-  <h1><span class="mark"><i class="brand-mark"></i></span>Dignify 시안</h1>
-  <p><a href="tokens.html" style="color:var(--color-brand);font-weight:600">토큰 목록 보기 →</a><br>iOS 1.2.1 실제 화면 기준. 칸을 누르면 해당 화면 파일이 열린다. 수치·문구는 앱 코드에서 가져왔고, 각 파일 맨 위 주석에 기준 Swift 파일이 적혀 있다.<br>
-     앨범 커버는 iTunes에서 받아 오므로 오프라인이면 그라데이션으로 보인다. 이용약관·개인정보처리방침은 Notion 페이지를 Safari로 여는 것이라 시안이 없다.</p>
-</header>
-<main id="main"></main>
+<main>
+  <h1>Dignify 토큰</h1>
+  <p class="lead">정본은 <code>tokens/*.json</code>이다. 노란 줄은 <b>[제안]</b> 토큰이다. 앱 코드에 하드코딩으로 반복되던 값을 이름으로 묶자고 제안한 것이고, 리뷰에서 받아들이면 <code>$description</code>의 [제안]을 지운다.<br>
+    나머지는 지금 iOS·Android 앱에 이미 있는 값이다.</p>
+  <div class="filter"><button class="on" data-f="all">전체</button><button data-f="proposed">제안만</button><button data-f="current">기존만</button></div>
+  <div id="out"></div>
+</main>
 <script>
-  const SCREENS = [
-    ['피드', [
-      ['feed', '피드'], ['feed-search', '피드 검색'], ['track-detail', '트랙 상세'], ['feed-push-popup', '이번 주 특집 끝 · 알림 권유'],
-      ['feed-coach', '피드 코치마크'], ['whats-new', '새로운 기능'],
-    ]],
-    ['Picks', [
-      ['picks', 'Picks'], ['pick-play', '픽 재생'], ['pick-menu', '픽 메뉴(신고·차단)'],
-      ['pick-compose', '새 픽 — 곡 고르기'], ['pick-compose-title', '새 픽 — 제목'],
-    ]],
-    ['마이', [
-      ['my-page', '마이페이지'], ['digging-profile', '디깅 프로필'], ['digging-profile-crate', '디깅 프로필 — 하입한 곡'],
-      ['digging-profile-locked', '디깅 프로필 — 잠김'], ['my-picks', '내가 만든 픽'], ['hype-history', '하입 기록'],
-      ['hype-history-edit', '하입 기록 — 편집'], ['seed-picker', '추천 기준 곡'], ['artist-requests', '아티스트 요청'],
-      ['artist-request-sheet', '아티스트 요청 시트'], ['blocked-users', '차단한 유저'],
-    ]],
-    ['온보딩', [
-      ['onboarding-signin', '로그인'], ['onboarding-tutorial', '튜토리얼'], ['onboarding-seed', '추천 기준 곡 고르기'],
-    ]],
-    ['공유 카드 (1080×1920 이미지)', [
-      ['share-card-track', '트랙'], ['share-card-pick', '픽'], ['share-card-profile', '디깅 유형'],
-    ]],
+  const T = JSON.parse(document.getElementById('tokens').textContent)
+  const kebab = s => s.replace(/[A-Z]/g, c => '-' + c.toLowerCase()).replace('_', '-')
+  const hex = v => typeof v === 'string' ? v : `${v.hex} · ${Math.round(v.alpha * 100)}%`
+  const entries = g => Object.entries(T[g]).filter(([k]) => !k.startsWith('$'))
+  const GROUPS = [
+    ['color', '색', 'DSColor', (n, t) => `<div class="swatch${/OnDark/.test(n) ? ' on-dark' : ''}"><i style="background:var(--color-${kebab(n)})"></i></div>`, (n, t) => hex(t.$value)],
+    ['typography', '타이포그래피', 'DSTypography', (n, t) => `<div class="type-sample" style="font:var(--typography-${kebab(n)})">가나다 Abc 123</div>`,
+      (n, t) => typeof t.$value === 'string' ? t.$value : `${t.$value.fontSize}pt · ${t.$value.fontWeight}`],
+    ['radius', '라운드', 'DSRadius', (n, t) => `<div class="radius-sample" style="border-radius:var(--radius-${kebab(n)})"></div>`, (n, t) => `${t.$value}pt`],
+    ['spacing', '여백', 'DSSpacing', (n, t) => `<div class="space-sample" style="width:var(--spacing-${kebab(n)})"></div>`, (n, t) => `${t.$value}pt`],
   ]
-  document.getElementById('main').innerHTML = SCREENS.map(([group, items]) => `
-    <section><h2>${group}</h2><div class="grid">${items.map(([file, name]) => `
-      <a class="tile" href="${file}.html"><div class="frame"><iframe src="${file}.html" loading="lazy" tabindex="-1"></iframe></div><b>${name}</b><span>${file}.html</span></a>`).join('')}
-    </div></section>`).join('')
+  const isProposed = t => (t.$description || '').startsWith('[제안]') || false
+  function render(filter) {
+    document.getElementById('out').innerHTML = GROUPS.map(([g, title, code, sample, value]) => {
+      const groupProposed = (T[g].$description || '').startsWith('[제안]')   // 그룹 전체가 제안(spacing)
+      const rows = entries(g).filter(([n, t]) => {
+        const p = groupProposed || isProposed(t)
+        return filter === 'all' || (filter === 'proposed') === p
+      })
+      if (!rows.length) return ''
+      return `<section><h2>${title}</h2><p>iOS·Android에서 <code>${code}.이름</code> · 시안 CSS에서 <code>var(--${g}-이름)</code></p><div class="table">` +
+        rows.map(([n, t]) => {
+          const p = groupProposed || isProposed(t)
+          const d = (t.$description || '').replace('[제안] ', '')
+          return `<div class="row${p ? ' proposed' : ''}">${sample(n, t)}<div class="name">${n}<small>${value(n, t)}</small></div><div class="desc">${p ? '<span class="tag">제안</span>' : ''}${d}</div></div>`
+        }).join('') + '</div></section>'
+    }).join('')
+  }
+  document.querySelectorAll('.filter button').forEach(b => b.onclick = () => {
+    document.querySelectorAll('.filter button').forEach(x => x.classList.toggle('on', x === b)); render(b.dataset.f)
+  })
+  render('all')
 </script>
 </body>
 </html>

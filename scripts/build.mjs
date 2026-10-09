@@ -98,10 +98,13 @@ const assets = ':root {\n' + readdirSync(join(root, 'assets')).filter(f => f.end
   `  --asset-${f.replace('.png', '')}: url(data:image/png;base64,${readFileSync(join(root, 'assets', f)).toString('base64')});\n`).join('') + '}\n'
 const ds = css() + assets + readFileSync(join(root, 'screens', '_shared.css'), 'utf8')
 const DS_BLOCK = /<style id="ds">[\s\S]*?<\/style>/
+const TOKENS_JSON = /<script id="tokens" type="application\/json">[\s\S]*?<\/script>/
 for (const f of readdirSync(join(root, 'screens')).filter(f => f.endsWith('.html'))) {
   const src = readFileSync(join(root, 'screens', f), 'utf8')
   if (!DS_BLOCK.test(src)) throw new Error(`screens/${f}: <style id="ds"></style> 자리가 없습니다`)
   outputs[`screens/${f}`] = src.replace(DS_BLOCK, () => `<style id="ds">\n${ds}</style>`)
+    // 토큰 목록 페이지용: 설명([제안] 포함)까지 JSON으로 넣는다.
+    .replace(TOKENS_JSON, () => `<script id="tokens" type="application/json">${JSON.stringify(tokens).replace(/</g, "\\u003c")}</script>`)
 }
 
 if (process.argv.includes('--check')) {
