@@ -2,9 +2,14 @@ import '../generated/web/ds.css'   // 토큰 + 애셋 + 공통 + 컴포넌트 CS
 import './preview.css'
 
 // 실기기 모드: 휴대폰에서 시안을 화면 가득 본다. URL에 &globals=fullscreen:!true;mockStatus:!false
-//   fullscreen — 기기 테두리 없이 화면에 맞춰 확대·축소(393×852 비율 유지, 남는 곳은 검정)
+//   fullscreen — 기기 테두리 없이 화면 가득. 휴대폰: 폭을 맞추고 높이는 실제 화면 높이를 따른다(검은 여백 없음).
+//                데스크톱(폭 600 이상): 393×852 비율 그대로 창 안에 맞춘다
 //   mockStatus — 가짜 상태바·다이내믹 아일랜드·홈 인디케이터를 그릴지
-const fit = () => document.documentElement.style.setProperty('--fit', Math.min(innerWidth / 393, innerHeight / 852))
+const fit = () => {
+  const phone = innerWidth < 600, k = phone ? innerWidth / 393 : Math.min(innerWidth / 393, innerHeight / 852)
+  document.documentElement.style.setProperty('--fit', k)
+  document.documentElement.style.setProperty('--fit-h', `${phone ? innerHeight / k : 852}px`)
+}
 addEventListener('resize', fit); fit()
 
 // 흐름(Flows)을 실기기 모드로 열면 한 장씩: 오른쪽 탭 = 다음, 왼쪽 1/4 탭 = 이전

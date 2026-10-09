@@ -3,7 +3,8 @@ body { display: block; min-height: 0; padding: 0; background: #fff; }
 
 /* 실기기 모드 — preview.js 의 fullscreen · mockStatus */
 .sb-fit { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; overflow: hidden; background: #000; }
-.sb-fit .device { border-radius: 0; box-shadow: none; transform: scale(var(--fit, 1)); }
+.sb-fit .device { border-radius: 0; box-shadow: none; height: var(--fit-h, 852px); transform: scale(var(--fit, 1)); }
+.sb-fit .ds-feed-track { height: 100% !important; }   /* 피드 지면도 기기 높이를 따라간다 */
 .sb-proto, .sb-proto__step { display: grid; place-items: center; }
 .sb-proto__step:not(.is-on) { display: none; }
 .sb-proto { cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
