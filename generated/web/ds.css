@@ -268,6 +268,12 @@ body.embed { padding: 0; background: transparent; }
   19% { transform: scale(1); opacity: 1; } 60% { transform: scale(1); opacity: 1; animation-timing-function: ease-in; }
   77%, 100% { transform: scale(1.08); opacity: 0; } }
 
+/* 한 번만(is-once): 팝 → hold 초 머묾 → 페이드아웃. hold는 speed와 따로 */
+.ds-coach-gesture.is-once .ds-coach-gesture__hype { animation: dsg-in calc(.45s * var(--k, 1)) cubic-bezier(.2,1.4,.4,1) both,
+  dsg-out calc(.4s * var(--k, 1)) ease-in calc(.45s * var(--k, 1) + var(--hold, 1s)) forwards; }
+@keyframes dsg-in { from { transform: scale(.3); opacity: 0; } }
+@keyframes dsg-out { to { transform: scale(1.08); opacity: 0; } }
+
 /* 사라질 때: 캡션·마크가 함께 0.2s 페이드 */
 .ds-coach-gesture { transition: opacity calc(.2s * var(--k, 1)) ease-out; }
 .ds-coach-gesture.is-leaving { opacity: 0; }
