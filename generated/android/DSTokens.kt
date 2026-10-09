@@ -33,6 +33,24 @@ object DSColor {
     val pickElevated = Color(0xFF282836)
     /** 다크 위 brand. #4B3FD8은 다크에 묻혀서 밝기만 올림 */
     val pickAccent = Color(0xFF8F86FF)
+    /** [제안] 피드·Picks 같은 어두운 지면 위 주 텍스트 */
+    val textOnDark = Color(0xFFFFFFFF)
+    /** [제안] 어두운 지면 위 보조 텍스트(피드 아티스트명) */
+    val textOnDarkSecondary = Color(0xBFFFFFFF)
+    /** [제안] 어두운 지면 위 메타(Picks 시간·곡 수) */
+    val textOnDarkTertiary = Color(0x73FFFFFF)
+    /** [제안] 어두운 지면 위 액션 아이콘(피드 상세·공유) */
+    val iconOnDark = Color(0xD1FFFFFF)
+    /** [제안] 어두운 지면 위 칩 지면 */
+    val fillOnDark = Color(0x26FFFFFF)
+    /** [제안] Picks 반응·공유 버튼 지면 */
+    val fillOnDarkSubtle = Color(0x12FFFFFF)
+    /** [제안] 어두운 지면 위 칩 테두리 */
+    val strokeOnDark = Color(0x33FFFFFF)
+    /** [제안] 아트워크 위 어둡게 까는 막(Picks 미디어) */
+    val scrim = Color(0x73000000)
+    /** [제안] 아트워크 위 배지·남은 곡 수 */
+    val scrimStrong = Color(0x8C000000)
 }
 
 object DSTypography {

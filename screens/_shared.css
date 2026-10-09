@@ -1,0 +1,143 @@
+/* 시안 공통 — 기기 프레임·상태바·탭바·시트·아이콘·커버.
+   build.mjs가 토큰과 함께 각 화면의 <style id="ds">로 인라인한다. 이 파일을 고치고 node scripts/build.mjs. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; padding: 24px 0; background: #E5E5EA;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Pretendard", sans-serif; -webkit-font-smoothing: antialiased; }
+body.embed { padding: 0; background: transparent; }
+
+/* ── 기기 (iPhone 15/16 Pro, 393×852) ── */
+.device { position: relative; width: 393px; height: 852px; flex: none; border-radius: 55px; overflow: hidden; isolation: isolate;
+  background: var(--color-background); color: var(--color-text-primary); box-shadow: 0 0 0 11px #1C1C1E, 0 0 0 12px #3A3A3C, 0 30px 60px rgba(0,0,0,.25); }
+.device.dark { color: #fff; }
+.island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 126px; height: 37px; border-radius: 20px; background: #000; z-index: 100; }
+.home { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 139px; height: 5px; border-radius: 3px; background: #000; z-index: 100; }
+.dark .home { background: #fff; }
+
+/* 상태바 — <div class="status"><b>10:28</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">97</i></span></div> */
+.status { position: absolute; top: 0; inset-inline: 0; height: 54px; padding: 18px 34px 0 50px; display: flex; justify-content: space-between; z-index: 99;
+  font-size: 17px; font-weight: 600; letter-spacing: -.2px; color: #000; }
+.dark .status { color: #fff; }
+.status span { display: flex; align-items: center; gap: 6px; }
+.status .ic { font-size: 18px; }
+.battery { font-style: normal; font-size: 12px; font-weight: 700; line-height: 13px; height: 13px; min-width: 25px; padding: 0 3px; border-radius: 4px;
+  text-align: center; background: #000; color: #fff; }
+.dark .battery { background: #fff; color: #000; }
+
+/* ── 아이콘 — <i class="ic ic-search"></i>. 크기 = font-size, 색 = color (SF Symbols 근사) ── */
+.ic { display: inline-block; width: 1em; height: 1em; flex: none; font-style: normal; background: currentColor;
+  -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
+.ic-hype { --i: var(--asset-hype-icon); }   /* 앱 애셋 HypeIcon (template 렌더) */
+.brand-mark { display: inline-block; background: var(--asset-brand-mark) center / contain no-repeat; }
+
+/* ── 앨범 커버 — <i class="art a-cannons"></i>. 오프라인이면 그라데이션으로 대체 ── */
+.art { display: block; flex: none; background-color: var(--color-surface); background-size: cover; background-position: center; }
+
+/* ── 탭바 (iOS 26 시스템 탭바, tint brand). 라벨은 iOS에서 번역하지 않는다(Feed·Picks·My) ── */
+.tabbar { position: absolute; bottom: 21px; left: 50%; transform: translateX(-50%); width: 272px; height: 62px; padding: 4px; z-index: 90;
+  display: flex; border-radius: 999px; background: rgba(250,250,252,.78); backdrop-filter: blur(18px) saturate(1.8); -webkit-backdrop-filter: blur(18px) saturate(1.8);
+  box-shadow: 0 8px 28px rgba(0,0,0,.12), inset 0 0 0 .5px rgba(0,0,0,.1); }
+.tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: 999px;
+  font-size: 10px; font-weight: 600; color: #1C1C1E; }
+.tab .ic { font-size: 25px; }
+.tab.on { color: var(--color-brand); background: rgba(120,120,128,.16); }
+.tabbar.media { background: rgba(200,200,205,.62); box-shadow: inset 0 0 0 .5px rgba(255,255,255,.3); }   /* 피드 위 */
+.tabbar.media .tab.on { background: rgba(0,0,0,.14); }
+.tabbar.dark { background: rgba(70,70,82,.55); box-shadow: inset 0 0 0 .5px rgba(255,255,255,.14); }      /* Picks 위 */
+.tabbar.dark .tab { color: #fff; }
+.tabbar.dark .tab.on { color: var(--color-pick-accent); background: rgba(255,255,255,.12); }
+
+/* ── 내비게이션 ── */
+.nav { position: absolute; top: 54px; inset-inline: 0; height: 52px; display: flex; align-items: center; justify-content: center; z-index: 50; }
+.nav h1 { font: var(--typography-headline); }
+.nav .left, .nav .right { position: absolute; top: 4px; display: flex; gap: 8px; }
+.nav .left { left: 16px; } .nav .right { right: 16px; }
+.glass-btn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 19px; color: var(--color-text-primary);
+  background: rgba(255,255,255,.82); backdrop-filter: blur(12px); box-shadow: 0 2px 12px rgba(0,0,0,.12), inset 0 0 0 .5px rgba(0,0,0,.06); }
+.glass-btn.text { width: auto; padding: 0 16px; border-radius: 22px; font-size: 16px; font-weight: 500; }
+.dark .glass-btn { background: rgba(255,255,255,.12); color: #fff; box-shadow: inset 0 0 0 .5px rgba(255,255,255,.14); }
+.large-title { font-size: 34px; font-weight: 700; letter-spacing: .3px; padding: 0 16px; }
+.scroll { position: absolute; inset: 0; overflow: hidden; }
+
+/* ── 리스트 (설정형) ── */
+.list-row { display: flex; align-items: center; min-height: 52px; padding: 0 20px; font-size: 16px; }
+.list-row .ic-chevron-right { margin-left: auto; font-size: 13px; color: var(--color-text-tertiary); }
+.hr { height: 1px; background: var(--color-divider); margin: 8px 20px; }
+
+/* ── 시트 (iOS 26 플로팅 시트) ── */
+.dim { position: absolute; inset: 0; background: rgba(0,0,0,.35); z-index: 92; }
+.sheet { position: absolute; inset-inline: 0; bottom: 0; z-index: 93; border-radius: 38px 38px 0 0; background: var(--color-background); overflow: hidden; }
+.sheet.floating { inset-inline: 8px; bottom: 8px; border-radius: 40px; }
+.grabber { width: 36px; height: 5px; border-radius: 3px; background: rgba(60,60,67,.3); margin: 6px auto 0; }
+
+/* ── 키보드 (한글 두벌식 자리표시) ── */
+.keyboard { position: absolute; inset: auto 0 0; height: 300px; background: #D3D5DB; color: #000; z-index: 95; padding: 8px 3px 0; display: grid; grid-template-rows: repeat(4, 50px); gap: 10px; }
+.keyboard div { display: flex; justify-content: center; gap: 6px; padding: 0 3px; min-width: 0; }
+.keyboard b { flex: 0 1 34px; min-width: 0; height: 44px; border-radius: 6px; background: #fff; display: grid; place-items: center; font-size: 20px; font-weight: 400; box-shadow: 0 1px 0 rgba(0,0,0,.3); }
+.keyboard b.w { flex-basis: 44px; font-size: 15px; background: #ABB0BA; }
+.keyboard b.sp { flex-basis: 200px; font-size: 15px; }
+
+/* ── 토스트 ── */
+.toast { position: absolute; left: 50%; transform: translateX(-50%); padding: 12px 18px; border-radius: 999px; background: rgba(30,30,30,.92); color: #fff;
+  font-size: 14px; font-weight: 500; white-space: nowrap; z-index: 96; }
+
+/* ── 아이콘 정의 ── */
+.ic-search { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='10.5' cy='10.5' r='6.6' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4'/%3E%3Cpath d='M15.4 15.4 20.6 20.6' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.7'/%3E%3C/svg%3E"); }
+.ic-sparkles { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 2.5c.5 3.6 2.4 5.5 6 6-3.6.5-5.5 2.4-6 6-.5-3.6-2.4-5.5-6-6 3.6-.5 5.5-2.4 6-6zM18 13c.3 2 1.2 2.9 3.2 3.2-2 .3-2.9 1.2-3.2 3.2-.3-2-1.2-2.9-3.2-3.2 2-.3 2.9-1.2 3.2-3.2zM18.5 2.5c.2 1.3.8 1.9 2 2-1.2.2-1.8.8-2 2-.2-1.2-.8-1.8-2-2 1.2-.1 1.8-.7 2-2z'/%3E%3C/svg%3E"); }
+.ic-shuffle { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 7h3.5c4.5 0 6.5 10 11 10H21M3 17h3.5c1.6 0 2.8-1.2 3.8-2.8M13.7 9.8C14.7 8.2 15.9 7 17.5 7H21M18.5 4.5 21 7l-2.5 2.5M18.5 14.5 21 17l-2.5 2.5' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/%3E%3C/svg%3E"); }
+.ic-swap { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 8h15M15.5 4.5 19 8l-3.5 3.5M20 16H5M8.5 12.5 5 16l3.5 3.5' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2'/%3E%3C/svg%3E"); }
+.ic-disc { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6'/%3E%3Ccircle cx='12' cy='12' r='2.6' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.6'/%3E%3Cpath d='M12 6.2a5.8 5.8 0 0 1 5.8 5.8M6.2 12A5.8 5.8 0 0 0 12 17.8' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.4'/%3E%3C/svg%3E"); }
+.ic-share { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.5v11M8.2 7.2 12 3.4l3.8 3.8M8 10.5H6.5A1.5 1.5 0 0 0 5 12v7.5A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V12a1.5 1.5 0 0 0-1.5-1.5H16' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.7'/%3E%3C/svg%3E"); }
+.ic-house { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.6 1.8 11.4a.9.9 0 0 0 1.2 1.3l.9-.8V19.5A1.8 1.8 0 0 0 5.7 21.3H9.6v-6.1h4.8v6.1h3.9a1.8 1.8 0 0 0 1.8-1.8v-7.6l.9.8a.9.9 0 0 0 1.2-1.3z'/%3E%3C/svg%3E"); }
+.ic-stack { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3.8' y='8.2' width='16.4' height='13.3' rx='3.2'/%3E%3Crect x='5.8' y='5.2' width='12.4' height='2' rx='1'/%3E%3Crect x='7.8' y='2.6' width='8.4' height='1.6' rx='.8'/%3E%3C/svg%3E"); }
+.ic-person { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3Cmask id='m'%3E%3Crect width='24' height='24' fill='white'/%3E%3Ccircle cx='12' cy='9.6' r='3.7' fill='black'/%3E%3Cpath d='M5.6 18.7C7.1 16.2 9.4 15 12 15s4.9 1.2 6.4 3.7A9.6 9.6 0 0 1 5.6 18.7z' fill='black'/%3E%3C/mask%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='10.2' mask='url(%23m)'/%3E%3C/svg%3E"); }
+.ic-chevron-left { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15 4.5 7.5 12l7.5 7.5' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4'/%3E%3C/svg%3E"); }
+.ic-chevron-right { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 4.5 16.5 12 9 19.5' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4'/%3E%3C/svg%3E"); }
+.ic-xmark { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.5 5.5l13 13M18.5 5.5l-13 13' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4'/%3E%3C/svg%3E"); }
+.ic-xmark-circle { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3Cmask id='m'%3E%3Crect width='24' height='24' fill='white'/%3E%3Cpath d='M8.6 8.6l6.8 6.8M15.4 8.6l-6.8 6.8' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/mask%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='10' mask='url(%23m)'/%3E%3C/svg%3E"); }
+.ic-checkmark-circle { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3Cmask id='m'%3E%3Crect width='24' height='24' fill='white'/%3E%3Cpath d='M7.6 12.4l3 3 5.8-6.4' stroke='black' fill='none' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/mask%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='10' mask='url(%23m)'/%3E%3C/svg%3E"); }
+.ic-minus-circle { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3Cmask id='m'%3E%3Crect width='24' height='24' fill='white'/%3E%3Cpath d='M7.5 12h9' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/mask%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='10' mask='url(%23m)'/%3E%3C/svg%3E"); }
+.ic-seal { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3Cmask id='m'%3E%3Crect width='24' height='24' fill='white'/%3E%3Cpath d='M8 12.3l2.6 2.6 5.2-5.6' stroke='black' fill='none' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/mask%3E%3C/defs%3E%3Cpath mask='url(%23m)' d='M12 1.8l2.4 1.7 2.9-.1.9 2.8 2.4 1.7-.9 2.8.9 2.8-2.4 1.7-.9 2.8-2.9-.1L12 22.2l-2.4-1.7-2.9.1-.9-2.8-2.4-1.7.9-2.8-.9-2.8 2.4-1.7.9-2.8 2.9.1z'/%3E%3C/svg%3E"); }
+.ic-checkmark { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4.5 12.5l5 5 10-11' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.6'/%3E%3C/svg%3E"); }
+.ic-clock { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8'/%3E%3Cpath d='M12 6.8V12l3.4 2.2' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8'/%3E%3C/svg%3E"); }
+.ic-play { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4.3v15.4c0 .9 1 1.5 1.8 1l12.2-7.7c.7-.5.7-1.5 0-2L8.8 3.3C8 2.8 7 3.4 7 4.3z'/%3E%3C/svg%3E"); }
+.ic-pause { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5.5' y='3.5' width='4.6' height='17' rx='1.2'/%3E%3Crect x='13.9' y='3.5' width='4.6' height='17' rx='1.2'/%3E%3C/svg%3E"); }
+.ic-music-note { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 17.5V5.3c0-.6.4-1.1 1-1.2l8.8-1.7c.6-.1 1.2.4 1.2 1v11.6' fill='none' stroke='black' stroke-width='2'/%3E%3Cellipse cx='6.6' cy='17.7' rx='3' ry='2.5'/%3E%3Cellipse cx='17.6' cy='15.3' rx='3' ry='2.5'/%3E%3C/svg%3E"); }
+.ic-ellipsis { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='12' r='2'/%3E%3Ccircle cx='12' cy='12' r='2'/%3E%3Ccircle cx='19' cy='12' r='2'/%3E%3C/svg%3E"); }
+.ic-plus { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4.5v15M4.5 12h15' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.6'/%3E%3C/svg%3E"); }
+.ic-lock { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 10.5V7.5a4 4 0 0 1 8 0v3' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2'/%3E%3Crect x='5' y='10' width='14' height='11' rx='2.6'/%3E%3C/svg%3E"); }
+.ic-info-circle { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.7'/%3E%3Cpath d='M12 11v5.5' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.9'/%3E%3Ccircle cx='12' cy='7.8' r='1.2'/%3E%3C/svg%3E"); }
+.ic-exclamation-circle { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.7'/%3E%3Cpath d='M12 7v6' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.9'/%3E%3Ccircle cx='12' cy='16.4' r='1.2'/%3E%3C/svg%3E"); }
+.ic-pencil { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 4.5l4 4L8.5 19.5 3.8 20.2l.7-4.7z' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8'/%3E%3C/svg%3E"); }
+.ic-headphones { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 15v-3a8 8 0 0 1 16 0v3' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.9'/%3E%3Crect x='3' y='13.5' width='4.5' height='7' rx='1.8'/%3E%3Crect x='16.5' y='13.5' width='4.5' height='7' rx='1.8'/%3E%3C/svg%3E"); }
+.ic-heart-slash { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20s-7.5-4.6-8.8-9.4C2.4 7.5 4.4 4.5 7.5 4.5c1.9 0 3.4 1 4.5 2.6 1.1-1.6 2.6-2.6 4.5-2.6 3.1 0 5.1 3 4.3 6.1C19.5 15.4 12 20 12 20zM3.5 3.5l17 17' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8'/%3E%3C/svg%3E"); }
+.ic-chart-bar { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 3.5v15.5a1 1 0 0 0 1 1h15.5' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.9'/%3E%3Cpath d='M8.5 16v-4M12.5 16V8M16.5 16v-6M20.5 16V6' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.4'/%3E%3C/svg%3E"); }
+.ic-arrow-clockwise { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4v4.5H15' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.2'/%3E%3C/svg%3E"); }
+.ic-trash { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4.5 6.5h15M9.5 6.5V4.5h5v2M6.5 6.5l1 13a1.5 1.5 0 0 0 1.5 1.4h6a1.5 1.5 0 0 0 1.5-1.4l1-13M10 10.5v6.5M14 10.5v6.5' stroke='black' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.7'/%3E%3C/svg%3E"); }
+.ic-signal { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='1.5' y='15' width='3.6' height='5' rx='1'/%3E%3Crect x='7' y='11.5' width='3.6' height='8.5' rx='1'/%3E%3Crect x='12.5' y='8' width='3.6' height='12' rx='1'/%3E%3Crect x='18' y='4.5' width='3.6' height='15.5' rx='1'/%3E%3C/svg%3E"); }
+.ic-wifi { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 19.6l2.6-3.1a4 4 0 0 0-5.2 0zM12 8.2c3.2 0 6.1 1.2 8.2 3.2l2-2.4A15 15 0 0 0 12 5a15 15 0 0 0-10.2 4l2 2.4c2.1-2 5-3.2 8.2-3.2zm0 4.4c2 0 3.8.7 5.3 1.9l2-2.4A11 11 0 0 0 12 9.4a11 11 0 0 0-7.3 2.7l2 2.4A8 8 0 0 1 12 12.6z'/%3E%3C/svg%3E"); }
+.ic-hand-tap { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.2 11.6V4.8a1.6 1.6 0 0 1 3.2 0v5.4l4.6.9c1.4.3 2.4 1.6 2.2 3.1l-.6 4.3a3 3 0 0 1-3 2.6h-4.3a3 3 0 0 1-2.4-1.2l-3.3-4.4a1.5 1.5 0 0 1 2.2-2z'/%3E%3Cpath d='M6.2 6.2a4.3 4.3 0 0 1 8.4-.2' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); }
+
+/* ── 커버 (iTunes artwork, 앱과 같은 CDN) ── */
+.a-cannons { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/a5/49/91/a5499162-103e-11a5-47c0-ae6c4a50439b/888880449597.jpg/300x300bb.jpg), linear-gradient(135deg,#3B4A5C,#9AA7B4); }  /* Cannons — Phil Wickham */
+.a-blame { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f4/f2/ba/f4f2baa6-8f36-37f5-e4ae-29955d4304c3/8800283955842.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* Blame — creespy */
+.a-lonely { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a3/a6/89/a3a68964-ea23-9fa1-d123-eb9728997231/886445193213.jpg/300x300bb.jpg), linear-gradient(135deg,#2E4A3A,#9FC2A8); }  /* Lonely Town, Lonely Street — Bill Withers */
+.a-farewell { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/2f/92/25/2f922513-0da1-5c2d-2ee2-c9cbca86457e/2.jpg/300x300bb.jpg), linear-gradient(135deg,#4A3B5C,#B4A2D0); }  /* Farewell to Arms! + Hymn for the Cradle — JANNABI */
+.a-friends { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/2c/c3/e0/2cc3e03a-65b3-c525-bccb-6d616f228571/cover_KM0021355_1.png/300x300bb.jpg), linear-gradient(135deg,#5C523B,#D8C79A); }  /* FRIENDS (feat. Friends) — Shinjihang */
+.a-intro { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music/88/60/c0/mzi.gxkbkptj.jpg/300x300bb.jpg), linear-gradient(135deg,#3B4A5C,#9AA7B4); }  /* Introduction to a Man — yoonsang */
+.a-findme { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/77/86/4e/77864e55-ac11-8638-7358-c3c1ed4f636d/8809851792506.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* Find Me! — The Poles */
+.a-wss { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/1a/a5/b3/1aa5b35f-cf08-dd09-3659-2722d97cc1fd/887928023997.jpg/300x300bb.jpg), linear-gradient(135deg,#2E4A3A,#9FC2A8); }  /* work, shit, sleep — jisokuryClub */
+.a-loveya { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/00/5f/d2/005fd283-065a-2e34-7836-4657f78d1b48/HYUKOH_24_3000.jpg/300x300bb.jpg), linear-gradient(135deg,#4A3B5C,#B4A2D0); }  /* LOVE YA! — HYUKOH */
+.a-bigvoid { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ef/32/d9/ef32d972-b414-5a29-916f-78d913b8acc9/8721416619731.png/300x300bb.jpg), linear-gradient(135deg,#5C523B,#D8C79A); }  /* BIG VOID (Single Version) — Silica Gel */
+.a-billann { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/b8/65/19/b8651915-b2bc-826d-6e5f-cda83d72526a/8809900751539.jpg/300x300bb.jpg), linear-gradient(135deg,#3B4A5C,#9AA7B4); }  /* Bill Loves Ann — Purple Whale */
+.a-truth { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7e/77/27/7e7727cf-f29a-e6c2-9211-4d36dd66a51f/8721416367274.png/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* Truthbuster — Noridogam */
+.a-comedown { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c2/d7/ad/c2d7adc1-d72a-dab7-330e-16275610523f/cover.jpg/300x300bb.jpg), linear-gradient(135deg,#2E4A3A,#9FC2A8); }  /* Comedown — Jazzbois */
+.a-seasons { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/fa/c5/61/fac561dc-8db4-b2e9-d3db-6e246da72bfa/5054197890017.jpg/300x300bb.jpg), linear-gradient(135deg,#4A3B5C,#B4A2D0); }  /* seasons — wave to earth */
+.a-cheeky { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/f9/ae/b4/f9aeb4b3-b67d-4197-e95c-a7529b1eb202/artwork.jpg/300x300bb.jpg), linear-gradient(135deg,#5C523B,#D8C79A); }  /* Cheeky Bastard (feat. Michael Britt, Robin Gallagher, Pierre Cote & Raul Coutinho) — Bart Dietvorst */
+.a-bulssi { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/1c/07/fd/1c07fd60-8139-4751-6a9a-863ad1bbb6a7/8800280922854.jpg/300x300bb.jpg), linear-gradient(135deg,#3B4A5C,#9AA7B4); }  /* Spark — Confined White */
+.a-bluff { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/cb/fe/16/cbfe16b3-25a9-7923-5763-a946441628c4/cover_KM0020497_1.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* BLUFF — John Park */
+.a-always { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0b/5c/d1/0b5cd186-db9c-0979-b900-dac4ba7bf024/197338732632.jpg/300x300bb.jpg), linear-gradient(135deg,#2E4A3A,#9FC2A8); }  /* Always You — Supertaste */
+.a-ohio { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/21/d2/d3/21d2d3e3-ea98-140a-ef2d-33beeb06889f/dj.hbgytaml.png/300x300bb.jpg), linear-gradient(135deg,#4A3B5C,#B4A2D0); }  /* Ohio — HYUKOH */
+.a-shanty { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/b3/84/71/b38471db-d78d-84f2-3859-caf0d5fb8aa7/199538517873.jpg/300x300bb.jpg), linear-gradient(135deg,#5C523B,#D8C79A); }  /* Shanty — Jio */
+.a-tomboy { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/20/de/43/20de43fe-733e-3734-cab9-7bd787411260/Cover_HYUKOH_23.jpg/300x300bb.jpg), linear-gradient(135deg,#3B4A5C,#9AA7B4); }  /* TOMBOY — HYUKOH */
+.a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */

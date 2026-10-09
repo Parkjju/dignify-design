@@ -27,6 +27,24 @@ enum DSColor {
     static let pickElevated = Color(hex: 0x282836)
     /// 다크 위 brand. #4B3FD8은 다크에 묻혀서 밝기만 올림
     static let pickAccent = Color(hex: 0x8F86FF)
+    /// [제안] 피드·Picks 같은 어두운 지면 위 주 텍스트
+    static let textOnDark = Color(hex: 0xFFFFFF)
+    /// [제안] 어두운 지면 위 보조 텍스트(피드 아티스트명)
+    static let textOnDarkSecondary = Color(hex: 0xFFFFFF, alpha: 0.75)
+    /// [제안] 어두운 지면 위 메타(Picks 시간·곡 수)
+    static let textOnDarkTertiary = Color(hex: 0xFFFFFF, alpha: 0.45)
+    /// [제안] 어두운 지면 위 액션 아이콘(피드 상세·공유)
+    static let iconOnDark = Color(hex: 0xFFFFFF, alpha: 0.82)
+    /// [제안] 어두운 지면 위 칩 지면
+    static let fillOnDark = Color(hex: 0xFFFFFF, alpha: 0.15)
+    /// [제안] Picks 반응·공유 버튼 지면
+    static let fillOnDarkSubtle = Color(hex: 0xFFFFFF, alpha: 0.07)
+    /// [제안] 어두운 지면 위 칩 테두리
+    static let strokeOnDark = Color(hex: 0xFFFFFF, alpha: 0.2)
+    /// [제안] 아트워크 위 어둡게 까는 막(Picks 미디어)
+    static let scrim = Color(hex: 0x000000, alpha: 0.45)
+    /// [제안] 아트워크 위 배지·남은 곡 수
+    static let scrimStrong = Color(hex: 0x000000, alpha: 0.55)
 }
 
 enum DSTypography {

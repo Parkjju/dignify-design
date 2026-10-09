@@ -16,6 +16,15 @@
   --color-pick-surface: #1E1E2A;
   --color-pick-elevated: #282836;
   --color-pick-accent: #8F86FF;
+  --color-text-on-dark: #FFFFFF;
+  --color-text-on-dark-secondary: #FFFFFFBF;
+  --color-text-on-dark-tertiary: #FFFFFF73;
+  --color-icon-on-dark: #FFFFFFD1;
+  --color-fill-on-dark: #FFFFFF26;
+  --color-fill-on-dark-subtle: #FFFFFF12;
+  --color-stroke-on-dark: #FFFFFF33;
+  --color-scrim: #00000073;
+  --color-scrim-strong: #0000008C;
   --typography-display: 700 40px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-title1: 700 24px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-title2: 700 18px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
