@@ -17,5 +17,5 @@ export const CoachSwipe = story('feed-coach-swipe', {}, gesture)
 export const WhatsNew = story('whats-new')
 
 // 직접 해 보기: 더블탭 → 아무 곳 탭 → 위로 쓸기. 처음부터 다시 하려면 Controls 값을 바꾸거나 새로고침
-export const CoachLive = { name: '코치마크 — 직접 해 보기', render: live, args: { speed: 1, handOffset: -18, captionBelow: 25 },
-  argTypes: { speed: gesture.speed, handOffset: gesture.handOffset, captionBelow: gesture.captionBelow } }
+export const CoachLive = { name: '코치마크 — 직접 해 보기', render: live, args: { speed: 1, hold: 1, handOffset: -18, captionBelow: 25 },
+  argTypes: { speed: gesture.speed, hold: { control: { type: 'range', min: 0, max: 3, step: 0.1 }, description: '더블탭 후 삽 아이콘이 다 커진 뒤 머무는 시간(초)' }, handOffset: gesture.handOffset, captionBelow: gesture.captionBelow } }

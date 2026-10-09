@@ -6,7 +6,7 @@ import { T } from './data.js'
 
 const TRACKS = [T.billann, T.seasons, T.loveya, T.bigvoid, T.wss]
 
-export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25 } = {}) {
+export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold = 1 } = {}) {
   const el = document.createElement('div')
   el.className = 'sb-live'
   let step = 'double-tap', i = 0, hyped = false, since = 0, lastUp = 0, downY = 0, busy = false
@@ -15,7 +15,7 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25 } = {
     const track = TRACKS[i % TRACKS.length]
     el.innerHTML = step === 'feed'
       ? FeedScreen({ track, chip: '', hyped, burst, speed })
-      : FeedCoachScreen({ track, gesture: step, hyped, handOffset, captionBelow, speed })
+      : FeedCoachScreen({ track, gesture: step, hyped, handOffset, captionBelow, speed, hold, once: true })
     since = performance.now()
   }
   const leave = (next) => { busy = true; el.querySelector('.ds-coach-gesture')?.classList.add('is-leaving'); setTimeout(() => { busy = false; next() }, 200 * k) }

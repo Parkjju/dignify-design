@@ -38,8 +38,8 @@ export function FeedPopupScreen({ track, title, message } = {}) {
 }
 
 // 첫 진입 온보딩(feed_coachmark 1.0): 따라 해야 넘어간다. double-tap → (더블탭) → hyped → (터치) → swipe-up → (스와이프) → 피드
-export function FeedCoachScreen({ track, gesture = 'double-tap', handOffset = -18, captionBelow = 25, speed = 1, hyped = gesture === 'hyped' } = {}) {
-  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: '', hyped, burst: gesture === 'hyped', speed, mode: 'following', overlay: CoachGesture({ gesture, handOffset, captionBelow, speed }) }) })
+export function FeedCoachScreen({ track, gesture = 'double-tap', handOffset = -18, captionBelow = 25, speed = 1, hold = 1, once = false, hyped = gesture === 'hyped' } = {}) {
+  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: '', hyped, burst: gesture === 'hyped', speed, mode: 'following', overlay: CoachGesture({ gesture, handOffset, captionBelow, speed, hold, once }) }) })
 }
 
 export function WhatsNewScreen({ track, releases } = {}) {
