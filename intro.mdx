@@ -6,11 +6,15 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 Dignify iOS·Android가 같이 쓰는 디자인 시스템이다. 왼쪽 메뉴는 세 층이다.
 
-| 메뉴 | 내용 | 정본 |
-|---|---|---|
-| **Foundations** | 색·타이포그래피·라운드·여백·아이콘 | `tokens/*.json` → iOS `DSTokens.swift` · Android `DSTokens.kt` 생성 |
-| **Components** | 컴포넌트별 명세(Docs)와 상태별 미리보기. 오른쪽 아래 Controls로 값을 바꿔 본다 | `components/<이름>/` (명세 md · 마크업 js · 스타일 css · 스토리) |
-| **Screens** | 지금 앱(iOS 1.2.1)의 모든 화면과, 컴포넌트를 조립한 새 시안 | `screens/` |
+{/* MDX는 GFM 표를 지원하지 않는다(remark-gfm 미설치) — 표는 JSX로 쓴다 */}
+<table>
+  <thead><tr><th>메뉴</th><th>내용</th><th>정본</th></tr></thead>
+  <tbody>
+    <tr><td><b>Foundations</b></td><td>색·타이포그래피·라운드·여백·아이콘</td><td><code>tokens/*.json</code> → iOS <code>DSTokens.swift</code> · Android <code>DSTokens.kt</code> 생성</td></tr>
+    <tr><td><b>Components</b></td><td>컴포넌트별 명세(Docs)와 상태별 미리보기. 아래 Controls로 값을 바꿔 본다</td><td><code>components/&lt;이름&gt;/</code> (명세 md · 마크업 js · 스타일 css · 스토리)</td></tr>
+    <tr><td><b>Screens</b></td><td>지금 앱(iOS 1.2.1)의 모든 화면과, 컴포넌트를 조립한 새 시안</td><td><code>screens/</code></td></tr>
+  </tbody>
+</table>
 
 수치·문구는 전부 앱 코드에서 가져왔다. 각 컴포넌트 명세 맨 아래에 대응하는 Swift·Kotlin 이름이 있다.
 
