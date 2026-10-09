@@ -1,57 +1,57 @@
 # dignify-design — 에이전트 규칙
 
-Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. 할 일은 셋이다. 시안 만들기, 토큰 고치기, 명세 쓰기. 팀에 디자이너가 없으니 **시안의 품질 = 앱과 얼마나 똑같이 생겼나**다.
+Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Storybook(`npm run dev`, 배포 https://parkjju.github.io/dignify-design/)이 토큰·컴포넌트·화면을 다 보여 준다. 팀에 디자이너가 없으니 **시안의 품질 = 앱과 얼마나 똑같이 생겼나**다.
 
 ## 시안을 만들 때 (필수 순서)
 
 1. **앱 코드부터 읽는다.** 기존 화면을 고치는 시안이면 `../dignify-iOS/dignify/dignify/Features/`의 해당 View에서 수치·문구를 읽는다. 문구는 `Localizable.xcstrings`의 한국어 값을 쓴다. 기억이나 상식으로 채우지 않는다.
-2. `patterns/`에서 지면 규칙을 확인한다. 피드면 `feed-media-surface.md`, Picks면 `picks-dark-surface.md`.
-3. 쓰는 컴포넌트의 `components/<name>.md`를 **전부 읽는다.**
-4. `screens/`에서 가장 가까운 화면을 **복사**해 수정한다. 처음부터 새로 짜지 않는다. 각 파일 맨 위 주석에 기준 Swift 파일이 있다.
-5. 갤러리 `screens/index.html`의 `SCREENS`에 한 줄 추가한다.
-6. `node scripts/build.mjs`로 빌드하고, **헤드리스 Chrome으로 렌더해서 직접 확인한 뒤** 넘긴다. 확인 안 한 시안은 넘기지 않는다.
-   ```bash
-   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
-     --virtual-time-budget=4000 --window-size=500,900 --screenshot=/tmp/s.png "file://$PWD/screens/<이름>.html"
+2. `patterns/`에서 지면 규칙을, `components/<이름>/<이름>.md`에서 쓰는 컴포넌트 명세를 **전부 읽는다.**
+3. **컴포넌트를 조립한 스토리로 만든다.** `screens/composed.stories.js`가 예시다.
+   ```js
+   import { Device } from './device.js'
+   import { PickCard } from '../components/pick-card/pick-card.js'
+   export const NewThing = { name: '새 화면', render: () => Device({ surface: 'dark', tab: 'picks', children: `…${PickCard({ … })}…` }) }
    ```
+   - 기능 단위로 `screens/<기능>.stories.js` 새 파일, `title: 'Screens/<기능>'`.
+   - 컴포넌트 함수가 이미 있는 건 반드시 그걸 쓴다. 비슷하게 다시 그리지 않는다.
+   - 기존 화면을 살짝 바꾸는 거라 조립이 과하면 `screens/<화면>.html`을 복사해 고쳐도 된다(그 경우 `screens/<흐름>.stories.js`에 `frame('<파일>')` 한 줄 추가).
+4. **명세에 없는 컴포넌트가 필요하면** `components/<이름>/`에 한 벌을 만든다: `<이름>.md`(`components/_template.md` 형식) · `<이름>.js`(마크업 함수) · `<이름>.css`(`.ds-<이름>` 접두) · `<이름>.stories.js`(상태별 스토리 + Controls).
+5. 빌드하고 **렌더해서 직접 확인한 뒤** 넘긴다. 확인 안 한 시안은 넘기지 않는다.
+   ```bash
+   npm run build && (cd storybook-static && python3 -m http.server 6007 &)
+   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --virtual-time-budget=6000 \
+     --window-size=900,950 --screenshot=/tmp/s.png "http://localhost:6007/iframe.html?id=<스토리 id>&viewMode=story"
+   ```
+   스토리 id는 `storybook-static/index.json`에 있다.
 
-### 파일 골격
-```html
-<style id="ds"></style>   <!-- build.mjs가 토큰 + 애셋 + _shared.css 를 채운다. 직접 쓰지 않는다 -->
-<div class="device">       <!-- 어두운 지면이면 class="device dark" -->
-  <div class="island"></div>
-  <div class="status"><b>10:28</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">97</i></span></div>
-  …
-  <nav class="tabbar">…</nav>   <!-- 피드 위 .media, Picks 위 .dark -->
-  <div class="home"></div>
-</div>
-```
-외부 CSS·이미지를 `<link>`나 상대 경로로 걸지 않는다. 뷰어나 단독 공유에서 끊긴다.
-
-### `_shared.css`에 있는 것
-- 기기: `.device` `.island` `.status` `.home` · 내비: `.nav` `.glass-btn` `.large-title` · 시트: `.dim` `.sheet` `.sheet.floating` `.grabber` · `.keyboard` · `.toast`
-- 아이콘: `<i class="ic ic-이름">`(크기 = font-size, 색 = color). 이름은 `_shared.css` 아래쪽 목록. 하입은 `ic-hype`(앱 애셋), 로고는 `<i class="brand-mark">`
-- 커버: `<i class="art a-cannons">` 등 iTunes 실제 커버. 목록은 `_shared.css` 맨 아래
+### 쓸 수 있는 것
+- 컴포넌트: `components/*/` 의 함수들 (Storybook Components 메뉴에서 이름·인자 확인)
+- 공통 CSS(`screens/_shared.css`): `.device`·`.status`·`.island`·`.home` · `.nav`·`.glass-btn`·`.large-title` · `.dim`·`.sheet`·`.sheet.floating`·`.grabber` · `.keyboard` · `.toast` · `.tabbar`
+- 아이콘: `<i class="ic ic-이름">`(크기 = font-size, 색 = color). 목록은 Foundations › 아이콘. 하입은 `ic-hype`, 로고는 `<i class="brand-mark">`
+- 커버: `<i class="art a-cannons">` 등. 목록은 Foundations › 앨범 커버
 
 ### 값 규칙
 - **토큰이 있는 값은 반드시 토큰으로 쓴다.** `var(--color-*)`, `var(--spacing-*)`, `var(--radius-*)`, `font: var(--typography-*)`.
-- **토큰이 없는 값**(11pt, white 90% 등 앱 하드코딩)은 앱 코드의 실측값을 그대로 쓴다. 여러 화면에 반복되면 토큰 제안으로 따로 적는다.
-- **새 값을 지어내지 않는다.** 앱에 없는 색이나 크기가 필요하면 토큰 제안으로 낸다.
-- **명세에 없는 컴포넌트가 필요하면** 시안과 함께 `components/_template.md` 형식의 명세 초안을 낸다.
+- **토큰이 없는 값**은 앱 코드의 실측값을 그대로 쓴다. 여러 화면에 반복되면 토큰 추가를 같은 PR에 넣는다.
+- **새 값을 지어내지 않는다.** 앱에 없는 색이나 크기가 필요하면 토큰 추가로 낸다.
 
 ### 앱 사실
 - 화면 393×852(iPhone 15/16 Pro). 앱은 **라이트 고정**. 예외는 피드(아트워크 미디어 지면)와 Picks(다크).
 - 카피는 한국어가 주력. iOS 탭바 라벨만 영어(Feed·Picks·My) 그대로.
-- 시안은 **HTML만**. Figma로 그리지 않는다.
+- 시안은 Storybook/HTML만. Figma로 그리지 않는다.
 
 ## 토큰을 고칠 때
 
-- `tokens/*.json`만 고친다. `generated/`와 `screens/*.html`의 `ds` 블록은 `node scripts/build.mjs`로만 바뀐다.
-- 커밋 전에 `node scripts/build.mjs --check`가 통과해야 한다.
+- `tokens/*.json`만 고친다. `generated/`와 `screens/*.html`의 `ds` 블록은 `npm run tokens`로만 바뀐다.
+- 커밋 전에 `npm run check`가 통과해야 한다(CI도 같은 검사로 막는다).
 - 색 값은 `"#RRGGBB"` 또는 `{ "hex": "#RRGGBB", "alpha": 0.45 }`.
 - 토큰 이름을 바꾸거나 지우면 두 앱 코드가 깨진다. 이름 변경은 별칭(`"$value": "{group.old}"`)으로 한 릴리스 동안 남겨 둔다.
-- 새 토큰은 `$description`에 용도를 적는다. 합의 전이면 앞에 `[제안]`.
+- 새 토큰은 `$description`에 용도를 적는다.
+
+## 주의
+
+- CSS 주석 안에 `*/`가 들어가는 경로(`components/*/*.css` 같은 글로브)를 쓰지 않는다. 주석이 일찍 닫혀 바로 뒤 `:root` 규칙이 통째로 무시된다(실제로 한 번 터졌다).
 
 ## 커밋
 
-토큰, 명세 문서, 시안은 커밋을 분리한다.
+토큰, 컴포넌트·명세, 시안은 커밋을 분리한다. main 푸시 = 배포다.
