@@ -48,6 +48,21 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Story
 - 토큰 이름을 바꾸거나 지우면 두 앱 코드가 깨진다. 이름 변경은 별칭(`"$value": "{group.old}"`)으로 한 릴리스 동안 남겨 둔다.
 - 새 토큰은 `$description`에 용도를 적는다.
 
+## 디자인 스킬 (2026-10-09 설치, `~/.claude/skills/`)
+
+**우선순위: 이 CLAUDE.md > 앱 코드 실측값 > 스킬.** 스킬은 품질을 올리는 도구지, 디자인 시스템을 다시 정하는 도구가 아니다. 스킬 지침이 아래와 부딪히면 이 파일을 따른다.
+
+| 스킬 | 이 레포에서 쓰는 때 | 쓰지 않는 부분 |
+|---|---|---|
+| `emil-design-eng` | 애니메이션·눌림 피드백·전환을 정하거나 리뷰할 때. 리뷰는 Before/After/Why 표 | — |
+| `web-design-guidelines` | 시안·컴포넌트 HTML/CSS 접근성·상태·성능 리뷰 (`file:line`) | 영문 웹 카피 규칙(Title Case·곧은 따옴표 등) — 카피는 앱 한국어 문구가 정본 |
+| `ui-ux-pro-max` | 터치 타깃·대비·내비·폼 같은 UX 규칙 확인, `--stack swiftui` / `jetpack-compose` 구현 가이드 | `--design-system`으로 팔레트·폰트·스타일 새로 뽑기, `--persist`로 `design-system/` 폴더 생성 |
+| `hallmark` | `hallmark audit <파일>` — 수정 없이 안티패턴 목록만 | 기본(빌드)·`redesign` 흐름 전체: 테마 로테이션, OKLCH 재작성, 루트 `tokens.css`·`.hallmark/` 생성, 기기 프레임 금지 규칙(우리 시안은 기기 프레임이 맞다) |
+| `frontend-design` | 앱 밖 마케팅 지면(랜딩·카드뉴스)을 새로 만들 때 | 앱 화면 시안 — 앱은 이미 정한 시스템을 따른다. "남과 다르게"가 아니라 "앱과 똑같이"가 기준 |
+
+- 새 컴포넌트를 만들면 `emil-design-eng`로 모션을, `web-design-guidelines`로 상태·접근성을 한 번씩 리뷰하고 결과를 PR에 붙인다.
+- 스킬이 새 색·크기를 제안하면 바로 쓰지 말고 토큰 추가로 올린다(값 규칙과 같다).
+
 ## 주의
 
 - CSS 주석 안에 `*/`가 들어가는 경로(`components/*/*.css` 같은 글로브)를 쓰지 않는다. 주석이 일찍 닫혀 바로 뒤 `:root` 규칙이 통째로 무시된다(실제로 한 번 터졌다).
