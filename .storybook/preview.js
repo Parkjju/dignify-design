@@ -16,6 +16,11 @@ addEventListener('click', e => {
   s[(i + (e.clientX < innerWidth / 4 ? -1 : 1) + s.length) % s.length].classList.add('is-on')
 })
 
+// 실기기 모드에서 0.8초 길게 누르면 모바일 목록(m.html)으로 돌아간다 — 홈 화면 앱엔 뒤로 가기가 없어서
+let hold
+addEventListener('pointerdown', e => { if (e.target.closest('.sb-fit')) hold = setTimeout(() => { location.href = 'm.html' }, 800) })
+for (const t of ['pointerup', 'pointercancel', 'pointermove']) addEventListener(t, e => { if (t !== 'pointermove' || Math.abs(e.movementY) > 4) clearTimeout(hold) })
+
 export default {
   globalTypes: {
     fullscreen: { description: '실기기 모드(화면 가득)', toolbar: { title: '실기기', icon: 'mobile', items: [{ value: false, title: '기기 프레임' }, { value: true, title: '화면 가득' }], dynamicTitle: true } },
@@ -23,9 +28,12 @@ export default {
   },
   initialGlobals: { fullscreen: false, mockStatus: true },
   decorators: [(story, { globals }) => {
-    const html = story()
-    const cls = [globals.fullscreen && typeof html === 'string' && html.includes('class="device') && 'sb-fit', !globals.mockStatus && 'no-mock'].filter(Boolean).join(' ')
-    return cls ? `<div class="${cls}">${html}</div>` : html
+    const out = story()   // 화면은 HTML 문자열, 직접 해 보기(coach-live)는 DOM 요소
+    const device = typeof out === 'string' ? out.includes('class="device') : !!out.querySelector?.('.device')
+    const cls = [globals.fullscreen && device && 'sb-fit', !globals.mockStatus && 'no-mock'].filter(Boolean).join(' ')
+    if (!cls) return out
+    if (typeof out === 'string') return `<div class="${cls}">${out}</div>`
+    const wrap = document.createElement('div'); wrap.className = cls; wrap.append(out); return wrap
   }],
   parameters: {
     layout: 'centered',
