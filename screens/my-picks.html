@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 화면: 내가 만든 픽(디깅 프로필 → 내가 만든 픽). 기준: Features/Picks/MyPicksSection.swift (MyPicksView) — 라이트 지면에 Picks 카드를 그대로, 내 픽은 반응 버튼 대신 표시만 + 재생 횟수(5회 이상) -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>내가 만든 픽</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -212,11 +212,9 @@ body.embed { padding: 0; background: transparent; }
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
 <style>
-  .device { background: var(--color-pick-background); }
-  .scroll { padding-top: calc(54px + 18px); }
-  .large-title { color: var(--color-text-on-dark); padding-bottom: var(--spacing-x3); }
-  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); padding-top: var(--spacing-x3); }
-
+  .nav::before { content: ""; position: absolute; inset: -54px 0 -14px; z-index: -1; background: linear-gradient(var(--color-background) 75%, rgba(255,255,255,0)); }
+  .scroll { padding-top: calc(54px + 52px + 16px); }
+  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); }
   /* 카드: pickSurface, radius large, 안쪽 14, 좌우 16 */
   .pick { margin: 0 var(--spacing-x4); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
     display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
@@ -250,41 +248,31 @@ body.embed { padding: 0; background: transparent; }
   .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle);
     display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }
 
-  /* 새 픽: brand 캡슐 48, 탭바 위 16 */
-  .compose { position: absolute; left: 50%; bottom: calc(21px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 91; height: 48px;
-    padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
-    gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
-  .compose .ic { font-size: 14px; }
 </style>
 </head>
 <body>
-<div class="device dark">
+<div class="device">
   <div class="island"></div>
-  <div class="status"><b>12:56</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">41</i></span></div>
-
-  <div class="scroll">
-    <h1 class="large-title">Picks</h1>
-    <div class="list">
+  <div class="status"><b>10:58</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">72</i></span></div>
+  <div class="nav"><span class="left"><span class="glass-btn"><i class="ic ic-chevron-left"></i></span></span><h1>내가 만든 픽</h1></div>
+  <div class="scroll"><div class="list">
       <article class="pick">
-        <div class="who"><b>@digger_lover</b><i class="ic ic-seal seal"></i><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
+        <div class="who"><b>@digger_lover</b><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
         <h3>모두가 사랑하는 밴드</h3>
         <div class="media"><i class="art a-loveya blur"></i><div class="stack" data-extra="+9"><i class="art a-tomboy"></i><i class="art a-ohio"></i><i class="art a-loveya"></i></div></div>
-        <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="share"><i class="ic ic-share"></i></span></div>
+        <div class="bubbles"><span class="react">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="count" style="padding-left:10px"><i class="ic ic-play" style="font-size:11px"></i>재생 27회</span><span class="share"><i class="ic ic-share"></i></span></div>
       </article>
       <article class="pick">
-        <div class="who"><b>@wavelover</b><span class="dot">·</span>1시간 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>국내 브릿팝 루키 🔥</h3>
+        <div class="who"><b>@digger_lover</b><span class="dot">·</span>3일 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
+        <h3>새벽 드라이브</h3>
         <div class="media"><i class="art a-bigvoid blur"></i><div class="stack" data-extra="+7"><i class="art a-truth"></i><i class="art a-billann"></i><i class="art a-bigvoid"></i></div></div>
         <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count"><i class="ic ic-music-note"></i>10곡</span><span class="share"><i class="ic ic-share"></i></span></div>
       </article>
-    </div>
-  </div>
-
-  <span class="compose"><i class="ic ic-plus"></i>새 픽</span>
-  <nav class="tabbar dark">
+  </div></div>
+  <nav class="tabbar">
     <span class="tab"><i class="ic ic-house"></i>Feed</span>
-    <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
-    <span class="tab"><i class="ic ic-person"></i>My</span>
+    <span class="tab"><i class="ic ic-stack"></i>Picks</span>
+    <span class="tab on"><i class="ic ic-person"></i>My</span>
   </nav>
   <div class="home"></div>
 </div>

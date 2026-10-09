@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 화면: 픽 ··· 메뉴 시트(남의 픽). 기준: PickListView.swift PickMenuSheet — 배경 pickElevated, 모서리 28, 행 60(라벨 32 들여쓰기), 취소 56. 내 픽이면 '제목 수정 / 삭제' -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>픽 메뉴</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -255,6 +255,13 @@ body.embed { padding: 0; background: transparent; }
     padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
     gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
   .compose .ic { font-size: 14px; }
+  .sheet.menu { background: var(--color-pick-elevated); border-radius: 28px; inset-inline: 8px; bottom: 8px; padding: 24px 0 24px; color: #fff; }
+  .sheet.menu .grabber { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); margin: 0; background: rgba(255,255,255,.3); }
+  .mrow { height: 60px; padding: 0 32px; display: flex; align-items: center; font-size: 17px; font-weight: 600; }
+  .mrow.destructive { color: var(--color-destructive); }
+  .mdiv { height: 1px; margin: 0 16px; background: rgba(255,255,255,.08); }
+  .mcancel { margin: 16px 16px 0; height: 56px; border-radius: var(--radius-medium); background: rgba(255,255,255,.08); display: grid; place-items: center; font-size: 17px; font-weight: 600; }
+  .dim { background: rgba(0,0,0,.45); }
 </style>
 </head>
 <body>
@@ -286,6 +293,12 @@ body.embed { padding: 0; background: transparent; }
     <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
     <span class="tab"><i class="ic ic-person"></i>My</span>
   </nav>
+  <div class="dim"></div>
+  <div class="sheet menu"><div class="grabber"></div>
+    <div class="mrow">신고</div><div class="mdiv"></div>
+    <div class="mrow destructive">@wavelover 차단</div>
+    <div class="mcancel">취소</div>
+  </div>
   <div class="home"></div>
 </div>
 </body>

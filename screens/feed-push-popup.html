@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 화면: 피드 — 이번 주 특집을 다 본 직후 알림 권유. 기준: Features/Feed/PushOptInPopup.swift (픽 올린 직후에도 같은 팝업, 문구만 다름) -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>알림 권유 팝업</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -212,80 +212,92 @@ body.embed { padding: 0; background: transparent; }
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
 <style>
-  .device { background: var(--color-pick-background); }
-  .scroll { padding-top: calc(54px + 18px); }
-  .large-title { color: var(--color-text-on-dark); padding-bottom: var(--spacing-x3); }
-  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); padding-top: var(--spacing-x3); }
+  .device { background: #000; }
+  /* 배경: 같은 아트워크를 화면 가득 1.1배 + blur 28, 위에 아래로 짙어지는 그라데이션 */
+  .bg { position: absolute; inset: -40px; filter: blur(28px); transform: scale(1.1); }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.85) 75%); }
 
-  /* 카드: pickSurface, radius large, 안쪽 14, 좌우 16 */
-  .pick { margin: 0 var(--spacing-x4); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
-    display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
-  .who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
-  .who b { font-size: 15px; font-weight: 600; color: var(--color-text-on-dark); }
-  .who .seal { font-size: 13px; color: var(--color-pick-accent); }
-  .who .dot { color: rgba(255,255,255,.3); }
-  .who .more { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.6); }
-  .pick h3 { font-size: 17px; font-weight: 700; color: var(--color-text-on-dark); }
+  /* 상단 우측: 성향(sparkles/shuffle) + 검색 40×40, 아래 모드 필 */
+  .controls { position: absolute; top: calc(54px + 8px); right: 16px; z-index: 10; display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacing-x2); }
+  .controls .btns { display: flex; }
+  .icon-btn { width: 40px; height: 40px; display: grid; place-items: center; font-size: 22px; color: var(--color-text-on-dark); }
+  .mode-pill { display: flex; align-items: center; gap: var(--spacing-x1); padding: 5px var(--spacing-x2-5); border-radius: var(--radius-full);
+    background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.25); color: var(--color-text-on-dark); font-size: 12px; font-weight: 500; }
+  .mode-pill .ic { font-size: 10px; }
 
-  /* 미디어 220, radius 18: 첫 커버 blur 28 + scrim, 위에 커버 최대 3장(150, 40씩 밀고 0→4° 기울기), 남은 곡 수 */
-  .media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
-  .media .blur { position: absolute; inset: -30px; filter: blur(28px); }
-  .media::after { content: ""; position: absolute; inset: 0; background: var(--color-scrim); }
-  .stack { position: relative; width: 230px; height: 150px; z-index: 1; }
-  .stack .art { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-  .stack .art:nth-child(1) { left: 80px; transform: rotate(4deg); }
-  .stack .art:nth-child(2) { left: 40px; transform: rotate(2deg); }
-  .stack .art:nth-child(3) { left: 0; }
-  .stack::after { content: attr(data-extra); position: absolute; left: 0; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); z-index: 2;
-    background: rgba(0,0,0,.5); display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; }
-
-  .bubbles { display: flex; align-items: center; gap: var(--spacing-x2); }
-  .react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-fill-on-dark-subtle);
-    display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
-  .react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
-  .react.mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
-  .react.mine b { color: var(--color-brand); }
-  .count { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: var(--color-text-on-dark-tertiary); }
-  .count .ic { font-size: 12px; }
-  .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle);
-    display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }
-
-  /* 새 픽: brand 캡슐 48, 탭바 위 16 */
-  .compose { position: absolute; left: 50%; bottom: calc(21px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 91; height: 48px;
-    padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
-    gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
-  .compose .ic { font-size: 14px; }
+  /* 카드: 위 safe+64, 아래 safe+72 사이에서 아트워크를 Spacer로 가운데. 폭 = 화면 - 48 */
+  .card { position: absolute; inset: calc(54px + 64px) 0 calc(34px + 72px); display: flex; flex-direction: column; align-items: center; }
+  .cover { width: 345px; height: 345px; border-radius: var(--radius-large); box-shadow: 0 16px 24px rgba(0,0,0,.5); margin: auto 0; }
+  .meta { width: 100%; padding: 0 var(--spacing-x5); display: flex; flex-direction: column; gap: var(--spacing-x4); }
+  .chip { align-self: flex-start; padding: 5px var(--spacing-x2-5); border-radius: var(--radius-full); font-size: 11px; font-weight: 600;
+    color: rgba(255,255,255,.9); background: var(--color-fill-on-dark); border: 1px solid var(--color-stroke-on-dark); }
+  .title { font-size: 18px; font-weight: 700; color: var(--color-text-on-dark); margin-top: var(--spacing-x2); }
+  .artist { font-size: 14px; color: var(--color-text-on-dark-secondary); margin-top: 3px; }
+  .actions { display: flex; align-items: center; }
+  .actions .right { margin-left: auto; display: flex; gap: var(--spacing-x4); }
+  .act { width: 32px; height: 32px; display: grid; place-items: center; font-size: 24px; color: var(--color-icon-on-dark); }
+  .hype { font-size: 28px; color: var(--color-text-tertiary); }   /* 하입 전 textTertiary → 하입하면 brand */
+  .hype.on { color: var(--color-brand); }
+  /* 지금 보고 있는 것 배지: safe+56(+모드 필이 있으면 33), 검정 55% */
+  .badge { position: absolute; top: calc(54px + 56px); left: 50%; transform: translateX(-50%); z-index: 10; white-space: nowrap;
+    padding: 7px var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-scrim-strong); border: 1px solid var(--color-stroke-on-dark);
+    font: var(--typography-label); color: var(--color-text-on-dark); }
+  .badge { top: calc(54px + 56px + 33px); }
+  .popup-dim { position: absolute; inset: 0; z-index: 92; background: var(--color-scrim-strong); display: grid; place-items: center; padding: 0 32px; }
+  .popup { width: 100%; padding: 28px var(--spacing-x6) var(--spacing-x5); border-radius: var(--radius-large); background: var(--color-background);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x3-5); text-align: center; color: var(--color-text-primary); }
+  .popup .brand-mark-box { width: 44px; height: 44px; border-radius: 11px; background: var(--color-brand-light); display: grid; place-items: center; margin-bottom: 2px; }
+  .popup .brand-mark { width: 28px; height: 28px; }
+  .popup h2 { font: var(--typography-title2); }
+  .popup p { font: var(--typography-body); line-height: 1.55; color: var(--color-text-secondary); margin-bottom: var(--spacing-x1); }
+  .btn-primary { width: 100%; height: 56px; border-radius: var(--radius-medium); background: var(--color-brand); color: #fff; display: grid; place-items: center; font-size: 16px; font-weight: 600; }
+  .popup .later { font: var(--typography-body); color: var(--color-text-tertiary); margin-top: 2px; }
 </style>
 </head>
 <body>
 <div class="device dark">
   <div class="island"></div>
-  <div class="status"><b>12:56</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">41</i></span></div>
+  <div class="status"><b>10:28</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">97</i></span></div>
 
-  <div class="scroll">
-    <h1 class="large-title">Picks</h1>
-    <div class="list">
-      <article class="pick">
-        <div class="who"><b>@digger_lover</b><i class="ic ic-seal seal"></i><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>모두가 사랑하는 밴드</h3>
-        <div class="media"><i class="art a-loveya blur"></i><div class="stack" data-extra="+9"><i class="art a-tomboy"></i><i class="art a-ohio"></i><i class="art a-loveya"></i></div></div>
-        <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-      <article class="pick">
-        <div class="who"><b>@wavelover</b><span class="dot">·</span>1시간 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>국내 브릿팝 루키 🔥</h3>
-        <div class="media"><i class="art a-bigvoid blur"></i><div class="stack" data-extra="+7"><i class="art a-truth"></i><i class="art a-billann"></i><i class="art a-bigvoid"></i></div></div>
-        <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count"><i class="ic ic-music-note"></i>10곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
+  <i class="art a-seasons bg"></i><div class="scrim"></div>
+
+  <div class="controls">
+    <div class="btns"><span class="icon-btn"><i class="ic ic-sparkles"></i></span><span class="icon-btn"><i class="ic ic-search"></i></span></div>
+    <span class="mode-pill">하입한 곡 따라가는 중 <i class="ic ic-swap"></i></span>
+  </div>
+
+  <span class="badge">이번 주 특집 5/5</span>
+
+  <div class="card">
+    <i class="art a-seasons cover"></i>
+    <div class="meta">
+      <div>
+        <!-- 칩은 한 자리만: 무드로 뽑혔으면 "비슷한 곡: <내 하입 곡>", 아니면 장르명 -->
+        <span class="chip">인디</span>
+        <p class="title">seasons</p>
+        <p class="artist">wave to earth</p>
+      </div>
+      <div class="actions">
+        <span class="act hype"><i class="ic ic-hype"></i></span>
+        <div class="right"><span class="act"><i class="ic ic-disc"></i></span><span class="act"><i class="ic ic-share"></i></span></div>
+      </div>
     </div>
   </div>
 
-  <span class="compose"><i class="ic ic-plus"></i>새 픽</span>
-  <nav class="tabbar dark">
-    <span class="tab"><i class="ic ic-house"></i>Feed</span>
-    <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
+  <nav class="tabbar media">
+    <span class="tab on"><i class="ic ic-house"></i>Feed</span>
+    <span class="tab"><i class="ic ic-stack"></i>Picks</span>
     <span class="tab"><i class="ic ic-person"></i>My</span>
   </nav>
+  <div class="popup-dim">
+    <div class="popup">
+      <span class="brand-mark-box"><i class="brand-mark"></i></span>
+      <h2>이번 주 특집, 여기까지예요</h2>
+      <p>방금 보신 곡들은 저희가 직접 판 거예요. 매주 새로 파고 있는데, 다음 편 올라오면 알려드릴까요?</p>
+      <span class="btn-primary">알림 받기</span>
+      <span class="later">나중에</span>
+    </div>
+  </div>
   <div class="home"></div>
 </div>
 </body>

@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 화면: 디깅 프로필(마이 → 디깅 프로필). 기준: Features/DiggingProfile/DiggingProfileView.swift · Features/Picks/MyPicksSection.swift · Features/MyPage/HypeCollection.swift — 상단 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>디깅 프로필</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -212,79 +212,89 @@ body.embed { padding: 0; background: transparent; }
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
 <style>
-  .device { background: var(--color-pick-background); }
-  .scroll { padding-top: calc(54px + 18px); }
-  .large-title { color: var(--color-text-on-dark); padding-bottom: var(--spacing-x3); }
-  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); padding-top: var(--spacing-x3); }
-
-  /* 카드: pickSurface, radius large, 안쪽 14, 좌우 16 */
-  .pick { margin: 0 var(--spacing-x4); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
-    display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
-  .who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
-  .who b { font-size: 15px; font-weight: 600; color: var(--color-text-on-dark); }
-  .who .seal { font-size: 13px; color: var(--color-pick-accent); }
-  .who .dot { color: rgba(255,255,255,.3); }
-  .who .more { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.6); }
-  .pick h3 { font-size: 17px; font-weight: 700; color: var(--color-text-on-dark); }
-
-  /* 미디어 220, radius 18: 첫 커버 blur 28 + scrim, 위에 커버 최대 3장(150, 40씩 밀고 0→4° 기울기), 남은 곡 수 */
-  .media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
-  .media .blur { position: absolute; inset: -30px; filter: blur(28px); }
-  .media::after { content: ""; position: absolute; inset: 0; background: var(--color-scrim); }
-  .stack { position: relative; width: 230px; height: 150px; z-index: 1; }
-  .stack .art { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-  .stack .art:nth-child(1) { left: 80px; transform: rotate(4deg); }
-  .stack .art:nth-child(2) { left: 40px; transform: rotate(2deg); }
-  .stack .art:nth-child(3) { left: 0; }
-  .stack::after { content: attr(data-extra); position: absolute; left: 0; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); z-index: 2;
-    background: rgba(0,0,0,.5); display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; }
-
-  .bubbles { display: flex; align-items: center; gap: var(--spacing-x2); }
-  .react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-fill-on-dark-subtle);
-    display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
-  .react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
-  .react.mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
-  .react.mine b { color: var(--color-brand); }
-  .count { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: var(--color-text-on-dark-tertiary); }
-  .count .ic { font-size: 12px; }
-  .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle);
-    display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }
-
-  /* 새 픽: brand 캡슐 48, 탭바 위 16 */
-  .compose { position: absolute; left: 50%; bottom: calc(21px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 91; height: 48px;
-    padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
-    gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
-  .compose .ic { font-size: 14px; }
+  .nav::before { content: ""; position: absolute; inset: -54px 0 -14px; z-index: -1; background: linear-gradient(var(--color-background) 75%, rgba(255,255,255,0)); }  /* 스크롤 엣지 효과 */
+  .status { background: transparent; }
+  .scroll { padding-top: calc(54px + 52px + 20px); }
+  .stack { display: flex; flex-direction: column; gap: var(--spacing-x6); }
+  .seg { margin: 0 var(--spacing-x5); height: 32px; border-radius: 9px; background: rgba(118,118,128,.12); display: flex; padding: 2px; font-size: 13px; }
+  .seg span { flex: 1; display: grid; place-items: center; border-radius: 7px; color: var(--color-text-primary); }
+  .seg .on { background: #fff; font-weight: 600; box-shadow: 0 3px 8px rgba(0,0,0,.12); }
+  .hero { margin: 0 var(--spacing-x5); padding: var(--spacing-x8) var(--spacing-x6); border-radius: var(--radius-large); text-align: center; color: #fff;
+    background: linear-gradient(var(--color-brand), var(--color-brand-deep)); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x2); }
+  .hero small { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--color-text-on-dark-secondary); }
+  .hero h2 { font-size: 26px; font-weight: 700; }
+  .hero .deep { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.85); }
+  .hero p { font-size: 13px; color: var(--color-text-on-dark-secondary); margin-top: var(--spacing-x1); }
+  .hero .ic { font-size: 22px; color: rgba(255,255,255,.9); }
+  .hero b { font-size: 16px; font-weight: 600; }
+  .headline { text-align: center; font-size: 17px; font-weight: 600; padding: 0 var(--spacing-x6); }
+  .pair { margin: 0 var(--spacing-x5); display: flex; gap: var(--spacing-x3); }
+  .stat { flex: 1; padding: var(--spacing-x5) 0; border-radius: var(--radius-medium); background: var(--color-surface); text-align: center; }
+  .stat b { display: block; font-size: 30px; font-weight: 700; }
+  .stat span { display: inline-flex; align-items: center; gap: var(--spacing-x1); font: var(--typography-caption); color: var(--color-text-secondary); margin-top: var(--spacing-x1); }
+  .stat .ic { font-size: 12px; color: var(--color-text-tertiary); }
+  .lens { margin: 0 var(--spacing-x5); }
+  .lens h3 { font: var(--typography-title2); margin-bottom: var(--spacing-x3); }
+  .cols { display: flex; gap: var(--spacing-x3); align-items: flex-start; }
+  .col { flex: 1; padding: var(--spacing-x3); border-radius: 14px; background: var(--color-surface); display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
+  .col.keep { background: var(--color-brand-light); }
+  .col .cap { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--color-text-secondary); }
+  .col.keep .cap { color: var(--color-brand); }
+  .col .cap .ic { font-size: 13px; }
+  .col p { display: flex; justify-content: space-between; font: var(--typography-body-medium); }
+  .col p span { font: var(--typography-caption); color: var(--color-text-secondary); }
+  .hr { margin: 0 var(--spacing-x5); }
+  .sec-head { margin: 0 var(--spacing-x5); display: flex; justify-content: space-between; align-items: center; }
+  .sec-head h3 { font: var(--typography-title2); }
+  .sec-head a { font: var(--typography-body-medium); color: var(--color-brand); }
+  .my-pick { margin: 0 var(--spacing-x5); display: flex; align-items: center; gap: var(--spacing-x3); }
+  .my-pick .art { width: 56px; height: 56px; border-radius: 10px; }
+  .my-pick b { display: block; font: var(--typography-body-medium); }
+  .my-pick span { display: block; font: var(--typography-caption); color: var(--color-text-secondary); margin-top: 3px; }
+  .my-pick .ic { margin-left: auto; font-size: 12px; color: var(--color-text-secondary); }
+  /* 하입한 곡: 날짜 헤더 13 semibold textTertiary, 가로 셀 72, 간격 12 (HypeCollection.DayRow) */
+  .day h4 { font: var(--typography-label); color: var(--color-text-tertiary); padding: 0 var(--spacing-x5); margin-bottom: 2px; }
+  .day + .day { margin-top: var(--spacing-x5); }
+  .cells { display: flex; gap: var(--spacing-x3); padding: var(--spacing-x1-5) var(--spacing-x5) 0; overflow: hidden; }
+  .cell { width: 72px; flex: none; display: flex; flex-direction: column; gap: var(--spacing-x1-5); }
+  .cell .art { width: 72px; height: 72px; border-radius: var(--radius-medium); }
+  .cell b { font-size: 11px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cell span { font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: -4px; }
+  .see-all { height: 44px; padding: 0 var(--spacing-x5); display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 500; color: var(--color-brand); }
+  .see-all .ic { font-size: 12px; }
+  .share { margin: 0 var(--spacing-x5); padding: 15px 0; border-radius: 14px; background: var(--color-brand); color: #fff; font-size: 16px; font-weight: 600;
+    display: flex; justify-content: center; align-items: center; gap: var(--spacing-x2); }
 </style>
 </head>
 <body>
-<div class="device dark">
+<div class="device">
   <div class="island"></div>
-  <div class="status"><b>12:56</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">41</i></span></div>
-
-  <div class="scroll">
-    <h1 class="large-title">Picks</h1>
-    <div class="list">
-      <article class="pick">
-        <div class="who"><b>@digger_lover</b><i class="ic ic-seal seal"></i><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>모두가 사랑하는 밴드</h3>
-        <div class="media"><i class="art a-loveya blur"></i><div class="stack" data-extra="+9"><i class="art a-tomboy"></i><i class="art a-ohio"></i><i class="art a-loveya"></i></div></div>
-        <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-      <article class="pick">
-        <div class="who"><b>@wavelover</b><span class="dot">·</span>1시간 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>국내 브릿팝 루키 🔥</h3>
-        <div class="media"><i class="art a-bigvoid blur"></i><div class="stack" data-extra="+7"><i class="art a-truth"></i><i class="art a-billann"></i><i class="art a-bigvoid"></i></div></div>
-        <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count"><i class="ic ic-music-note"></i>10곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
+  <div class="status"><b>10:57</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">72</i></span></div>
+  <div class="nav"><span class="left"><span class="glass-btn"><i class="ic ic-chevron-left"></i></span></span><h1>디깅 프로필</h1></div>
+  <div class="scroll"><div class="stack">
+    <div class="seg"><span>이번 주</span><span class="on">전체</span></div>
+    <div class="hero"><small>내 유형</small><h2>충성파</h2><span class="deep">록에 진심</span><p>자기 취향을 알고, 거기에 충실해요.</p></div>
+    <p class="headline">듣는 것도 담는 것도 록.</p>
+    <div class="pair"><div class="stat"><b>50</b><span>디깅한 트랙 <i class="ic ic-info-circle"></i></span></div><div class="stat"><b>36</b><span>담은 트랙</span></div></div>
+    <div class="lens"><h3>주요 장르</h3><div class="cols"><div class="col explore"><span class="cap"><i class="ic ic-headphones"></i>탐색</span><p>록<span>39</span></p><p>R&amp;B/소울<span>3</span></p><p>얼터너티브<span>2</span></p><p>일렉트로닉<span>2</span></p><p>힙합/랩<span>1</span></p></div><div class="col keep"><span class="cap"><i class="ic ic-hype"></i>담음</span><p>록<span>25</span></p><p>R&amp;B/소울<span>4</span></p><p>컨트리<span>3</span></p><p>얼터너티브<span>2</span></p><p>CCM<span>2</span></p></div></div></div>
+    <div class="lens"><h3>주요 아티스트</h3><div class="cols"><div class="col explore"><span class="cap"><i class="ic ic-headphones"></i>탐색</span><p>혁오<span>6</span></p><p>잔나비<span>4</span></p><p>실리카겔<span>3</span></p><p>wave to earth<span>2</span></p><p>Jio<span>2</span></p></div><div class="col keep"><span class="cap"><i class="ic ic-hype"></i>담음</span><p>혁오<span>5</span></p><p>잔나비<span>3</span></p><p>wave to earth<span>2</span></p><p>Jio<span>2</span></p><p>윤상<span>1</span></p></div></div></div>
+    <div class="hr"></div>
+    <div class="sec-head"><h3>내가 만든 픽</h3></div>
+    <div class="my-pick"><i class="art a-loveya"></i><div><b>모두가 사랑하는 밴드</b><span>픽 3개</span></div><i class="ic ic-chevron-right"></i></div>
+    <div class="hr"></div>
+    <div class="sec-head"><h3>하입한 곡</h3><a>편집</a></div>
+    <div>
+      <div class="day"><h4>2026년 10월 7일</h4><div class="cells"><div class="cell"><i class="art a-farewell"></i><b>Farewell to Arms!</b><span>잔나비</span></div><div class="cell"><i class="art a-friends"></i><b>FRIENDS (feat. Friends)</b><span>shinjihang</span></div><div class="cell"><i class="art a-intro"></i><b>Introduction to a Man</b><span>윤상</span></div><div class="cell"><i class="art a-seasons"></i><b>seasons</b><span>wave to earth</span></div><div class="cell"><i class="art a-bulssi"></i><b>불씨</b><span>컨파인드 화이트</span></div></div></div>
+      <div class="day"><h4>2026년 10월 5일</h4><div class="cells"><div class="cell"><i class="art a-blame"></i><b>Blame</b><span>creespy</span></div><div class="cell"><i class="art a-shanty"></i><b>Shanty</b><span>Jio</span></div></div></div>
+      <div class="day"><h4>2026년 10월 1일</h4><div class="cells"><div class="cell"><i class="art a-lonely"></i><b>Lonely Town, Lonely Street</b><span>Bill Withers</span></div><div class="cell"><i class="art a-ohio"></i><b>Ohio</b><span>혁오</span></div><div class="cell"><i class="art a-bigvoid"></i><b>BIG VOID</b><span>실리카겔</span></div></div></div>
     </div>
-  </div>
-
-  <span class="compose"><i class="ic ic-plus"></i>새 픽</span>
-  <nav class="tabbar dark">
+    <div class="see-all">하입 기록 전체 보기<i class="ic ic-chevron-right"></i></div>
+    <div class="share"><i class="ic ic-share"></i>내 취향 공유</div>
+  </div></div>
+  <nav class="tabbar">
     <span class="tab"><i class="ic ic-house"></i>Feed</span>
-    <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
-    <span class="tab"><i class="ic ic-person"></i>My</span>
+    <span class="tab"><i class="ic ic-stack"></i>Picks</span>
+    <span class="tab on"><i class="ic ic-person"></i>My</span>
   </nav>
   <div class="home"></div>
 </div>

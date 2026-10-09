@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 시안 갤러리: 모든 화면을 흐름별로 한 장에. 각 칸은 해당 파일을 iframe으로 띄운다(파일을 고치면 새로고침만). 새 화면을 만들면 아래 SCREENS에 한 줄 추가 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>Dignify 시안</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -212,81 +212,57 @@ body.embed { padding: 0; background: transparent; }
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
 <style>
-  .device { background: var(--color-pick-background); }
-  .scroll { padding-top: calc(54px + 18px); }
-  .large-title { color: var(--color-text-on-dark); padding-bottom: var(--spacing-x3); }
-  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); padding-top: var(--spacing-x3); }
-
-  /* 카드: pickSurface, radius large, 안쪽 14, 좌우 16 */
-  .pick { margin: 0 var(--spacing-x4); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
-    display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
-  .who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
-  .who b { font-size: 15px; font-weight: 600; color: var(--color-text-on-dark); }
-  .who .seal { font-size: 13px; color: var(--color-pick-accent); }
-  .who .dot { color: rgba(255,255,255,.3); }
-  .who .more { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.6); }
-  .pick h3 { font-size: 17px; font-weight: 700; color: var(--color-text-on-dark); }
-
-  /* 미디어 220, radius 18: 첫 커버 blur 28 + scrim, 위에 커버 최대 3장(150, 40씩 밀고 0→4° 기울기), 남은 곡 수 */
-  .media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
-  .media .blur { position: absolute; inset: -30px; filter: blur(28px); }
-  .media::after { content: ""; position: absolute; inset: 0; background: var(--color-scrim); }
-  .stack { position: relative; width: 230px; height: 150px; z-index: 1; }
-  .stack .art { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-  .stack .art:nth-child(1) { left: 80px; transform: rotate(4deg); }
-  .stack .art:nth-child(2) { left: 40px; transform: rotate(2deg); }
-  .stack .art:nth-child(3) { left: 0; }
-  .stack::after { content: attr(data-extra); position: absolute; left: 0; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); z-index: 2;
-    background: rgba(0,0,0,.5); display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; }
-
-  .bubbles { display: flex; align-items: center; gap: var(--spacing-x2); }
-  .react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-fill-on-dark-subtle);
-    display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
-  .react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
-  .react.mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
-  .react.mine b { color: var(--color-brand); }
-  .count { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: var(--color-text-on-dark-tertiary); }
-  .count .ic { font-size: 12px; }
-  .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle);
-    display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }
-
-  /* 새 픽: brand 캡슐 48, 탭바 위 16 */
-  .compose { position: absolute; left: 50%; bottom: calc(21px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 91; height: 48px;
-    padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
-    gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
-  .compose .ic { font-size: 14px; }
+  body { display: block; padding: 40px 32px 80px; background: #E5E5EA; }
+  header { max-width: 1400px; margin: 0 auto 32px; }
+  header h1 { font-size: 28px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  header .mark { width: 32px; height: 32px; border-radius: 8px; background: var(--color-brand-light); display: grid; place-items: center; }
+  header .mark .brand-mark { width: 21px; height: 21px; }
+  header p { color: var(--color-text-secondary); font-size: 14px; margin-top: 8px; line-height: 1.5; }
+  section { max-width: 1400px; margin: 0 auto 40px; }
+  section h2 { font: var(--typography-title2); margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 28px 20px; }
+  .tile { display: flex; flex-direction: column; gap: 8px; text-decoration: none; color: inherit; }
+  .frame { position: relative; width: 230px; height: 470px; overflow: hidden; border-radius: 8px; }
+  .frame iframe { position: absolute; left: 0; top: 0; width: 440px; height: 900px; border: 0; transform: scale(.523); transform-origin: 0 0; pointer-events: none; }
+  .tile b { font-size: 14px; font-weight: 600; }
+  .tile span { font-size: 12px; color: var(--color-text-tertiary); font-family: ui-monospace, Menlo, monospace; }
+  .tile:hover b { color: var(--color-brand); }
 </style>
 </head>
 <body>
-<div class="device dark">
-  <div class="island"></div>
-  <div class="status"><b>12:56</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">41</i></span></div>
-
-  <div class="scroll">
-    <h1 class="large-title">Picks</h1>
-    <div class="list">
-      <article class="pick">
-        <div class="who"><b>@digger_lover</b><i class="ic ic-seal seal"></i><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>모두가 사랑하는 밴드</h3>
-        <div class="media"><i class="art a-loveya blur"></i><div class="stack" data-extra="+9"><i class="art a-tomboy"></i><i class="art a-ohio"></i><i class="art a-loveya"></i></div></div>
-        <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-      <article class="pick">
-        <div class="who"><b>@wavelover</b><span class="dot">·</span>1시간 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>국내 브릿팝 루키 🔥</h3>
-        <div class="media"><i class="art a-bigvoid blur"></i><div class="stack" data-extra="+7"><i class="art a-truth"></i><i class="art a-billann"></i><i class="art a-bigvoid"></i></div></div>
-        <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count"><i class="ic ic-music-note"></i>10곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-    </div>
-  </div>
-
-  <span class="compose"><i class="ic ic-plus"></i>새 픽</span>
-  <nav class="tabbar dark">
-    <span class="tab"><i class="ic ic-house"></i>Feed</span>
-    <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
-    <span class="tab"><i class="ic ic-person"></i>My</span>
-  </nav>
-  <div class="home"></div>
-</div>
+<header>
+  <h1><span class="mark"><i class="brand-mark"></i></span>Dignify 시안</h1>
+  <p>iOS 1.2.1 실제 화면 기준. 칸을 누르면 해당 화면 파일이 열린다. 수치·문구는 앱 코드에서 가져왔고, 각 파일 맨 위 주석에 기준 Swift 파일이 적혀 있다.<br>
+     앨범 커버는 iTunes에서 받아 오므로 오프라인이면 그라데이션으로 보인다. 이용약관·개인정보처리방침은 Notion 페이지를 Safari로 여는 것이라 시안이 없다.</p>
+</header>
+<main id="main"></main>
+<script>
+  const SCREENS = [
+    ['피드', [
+      ['feed', '피드'], ['feed-search', '피드 검색'], ['track-detail', '트랙 상세'], ['feed-push-popup', '이번 주 특집 끝 · 알림 권유'],
+      ['feed-coach', '피드 코치마크'], ['whats-new', '새로운 기능'],
+    ]],
+    ['Picks', [
+      ['picks', 'Picks'], ['pick-play', '픽 재생'], ['pick-menu', '픽 메뉴(신고·차단)'],
+      ['pick-compose', '새 픽 — 곡 고르기'], ['pick-compose-title', '새 픽 — 제목'],
+    ]],
+    ['마이', [
+      ['my-page', '마이페이지'], ['digging-profile', '디깅 프로필'], ['digging-profile-crate', '디깅 프로필 — 하입한 곡'],
+      ['digging-profile-locked', '디깅 프로필 — 잠김'], ['my-picks', '내가 만든 픽'], ['hype-history', '하입 기록'],
+      ['hype-history-edit', '하입 기록 — 편집'], ['seed-picker', '추천 기준 곡'], ['artist-requests', '아티스트 요청'],
+      ['artist-request-sheet', '아티스트 요청 시트'], ['blocked-users', '차단한 유저'],
+    ]],
+    ['온보딩', [
+      ['onboarding-signin', '로그인'], ['onboarding-tutorial', '튜토리얼'], ['onboarding-seed', '추천 기준 곡 고르기'],
+    ]],
+    ['공유 카드 (1080×1920 이미지)', [
+      ['share-card-track', '트랙'], ['share-card-pick', '픽'], ['share-card-profile', '디깅 유형'],
+    ]],
+  ]
+  document.getElementById('main').innerHTML = SCREENS.map(([group, items]) => `
+    <section><h2>${group}</h2><div class="grid">${items.map(([file, name]) => `
+      <a class="tile" href="${file}.html"><div class="frame"><iframe src="${file}.html" loading="lazy" tabindex="-1"></iframe></div><b>${name}</b><span>${file}.html</span></a>`).join('')}
+    </div></section>`).join('')
+</script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 화면: 아티스트 요청 시트(요청 내역의 ＋, 새 픽·피드 검색 결과 없음에서도 열림). 기준: Features/ArtistRequest/ArtistRequestSheet.swift — 높이 280 고정, 보낸 뒤 220 -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>아티스트 요청</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -212,81 +212,48 @@ body.embed { padding: 0; background: transparent; }
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
 <style>
-  .device { background: var(--color-pick-background); }
-  .scroll { padding-top: calc(54px + 18px); }
-  .large-title { color: var(--color-text-on-dark); padding-bottom: var(--spacing-x3); }
-  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); padding-top: var(--spacing-x3); }
-
-  /* 카드: pickSurface, radius large, 안쪽 14, 좌우 16 */
-  .pick { margin: 0 var(--spacing-x4); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
-    display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
-  .who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
-  .who b { font-size: 15px; font-weight: 600; color: var(--color-text-on-dark); }
-  .who .seal { font-size: 13px; color: var(--color-pick-accent); }
-  .who .dot { color: rgba(255,255,255,.3); }
-  .who .more { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.6); }
-  .pick h3 { font-size: 17px; font-weight: 700; color: var(--color-text-on-dark); }
-
-  /* 미디어 220, radius 18: 첫 커버 blur 28 + scrim, 위에 커버 최대 3장(150, 40씩 밀고 0→4° 기울기), 남은 곡 수 */
-  .media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
-  .media .blur { position: absolute; inset: -30px; filter: blur(28px); }
-  .media::after { content: ""; position: absolute; inset: 0; background: var(--color-scrim); }
-  .stack { position: relative; width: 230px; height: 150px; z-index: 1; }
-  .stack .art { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-  .stack .art:nth-child(1) { left: 80px; transform: rotate(4deg); }
-  .stack .art:nth-child(2) { left: 40px; transform: rotate(2deg); }
-  .stack .art:nth-child(3) { left: 0; }
-  .stack::after { content: attr(data-extra); position: absolute; left: 0; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); z-index: 2;
-    background: rgba(0,0,0,.5); display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; }
-
-  .bubbles { display: flex; align-items: center; gap: var(--spacing-x2); }
-  .react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-fill-on-dark-subtle);
-    display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
-  .react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
-  .react.mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
-  .react.mine b { color: var(--color-brand); }
-  .count { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: var(--color-text-on-dark-tertiary); }
-  .count .ic { font-size: 12px; }
-  .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle);
-    display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }
-
-  /* 새 픽: brand 캡슐 48, 탭바 위 16 */
-  .compose { position: absolute; left: 50%; bottom: calc(21px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 91; height: 48px;
-    padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
-    gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
-  .compose .ic { font-size: 14px; }
+  .scroll { padding-top: calc(54px + 52px + 8px); }
+  .nav .right .glass-btn.text { color: var(--color-brand); }
+  /* List(.plain): 행 사이 구분선, 좌측 20 들여쓰기 */
+  .li { padding: var(--spacing-x3) var(--spacing-x5); border-bottom: 1px solid var(--color-divider); margin-left: 0; }
+  .li .top { display: flex; align-items: center; gap: var(--spacing-x2); }
+  .li b { font: var(--typography-body-medium); }
+  .li p { font: var(--typography-caption); color: var(--color-text-secondary); margin-top: var(--spacing-x1-5); }
+  .li small { display: block; font: var(--typography-caption); color: var(--color-text-tertiary); margin-top: var(--spacing-x1-5); }
+  .status-badge { font: var(--typography-micro); padding: 3px var(--spacing-x2); border-radius: var(--radius-full); }
+  .pending { color: var(--color-text-secondary); background: color-mix(in srgb, var(--color-text-secondary) 12%, transparent); }
+  .added { color: var(--color-brand); background: color-mix(in srgb, var(--color-brand) 12%, transparent); }
+  .canceled { color: var(--color-destructive); background: color-mix(in srgb, var(--color-destructive) 12%, transparent); }
+  .user { height: 52px; padding: 0 var(--spacing-x5); display: flex; align-items: center; font-size: 15px; border-bottom: 1px solid var(--color-divider); position: relative; overflow: hidden; }
+  .user.swiped span { transform: translateX(-104px); }
+  .user .unblock { position: absolute; right: 0; top: 0; bottom: 0; width: 104px; background: #8E8E93; color: #fff; display: grid; place-items: center; font-size: 15px; font-weight: 500; }
+  .sheet.floating { bottom: 308px; }
 </style>
 </head>
 <body>
-<div class="device dark">
+<div class="device">
   <div class="island"></div>
-  <div class="status"><b>12:56</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">41</i></span></div>
-
+  <div class="status"><b>4:40</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">86</i></span></div>
+  <div class="nav"><span class="left"><span class="glass-btn"><i class="ic ic-chevron-left"></i></span></span><h1>아티스트 요청</h1><span class="right"><span class="glass-btn text">편집</span><span class="glass-btn"><i class="ic ic-plus"></i></span></span></div>
   <div class="scroll">
-    <h1 class="large-title">Picks</h1>
-    <div class="list">
-      <article class="pick">
-        <div class="who"><b>@digger_lover</b><i class="ic ic-seal seal"></i><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>모두가 사랑하는 밴드</h3>
-        <div class="media"><i class="art a-loveya blur"></i><div class="stack" data-extra="+9"><i class="art a-tomboy"></i><i class="art a-ohio"></i><i class="art a-loveya"></i></div></div>
-        <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-      <article class="pick">
-        <div class="who"><b>@wavelover</b><span class="dot">·</span>1시간 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>국내 브릿팝 루키 🔥</h3>
-        <div class="media"><i class="art a-bigvoid blur"></i><div class="stack" data-extra="+7"><i class="art a-truth"></i><i class="art a-billann"></i><i class="art a-bigvoid"></i></div></div>
-        <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count"><i class="ic ic-music-note"></i>10곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-    </div>
+    <div class="li"><div class="top"><b>실리카겔</b><span class="status-badge added">추가됨</span></div><small>2026년 10월 3일</small></div>
+    <div class="li"><div class="top"><b>쏜애플</b><span class="status-badge pending">대기 중</span></div><small>2026년 10월 6일</small></div>
+    <div class="li"><div class="top"><b>Big Thief</b><span class="status-badge pending">대기 중</span></div><small>2026년 10월 7일</small></div>
+    <div class="li"><div class="top"><b>임영웅</b><span class="status-badge canceled">취소됨</span></div><p>Apple Music에 미리듣기가 없는 아티스트예요.</p><small>2026년 9월 28일</small></div>
   </div>
-
-  <span class="compose"><i class="ic ic-plus"></i>새 픽</span>
-  <nav class="tabbar dark">
-    <span class="tab"><i class="ic ic-house"></i>Feed</span>
-    <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
-    <span class="tab"><i class="ic ic-person"></i>My</span>
-  </nav>
-  <div class="home"></div>
+  <div class="dim"></div>
+  <div class="sheet floating" style="padding: var(--spacing-x6); color: var(--color-text-primary)">
+    <h2 style="font: var(--typography-title2)">아티스트 요청하기</h2>
+    <p style="font: var(--typography-body); color: var(--color-text-secondary); margin: var(--spacing-x4) 0; line-height:1.45">찾는 아티스트가 없나요? 알려주시면 추가를 검토할게요.</p>
+    <div style="height:46px; border-radius:12px; background:var(--color-surface); padding:0 var(--spacing-x3-5); display:flex; align-items:center; font: var(--typography-body)">검정치마<span style="display:inline-block;width:2px;height:19px;background:var(--color-brand);margin-left:1px"></span></div>
+    <div style="height:48px; border-radius:12px; background:var(--color-brand); color:#fff; display:grid; place-items:center; font: var(--typography-body-medium); margin-top: var(--spacing-x4)">요청 보내기</div>
+  </div>
+  <div class="keyboard" style="z-index:94">
+    <div><b>ㅂ</b><b>ㅈ</b><b>ㄷ</b><b>ㄱ</b><b>ㅅ</b><b>ㅛ</b><b>ㅕ</b><b>ㅑ</b><b>ㅐ</b><b>ㅔ</b></div>
+    <div><b>ㅁ</b><b>ㄴ</b><b>ㅇ</b><b>ㄹ</b><b>ㅎ</b><b>ㅗ</b><b>ㅓ</b><b>ㅏ</b><b>ㅣ</b></div>
+    <div><b class="w">⇧</b><b>ㅋ</b><b>ㅌ</b><b>ㅊ</b><b>ㅍ</b><b>ㅠ</b><b>ㅜ</b><b>ㅡ</b><b class="w">⌫</b></div>
+    <div><b class="w">123</b><b class="sp">스페이스</b><b class="w" style="background:#007AFF;color:#fff">보내기</b></div>
+  </div>
 </div>
 </body>
 </html>

@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 화면: 첫 가입 — 튜토리얼 7장(좌우 스와이프). 기준: Features/Onboarding/TutorialView.swift (TutorialPage.all · PageDots). 마지막 장 버튼은 '시작하기' -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>튜토리얼</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -212,80 +212,26 @@ body.embed { padding: 0; background: transparent; }
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
 <style>
-  .device { background: var(--color-pick-background); }
-  .scroll { padding-top: calc(54px + 18px); }
-  .large-title { color: var(--color-text-on-dark); padding-bottom: var(--spacing-x3); }
-  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); padding-top: var(--spacing-x3); }
-
-  /* 카드: pickSurface, radius large, 안쪽 14, 좌우 16 */
-  .pick { margin: 0 var(--spacing-x4); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
-    display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
-  .who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
-  .who b { font-size: 15px; font-weight: 600; color: var(--color-text-on-dark); }
-  .who .seal { font-size: 13px; color: var(--color-pick-accent); }
-  .who .dot { color: rgba(255,255,255,.3); }
-  .who .more { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.6); }
-  .pick h3 { font-size: 17px; font-weight: 700; color: var(--color-text-on-dark); }
-
-  /* 미디어 220, radius 18: 첫 커버 blur 28 + scrim, 위에 커버 최대 3장(150, 40씩 밀고 0→4° 기울기), 남은 곡 수 */
-  .media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
-  .media .blur { position: absolute; inset: -30px; filter: blur(28px); }
-  .media::after { content: ""; position: absolute; inset: 0; background: var(--color-scrim); }
-  .stack { position: relative; width: 230px; height: 150px; z-index: 1; }
-  .stack .art { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-  .stack .art:nth-child(1) { left: 80px; transform: rotate(4deg); }
-  .stack .art:nth-child(2) { left: 40px; transform: rotate(2deg); }
-  .stack .art:nth-child(3) { left: 0; }
-  .stack::after { content: attr(data-extra); position: absolute; left: 0; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); z-index: 2;
-    background: rgba(0,0,0,.5); display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; }
-
-  .bubbles { display: flex; align-items: center; gap: var(--spacing-x2); }
-  .react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-fill-on-dark-subtle);
-    display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
-  .react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
-  .react.mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
-  .react.mine b { color: var(--color-brand); }
-  .count { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: var(--color-text-on-dark-tertiary); }
-  .count .ic { font-size: 12px; }
-  .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle);
-    display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }
-
-  /* 새 픽: brand 캡슐 48, 탭바 위 16 */
-  .compose { position: absolute; left: 50%; bottom: calc(21px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 91; height: 48px;
-    padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
-    gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
-  .compose .ic { font-size: 14px; }
+  .btn-primary { height: 56px; border-radius: var(--radius-medium); background: var(--color-brand); color: #fff; display: grid; place-items: center; font-size: 16px; font-weight: 600; }
+  .skip { position: absolute; top: 54px; right: 20px; height: 44px; display: flex; align-items: center; font: var(--typography-body-medium); color: var(--color-text-tertiary); }
+  .page { position: absolute; inset: calc(54px + 44px) 0 auto; height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--spacing-x8); text-align: center; padding: 0 32px; }
+  .circle { width: 140px; height: 140px; border-radius: 50%; background: var(--color-brand-light); display: grid; place-items: center; color: var(--color-brand); font-size: 56px; }
+  .page h1 { font: var(--typography-title1); }
+  .page p { font: var(--typography-body); color: var(--color-text-secondary); line-height: 1.5; margin-top: var(--spacing-x3); }
+  .dots { position: absolute; bottom: calc(34px + 24px + 56px + 24px); left: 0; right: 0; display: flex; justify-content: center; gap: var(--spacing-x2); }
+  .dots i { width: 8px; height: 8px; border-radius: 4px; background: var(--color-border-light); }
+  .dots i.on { width: 20px; background: var(--color-brand); }
+  .bottom { position: absolute; left: 24px; right: 24px; bottom: calc(34px + 24px); }
 </style>
 </head>
 <body>
-<div class="device dark">
+<div class="device">
   <div class="island"></div>
-  <div class="status"><b>12:56</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">41</i></span></div>
-
-  <div class="scroll">
-    <h1 class="large-title">Picks</h1>
-    <div class="list">
-      <article class="pick">
-        <div class="who"><b>@digger_lover</b><i class="ic ic-seal seal"></i><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>모두가 사랑하는 밴드</h3>
-        <div class="media"><i class="art a-loveya blur"></i><div class="stack" data-extra="+9"><i class="art a-tomboy"></i><i class="art a-ohio"></i><i class="art a-loveya"></i></div></div>
-        <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-      <article class="pick">
-        <div class="who"><b>@wavelover</b><span class="dot">·</span>1시간 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>국내 브릿팝 루키 🔥</h3>
-        <div class="media"><i class="art a-bigvoid blur"></i><div class="stack" data-extra="+7"><i class="art a-truth"></i><i class="art a-billann"></i><i class="art a-bigvoid"></i></div></div>
-        <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count"><i class="ic ic-music-note"></i>10곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-    </div>
-  </div>
-
-  <span class="compose"><i class="ic ic-plus"></i>새 픽</span>
-  <nav class="tabbar dark">
-    <span class="tab"><i class="ic ic-house"></i>Feed</span>
-    <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
-    <span class="tab"><i class="ic ic-person"></i>My</span>
-  </nav>
+  <div class="status"><b>1:06</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">36</i></span></div>
+  <span class="skip">건너뛰기</span>
+  <div class="page"><span class="circle"><i class="ic ic-hand-tap"></i></span><div><h1>더블 탭으로 하입</h1><p>마음에 드는 곡이 있나요? 카드를 더블 탭하면 바로 하입할 수 있어요.</p></div></div>
+  <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="bottom"><div class="btn-primary">다음</div></div>
   <div class="home"></div>
 </div>
 </body>

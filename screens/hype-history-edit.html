@@ -1,10 +1,10 @@
 <!doctype html>
-<!-- 화면: Picks 탭(다크 지면). 기준: iOS Features/Picks/PickListView.swift (titleHeader · PickCard · PickThumbnailStack · composeButton). patterns/picks-dark-surface.md -->
+<!-- 화면: 하입 기록 편집 모드 — 셀마다 제거 배지, 탭하면 확인 후 제거. 기준: Features/MyPage/HypeHistoryView.swift · HypeCollection.swift (DayRow · selectionBadge · removeBadge) -->
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Picks</title>
+<title>하입 기록</title>
 <style id="ds">
 /* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
 :root {
@@ -212,79 +212,42 @@ body.embed { padding: 0; background: transparent; }
 .a-fireworks { background-image: url(https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fc/a9/b2/fca9b2d4-b1ed-92e8-2e5f-1838d77cbce7/cover-_NEW.jpg/300x300bb.jpg), linear-gradient(135deg,#5C3B3B,#C9A27A); }  /* For Lovers Who Hesitate — JANNABI */
 </style>
 <style>
-  .device { background: var(--color-pick-background); }
-  .scroll { padding-top: calc(54px + 18px); }
-  .large-title { color: var(--color-text-on-dark); padding-bottom: var(--spacing-x3); }
-  .list { display: flex; flex-direction: column; gap: var(--spacing-x3-5); padding-top: var(--spacing-x3); }
-
-  /* 카드: pickSurface, radius large, 안쪽 14, 좌우 16 */
-  .pick { margin: 0 var(--spacing-x4); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
-    display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
-  .who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
-  .who b { font-size: 15px; font-weight: 600; color: var(--color-text-on-dark); }
-  .who .seal { font-size: 13px; color: var(--color-pick-accent); }
-  .who .dot { color: rgba(255,255,255,.3); }
-  .who .more { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.6); }
-  .pick h3 { font-size: 17px; font-weight: 700; color: var(--color-text-on-dark); }
-
-  /* 미디어 220, radius 18: 첫 커버 blur 28 + scrim, 위에 커버 최대 3장(150, 40씩 밀고 0→4° 기울기), 남은 곡 수 */
-  .media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
-  .media .blur { position: absolute; inset: -30px; filter: blur(28px); }
-  .media::after { content: ""; position: absolute; inset: 0; background: var(--color-scrim); }
-  .stack { position: relative; width: 230px; height: 150px; z-index: 1; }
-  .stack .art { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-  .stack .art:nth-child(1) { left: 80px; transform: rotate(4deg); }
-  .stack .art:nth-child(2) { left: 40px; transform: rotate(2deg); }
-  .stack .art:nth-child(3) { left: 0; }
-  .stack::after { content: attr(data-extra); position: absolute; left: 0; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); z-index: 2;
-    background: rgba(0,0,0,.5); display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; }
-
-  .bubbles { display: flex; align-items: center; gap: var(--spacing-x2); }
-  .react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-fill-on-dark-subtle);
-    display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
-  .react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
-  .react.mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
-  .react.mine b { color: var(--color-brand); }
-  .count { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: var(--color-text-on-dark-tertiary); }
-  .count .ic { font-size: 12px; }
-  .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle);
-    display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }
-
-  /* 새 픽: brand 캡슐 48, 탭바 위 16 */
-  .compose { position: absolute; left: 50%; bottom: calc(21px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 91; height: 48px;
-    padding: 0 var(--spacing-x5); border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center;
-    gap: var(--spacing-x1-5); font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
-  .compose .ic { font-size: 14px; }
+  .nav::before { content: ""; position: absolute; inset: -54px 0 -14px; z-index: -1; background: linear-gradient(var(--color-background) 75%, rgba(255,255,255,0)); }
+  .nav .right .glass-btn.text { color: var(--color-brand); }
+  .scroll { padding-top: calc(54px + 52px); }
+  .intro { padding: var(--spacing-x4) var(--spacing-x5); display: flex; flex-direction: column; gap: var(--spacing-x1-5); }
+  .intro p { font: var(--typography-body); color: var(--color-text-secondary); line-height: 1.45; }
+  .intro small { font: var(--typography-caption); color: var(--color-text-tertiary); line-height: 1.45; }
+  .day { margin-top: var(--spacing-x5); }
+  .day h4 { font: var(--typography-label); color: var(--color-text-tertiary); padding: 0 var(--spacing-x5); margin-bottom: 2px; }
+  .cells { display: flex; gap: var(--spacing-x3); padding: var(--spacing-x1-5) var(--spacing-x5) 0; overflow: hidden; }
+  .cell { position: relative; width: 72px; flex: none; display: flex; flex-direction: column; gap: var(--spacing-x1-5); }
+  .cell .art { width: 72px; height: 72px; border-radius: var(--radius-medium); }
+  .cell b { font-size: 11px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cell span { font-size: 10px; color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: -4px; }
+  /* 선택 배지 20: 아트워크 좌상단에 -6 걸침. 고름 = brand+체크, 안 고름 = 흰 면+회색 테두리 */
+  .pick-badge { position: absolute; left: -6px; top: -6px; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 1.5px solid var(--color-text-tertiary); }
+  .pick-badge.on { background: var(--color-brand); border: 0; color: #fff; display: grid; place-items: center; font-size: 11px; }
+  .remove-badge { position: absolute; left: -6px; top: -6px; width: 20px; height: 20px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-size: 20px; color: var(--color-destructive); }
 </style>
 </head>
 <body>
-<div class="device dark">
+<div class="device">
   <div class="island"></div>
-  <div class="status"><b>12:56</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">41</i></span></div>
-
+  <div class="status"><b>4:32</b><span><i class="ic ic-signal"></i><i class="ic ic-wifi"></i><i class="battery">88</i></span></div>
+  <div class="nav"><span class="left"><span class="glass-btn"><i class="ic ic-chevron-left"></i></span></span><h1>하입 기록</h1><span class="right"><span class="glass-btn text" style="font-weight:600">완료</span></span></div>
   <div class="scroll">
-    <h1 class="large-title">Picks</h1>
-    <div class="list">
-      <article class="pick">
-        <div class="who"><b>@digger_lover</b><i class="ic ic-seal seal"></i><span class="dot">·</span>12분 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>모두가 사랑하는 밴드</h3>
-        <div class="media"><i class="art a-loveya blur"></i><div class="stack" data-extra="+9"><i class="art a-tomboy"></i><i class="art a-ohio"></i><i class="art a-loveya"></i></div></div>
-        <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count"><i class="ic ic-music-note"></i>12곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-      <article class="pick">
-        <div class="who"><b>@wavelover</b><span class="dot">·</span>1시간 전<span class="more"><i class="ic ic-ellipsis"></i></span></div>
-        <h3>국내 브릿팝 루키 🔥</h3>
-        <div class="media"><i class="art a-bigvoid blur"></i><div class="stack" data-extra="+7"><i class="art a-truth"></i><i class="art a-billann"></i><i class="art a-bigvoid"></i></div></div>
-        <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count"><i class="ic ic-music-note"></i>10곡</span><span class="share"><i class="ic ic-share"></i></span></div>
-      </article>
-    </div>
-  </div>
+    <div class="day" style="margin-top:var(--spacing-x4)"><h4>2026년 10월 7일</h4><div class="cells"><div class="cell"><i class="art a-farewell"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Farewell to Arms!</b><span>잔나비</span></div><div class="cell"><i class="art a-friends"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>FRIENDS (feat. Friends)</b><span>shinjihang</span></div><div class="cell"><i class="art a-intro"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Introduction to a Man</b><span>윤상</span></div><div class="cell"><i class="art a-seasons"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>seasons</b><span>wave to earth</span></div><div class="cell"><i class="art a-bulssi"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>불씨</b><span>컨파인드 화이트</span></div></div></div>
+    <div class="day"><h4>2026년 10월 5일</h4><div class="cells"><div class="cell"><i class="art a-blame"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Blame</b><span>creespy</span></div><div class="cell"><i class="art a-shanty"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Shanty</b><span>Jio</span></div></div></div>
+    <div class="day"><h4>2026년 10월 1일</h4><div class="cells"><div class="cell"><i class="art a-lonely"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Lonely Town, Lonely Street</b><span>Bill Withers</span></div><div class="cell"><i class="art a-ohio"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Ohio</b><span>혁오</span></div><div class="cell"><i class="art a-bigvoid"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>BIG VOID</b><span>실리카겔</span></div><div class="cell"><i class="art a-findme"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Find Me!</b><span>The Poles</span></div><div class="cell"><i class="art a-wss"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>work, shit, sleep</b><span>jisokuryClub</span></div></div></div>
+    <div class="day"><h4>2026년 9월 28일</h4><div class="cells"><div class="cell"><i class="art a-comedown"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Comedown</b><span>Jazzbois</span></div><div class="cell"><i class="art a-truth"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Truthbuster</b><span>놀이도감</span></div><div class="cell"><i class="art a-billann"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Bill Loves Ann</b><span>퍼플웨일</span></div></div></div>
+    <div class="day"><h4>2026년 9월 24일</h4><div class="cells"><div class="cell"><i class="art a-cannons"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>Cannons</b><span>Phil Wickham</span></div><div class="cell"><i class="art a-tomboy"></i><i class="remove-badge"><i class="ic ic-minus-circle"></i></i><b>TOMBOY</b><span>혁오</span></div></div></div>
 
-  <span class="compose"><i class="ic ic-plus"></i>새 픽</span>
-  <nav class="tabbar dark">
+  </div>
+  <nav class="tabbar">
     <span class="tab"><i class="ic ic-house"></i>Feed</span>
-    <span class="tab on"><i class="ic ic-stack"></i>Picks</span>
-    <span class="tab"><i class="ic ic-person"></i>My</span>
+    <span class="tab"><i class="ic ic-stack"></i>Picks</span>
+    <span class="tab on"><i class="ic ic-person"></i>My</span>
   </nav>
   <div class="home"></div>
 </div>
