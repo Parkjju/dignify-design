@@ -7,7 +7,7 @@ import { RecentSearches } from '../components/recent-searches/recent-searches.js
 import { Keyboard } from '../components/keyboard/keyboard.js'
 import { TrackDetail } from '../components/track-detail/track-detail.js'
 import { Popup } from '../components/popup/popup.js'
-import { CoachMark } from '../components/coach-mark/coach-mark.js'
+import { CoachGesture } from '../components/coach-gesture/coach-gesture.js'
 import { ReleaseNotes } from '../components/release-notes/release-notes.js'
 import { Button } from '../components/button/button.js'
 
@@ -37,12 +37,10 @@ export function FeedPopupScreen({ track, title, message } = {}) {
     overlay: `<div class="dim" style="background:var(--color-scrim-strong);display:grid;place-items:center">${Popup({ title, message })}</div>` })
 }
 
-export function FeedCoachScreen({ track, step = 1 } = {}) {
-  const steps = [['마음에 들면 하입하세요', '하입한 곡은 담은 곡에 모여요. 그리고 피드가 그 곡과 비슷한 소리를 찾아 와요.', 'left:12px;top:706px;width:48px;height:48px', 'bottom:186px'],
-    ['지금 무엇을 따라가는지', '피드가 하입을 따라가는 중인지 무작위인지 여기서 알 수 있어요. 누르면 바뀌어요.', 'right:12px;top:102px;width:172px;height:42px;border-radius:20px', 'top:168px']]
-  const [title, body, spot, place] = steps[step - 1] || steps[0]
-  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: '비슷한 곡: Blame', mode: 'following' }),
-    overlay: `<div class="ds-spotlight" style="position:absolute;z-index:95;${spot}"></div><div style="position:absolute;left:24px;right:24px;z-index:96;${place}">${CoachMark({ title, body, step, total: 2 })}</div>` })
+// 첫 진입 온보딩(feed_coachmark 1.0): 따라 해야 넘어간다. double-tap → (더블탭) → hyped → (터치) → swipe-up → (스와이프) → 피드
+export function FeedCoachScreen({ track, gesture = 'double-tap', handY = 390, captionTop = 525 } = {}) {
+  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: '', hyped: gesture === 'hyped', mode: 'following' }),
+    overlay: CoachGesture({ gesture, handY, captionTop }) })
 }
 
 export function WhatsNewScreen({ track, releases } = {}) {

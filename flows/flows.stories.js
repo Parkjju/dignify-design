@@ -13,12 +13,33 @@ export default {
   args: { scale: 0.5, wrap: false },
 }
 
-export const FirstLaunch = { name: '첫 실행', args: { steps: [
-  { screen: 'onboarding-signin', note: 'Apple 로그인 또는 둘러보기' },
-  { screen: 'onboarding-tutorial', note: '7장, 건너뛰기 가능' },
-  { screen: 'onboarding-seed', note: '최대 3곡 → 피드 기준' },
-  { screen: 'feed-coach', note: '첫 진입에 한 번' },
-  { screen: 'feed', args: { track: { cover: 'a-wss', title: 'work, shit, sleep', artist: 'jisokuryClub' }, chip: '비슷한 곡: work, shit, sleep' } },
+// 첫 실행 3갈래 (feed_coachmark 1.0). 코치마크는 피드에서만, 따라 해야 넘어간다
+const coach = [
+  { screen: 'feed-coach', note: '손 모션: 1초 안에 두 번 탭 → 2초 쉼 반복. 유저가 더블탭해야 넘어감' },
+  { screen: 'feed-coach-hyped', note: '하입 아이콘 팝. 화면 아무 곳 터치 → 사라짐' },
+  { screen: 'feed-coach-swipe', note: '손 모션: 위로 쓸어 올림. 유저가 다음 곡으로 넘기면 끝' },
+]
+
+export const FirstLaunchGuest = { name: '첫 실행 — 로그인 없이 둘러보기', args: { steps: [
+  { screen: 'onboarding-signin', note: '로그인 없이 둘러보기' },
+  ...coach,
+  { screen: 'feed', label: '피드(게스트)', args: { track: { cover: 'a-seasons', title: 'seasons', artist: 'wave to earth' }, chip: '인디' } },
+  { screen: 'guest-prompt', note: 'Picks·마이 탭을 누르면' },
+  { screen: 'onboarding-signin-gate', note: '로그인 → 「둘러보기 후 로그인」으로' },
+] } }
+
+export const FirstLaunchSignIn = { name: '첫 실행 — 바로 로그인', args: { steps: [
+  { screen: 'onboarding-signin', note: 'Apple로 계속하기' },
+  ...coach,
+  { screen: 'onboarding-seed', note: '곡 선택 (최대 3곡 → 피드 기준)' },
+  { screen: 'feed', label: '바로 시작', args: { track: { cover: 'a-wss', title: 'work, shit, sleep', artist: 'jisokuryClub' }, chip: '비슷한 곡: work, shit, sleep' } },
+] } }
+
+export const GuestThenSignIn = { name: '둘러보기 후 로그인', args: { steps: [
+  { screen: 'onboarding-signin-gate', note: '게스트가 Picks·마이에서 로그인' },
+  { screen: 'onboarding-loading', note: '곡 선택 후보를 받는 동안 · 코치마크는 이미 봤으니 생략' },
+  { screen: 'onboarding-seed', note: '곡 선택' },
+  { screen: 'feed', label: '바로 시작', args: { track: { cover: 'a-wss', title: 'work, shit, sleep', artist: 'jisokuryClub' }, chip: '비슷한 곡: work, shit, sleep' } },
 ] } }
 
 export const Discover = { name: '피드에서 발견하기', args: { steps: [
