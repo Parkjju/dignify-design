@@ -3,7 +3,7 @@ import spec from './pick-card.md?raw'
 import { docs, onDark, COVERS } from '../_story.js'
 
 export default {
-  title: 'Components/PickCard', tags: ['autodocs'], parameters: docs(spec), decorators: [...onDark(), s => `<div style="width:361px">${s()}</div>`],
+  title: 'Components/Content/PickCard', tags: ['autodocs'], parameters: docs(spec), decorators: [...onDark(), s => `<div style="width:361px">${s()}</div>`],
   render: PickCard,
   argTypes: { covers: { control: 'check', options: COVERS } },
   args: { nickname: 'digger_lover', verified: true, time: '12분 전', title: '모두가 사랑하는 밴드', covers: ['a-loveya', 'a-ohio', 'a-tomboy'], trackCount: 12, reactions: 3, reacted: true, mine: false, plays: 0 },

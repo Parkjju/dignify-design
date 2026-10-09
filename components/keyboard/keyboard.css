@@ -1,0 +1,5 @@
+/* components/keyboard/keyboard.md */
+/* 바탕·키 모양은 screens/_shared.css 의 .keyboard */
+.ds-keyboard { position: relative; inset: auto; width: 393px; }
+.device .ds-keyboard { position: absolute; inset: auto 0 0; width: auto; }
+.ds-keyboard__return { background: #007AFF !important; color: #fff; }

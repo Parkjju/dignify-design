@@ -1,0 +1,4 @@
+/* components/segmented/segmented.md */
+.ds-seg { height: 32px; border-radius: 9px; background: rgba(118,118,128,.12); display: flex; padding: 2px; font-size: 13px; color: var(--color-text-primary); }
+.ds-seg span { flex: 1; display: grid; place-items: center; border-radius: 7px; }
+.ds-seg .is-on { background: #fff; font-weight: 600; box-shadow: 0 3px 8px rgba(0,0,0,.12); }

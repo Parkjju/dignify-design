@@ -1,0 +1,8 @@
+/* components/section-header/section-header.md */
+.ds-section { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--spacing-x5); }
+.ds-section h3 { font-weight: 600; }
+.ds-section--title h3 { font: var(--typography-title2); color: var(--color-text-primary); }
+.ds-section a { font: var(--typography-body-medium); color: var(--color-brand); }
+.ds-section--label h3 { font: var(--typography-label); color: var(--color-text-secondary); }
+.ds-section--date h3 { font-size: 12px; color: var(--color-text-tertiary); }
+.ds-section--caption h3 { font-size: 11px; color: var(--color-text-tertiary); }

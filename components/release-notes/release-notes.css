@@ -1,0 +1,6 @@
+/* components/release-notes/release-notes.md */
+.ds-release { display: flex; flex-direction: column; gap: 28px; padding: 0 var(--spacing-x6); }
+.ds-release > div { display: flex; flex-direction: column; gap: var(--spacing-x3); }
+.ds-release small { font: var(--typography-caption); color: var(--color-brand); }
+.ds-release p { display: flex; gap: var(--spacing-x2-5); font: var(--typography-body); color: var(--color-text-secondary); line-height: 1.45; }
+.ds-release p::before { content: ""; flex: none; width: 5px; height: 5px; border-radius: 50%; background: var(--color-brand); margin-top: 8px; }

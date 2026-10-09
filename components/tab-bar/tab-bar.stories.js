@@ -3,7 +3,7 @@ import spec from './tab-bar.md?raw'
 import { docs, onDark } from '../_story.js'
 
 export default {
-  title: 'Components/TabBar', tags: ['autodocs'], parameters: docs(spec),
+  title: 'Components/Navigation/TabBar', tags: ['autodocs'], parameters: docs(spec),
   render: TabBar,
   argTypes: { surface: { control: 'inline-radio', options: ['light', 'media', 'dark'] }, selected: { control: 'inline-radio', options: ['feed', 'picks', 'my'] } },
   args: { surface: 'light', selected: 'my' },

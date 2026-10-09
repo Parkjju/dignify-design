@@ -1,0 +1,5 @@
+/* components/user-row/user-row.md */
+.ds-user { position: relative; height: 52px; padding: 0 var(--spacing-x5); display: flex; align-items: center; font-size: 15px; color: var(--color-text-primary); border-bottom: 1px solid var(--color-divider); overflow: hidden; }
+.ds-user span { transition: transform 200ms cubic-bezier(.23,1,.32,1); }
+.ds-user.is-swiped span { transform: translateX(-104px); }
+.ds-user b { position: absolute; right: 0; top: 0; bottom: 0; width: 104px; background: #8E8E93; color: #fff; display: grid; place-items: center; font-size: 15px; font-weight: 500; }

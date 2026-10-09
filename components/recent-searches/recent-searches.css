@@ -1,0 +1,9 @@
+/* components/recent-searches/recent-searches.md */
+.ds-recent { padding: var(--spacing-x4) var(--spacing-x5) 0; background: var(--color-background); color: var(--color-text-primary); }
+.ds-recent h4 { font-size: 11px; font-weight: 600; color: var(--color-text-tertiary); margin-bottom: var(--spacing-x1); }
+.ds-recent__row { display: flex; align-items: center; gap: var(--spacing-x3); padding: var(--spacing-x3) 0; color: var(--color-text-tertiary); }
+.ds-recent__row > .ic { font-size: 14px; }
+.ds-recent__row span { flex: 1; font-size: 15px; color: var(--color-text-primary); }
+.ds-recent__x { width: 32px; height: 32px; display: grid; place-items: center; font-size: 12px; font-style: normal; }
+.ds-recent__run { display: flex; align-items: center; gap: var(--spacing-x2); padding: var(--spacing-x3-5) 0; color: var(--color-brand); font-size: 15px; font-weight: 500; }
+.ds-recent__run .ic { font-size: 14px; }

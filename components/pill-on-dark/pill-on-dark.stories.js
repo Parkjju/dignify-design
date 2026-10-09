@@ -3,7 +3,7 @@ import spec from './pill-on-dark.md?raw'
 import { docs, onDark } from '../_story.js'
 
 export default {
-  title: 'Components/PillOnDark', tags: ['autodocs'], parameters: docs(spec), decorators: onDark('#2b2014'),
+  title: 'Components/Content/PillOnDark', tags: ['autodocs'], parameters: docs(spec), decorators: onDark('#2b2014'),
   render: PillOnDark,
   argTypes: { variant: { control: 'inline-radio', options: ['chip', 'mode', 'query', 'badge'] } },
   args: { variant: 'chip', label: '비슷한 곡: Blame' },

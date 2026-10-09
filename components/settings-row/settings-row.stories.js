@@ -3,7 +3,7 @@ import spec from './settings-row.md?raw'
 import { docs, width } from '../_story.js'
 
 export default {
-  title: 'Components/SettingsRow', tags: ['autodocs'], parameters: docs(spec), decorators: width(393),
+  title: 'Components/Content/SettingsRow', tags: ['autodocs'], parameters: docs(spec), decorators: width(393),
   render: SettingsRow,
   argTypes: { variant: { control: 'inline-radio', options: ['link', 'destructive', 'toggle', 'card'] } },
   args: { variant: 'link', label: '추천 기준 곡', caption: '', on: true },

@@ -3,7 +3,7 @@ import spec from './brand-mark.md?raw'
 import { docs } from '../_story.js'
 
 export default {
-  title: 'Components/BrandMark', tags: ['autodocs'], parameters: docs(spec),
+  title: 'Components/Content/BrandMark', tags: ['autodocs'], parameters: docs(spec),
   render: BrandMark, argTypes: { size: { control: { type: 'range', min: 22, max: 128, step: 2 } } }, args: { size: 64 },
 }
 export const Default = {}

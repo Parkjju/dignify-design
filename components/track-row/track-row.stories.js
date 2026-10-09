@@ -3,7 +3,7 @@ import spec from './track-row.md?raw'
 import { docs, width, COVERS } from '../_story.js'
 
 export default {
-  title: 'Components/TrackRow', tags: ['autodocs'], parameters: docs(spec), decorators: width(353),
+  title: 'Components/Content/TrackRow', tags: ['autodocs'], parameters: docs(spec), decorators: width(353),
   render: TrackRow,
   argTypes: { cover: { control: 'select', options: COVERS }, number: { control: { type: 'number', min: 0, max: 3 } } },
   args: { cover: 'a-seasons', title: 'seasons', artist: 'wave to earth', number: 0, playing: false },

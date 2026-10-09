@@ -1,0 +1,12 @@
+/* components/lens-columns/lens-columns.md */
+.ds-lens { margin: 0 var(--spacing-x5); }
+.ds-lens h3 { font: var(--typography-title2); margin-bottom: var(--spacing-x3); color: var(--color-text-primary); }
+.ds-lens__cols { display: flex; gap: var(--spacing-x3); align-items: flex-start; }
+.ds-lens__col { flex: 1; min-width: 0; padding: var(--spacing-x3); border-radius: 14px; background: var(--color-surface); display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
+.ds-lens__col.is-keep { background: var(--color-brand-light); }
+.ds-lens__cap { display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--color-text-secondary); }
+.ds-lens__col.is-keep .ds-lens__cap { color: var(--color-brand); }
+.ds-lens__cap .ic { font-size: 13px; }
+.ds-lens__col p { display: flex; justify-content: space-between; gap: var(--spacing-x2); font: var(--typography-body-medium); color: var(--color-text-primary); }
+.ds-lens__col p span { font: var(--typography-caption); color: var(--color-text-secondary); }
+.ds-lens__col p.is-empty { color: var(--color-text-tertiary); }

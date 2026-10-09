@@ -1,6 +1,6 @@
 /* components/nav-bar/nav-bar.md — 원형·캡슐 유리 버튼은 screens/_shared.css 의 .glass-btn */
 .ds-nav { height: 52px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 16px; background: var(--color-background); color: var(--color-text-primary); }
 .ds-nav h1 { font: var(--typography-headline); }
-.ds-nav__side { display: flex; } .ds-nav__side.is-right { justify-content: flex-end; }
+.ds-nav__side { display: flex; gap: var(--spacing-x2); } .ds-nav__side.is-right { justify-content: flex-end; }
 .ds-nav__action { color: var(--color-brand); }
 .ds-nav__secondary { color: var(--color-text-secondary); }

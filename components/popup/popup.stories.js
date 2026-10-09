@@ -3,7 +3,7 @@ import spec from './popup.md?raw'
 import { docs, onDark } from '../_story.js'
 
 export default {
-  title: 'Components/Popup', tags: ['autodocs'], parameters: docs(spec), decorators: onDark('rgba(0,0,0,.55)'),
+  title: 'Components/Overlays/Popup', tags: ['autodocs'], parameters: docs(spec), decorators: onDark('rgba(0,0,0,.55)'),
   render: Popup, args: {},
 }
 export const WeeklySetDone = {}

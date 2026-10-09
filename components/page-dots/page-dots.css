@@ -1,0 +1,6 @@
+/* components/page-dots/page-dots.md */
+.ds-dots { display: flex; justify-content: center; gap: var(--spacing-x2); }
+.ds-dots i { width: 8px; height: 8px; border-radius: 4px; background: var(--color-border-light); transition: width 200ms cubic-bezier(.77,0,.175,1); }
+.ds-dots i.is-on { width: 20px; background: var(--color-brand); }
+.ds-dots.is-dark i { background: rgba(255,255,255,.25); }
+.ds-dots.is-dark i.is-on { background: #fff; }

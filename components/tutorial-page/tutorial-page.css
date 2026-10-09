@@ -1,0 +1,5 @@
+/* components/tutorial-page/tutorial-page.md */
+.ds-tutorial { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x8); text-align: center; padding: 0 32px; color: var(--color-text-primary); }
+.ds-tutorial__circle { width: 140px; height: 140px; border-radius: 50%; background: var(--color-brand-light); display: grid; place-items: center; color: var(--color-brand); font-size: 56px; }
+.ds-tutorial h1 { font: var(--typography-title1); text-wrap: balance; }
+.ds-tutorial p { font: var(--typography-body); color: var(--color-text-secondary); line-height: 1.5; margin-top: var(--spacing-x3); }

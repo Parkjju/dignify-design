@@ -3,7 +3,7 @@ import spec from './menu-sheet.md?raw'
 import { docs, onDark } from '../_story.js'
 
 export default {
-  title: 'Components/MenuSheet', tags: ['autodocs'], parameters: docs(spec), decorators: onDark(),
+  title: 'Components/Overlays/MenuSheet', tags: ['autodocs'], parameters: docs(spec), decorators: onDark(),
   render: MenuSheet,
 }
 export const OthersPick = {}

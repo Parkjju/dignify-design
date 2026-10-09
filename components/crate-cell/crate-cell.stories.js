@@ -8,7 +8,7 @@ const items = [
   { cover: 'a-bulssi', title: '불씨', artist: '컨파인드 화이트' },
 ]
 export default {
-  title: 'Components/CrateCell', tags: ['autodocs'], parameters: docs(spec),
+  title: 'Components/Content/CrateCell', tags: ['autodocs'], parameters: docs(spec),
   render: CrateCell,
   argTypes: { mode: { control: 'inline-radio', options: ['default', 'edit', 'select'] }, cover: { control: 'select', options: COVERS } },
   args: { ...items[0], mode: 'default', selected: false },

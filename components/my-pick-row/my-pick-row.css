@@ -1,0 +1,7 @@
+/* components/my-pick-row/my-pick-row.md */
+.ds-my-pick { margin: 0 var(--spacing-x5); display: flex; align-items: center; gap: var(--spacing-x3); color: var(--color-text-primary); }
+.ds-my-pick .art { width: 56px; height: 56px; border-radius: 10px; }
+.ds-my-pick span { flex: 1; min-width: 0; }
+.ds-my-pick b { display: block; font: var(--typography-body-medium); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-my-pick small { display: block; font: var(--typography-caption); color: var(--color-text-secondary); margin-top: 3px; }
+.ds-my-pick > .ic { font-size: 12px; color: var(--color-text-secondary); }
