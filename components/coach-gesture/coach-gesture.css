@@ -20,8 +20,11 @@
 .is-swipe-up { animation: dsg-swipe 2.4s cubic-bezier(.3,0,.2,1) infinite; }
 @keyframes dsg-swipe { 0% { transform: translateY(70px); opacity: 0; } 12% { opacity: 1; } 50% { transform: translateY(-70px); opacity: 1; } 60%, 100% { transform: translateY(-70px); opacity: 0; } }
 
-.ds-coach-gesture__hype { font-size: 160px; color: var(--color-brand); translate: 0 -80px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); animation: dsg-pop .45s cubic-bezier(.2,1.4,.4,1) both; }
-@keyframes dsg-pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.ds-coach-gesture__hype { font-size: 160px; color: var(--color-brand); translate: 0 -80px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); animation: dsg-pop 2.4s infinite; }
+/* 팝(0.45s, 오버슈트) → 머묾 → 페이드아웃(0.4s). 시안에선 반복해서 보여 주고, 앱에선 1회 */
+@keyframes dsg-pop { 0% { transform: scale(.3); opacity: 0; animation-timing-function: cubic-bezier(.2,1.4,.4,1); }
+  19% { transform: scale(1); opacity: 1; } 60% { transform: scale(1); opacity: 1; animation-timing-function: ease-in; }
+  77%, 100% { transform: scale(1.08); opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   .ds-coach-gesture *, .ds-coach-gesture__hand { animation: none !important; }
