@@ -10,6 +10,7 @@ Dignify iOS·Android가 같이 쓰는 디자인 시스템이다. 이 레포 하�
 
 ```bash
 open screens/index.html     # 지금 앱의 모든 화면(28개)을 흐름별로 한 장에
+open screens/tokens.html    # 토큰 목록 — 색 견본·글꼴 크기·라운드·여백, [제안] 토큰은 노란 줄
 ```
 
 브라우저에서 열리고, 칸을 누르면 그 화면 파일이 열린다. 빌드·서버·설치는 필요 없다.
