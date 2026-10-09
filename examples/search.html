@@ -1,0 +1,48 @@
+<!doctype html>
+<!-- 예제: 검색 화면. 새 시안은 이 파일을 복사해 시작한다. 값은 tokens.css 변수로만 쓴다. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 — 검색</title>
+<link rel="stylesheet" href="../generated/web/tokens.css">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--color-surface); display: flex; justify-content: center; padding: var(--spacing-x6) 0; }
+  .device { width: 393px; min-height: 852px; background: var(--color-background); border-radius: var(--radius-extra-large); overflow: hidden; padding: var(--spacing-x5); }
+  h1 { font: var(--typography-title1); color: var(--color-text-primary); margin-bottom: var(--spacing-x4); }
+
+  /* components/search-bar.md */
+  .search-bar { display: flex; align-items: center; gap: var(--spacing-x2); height: 40px; padding: 0 var(--spacing-x3-5);
+    background: var(--color-surface); border: 1px solid var(--color-border-light); border-radius: var(--radius-medium); }
+  .search-bar svg { width: 15px; height: 15px; color: var(--color-text-tertiary); }
+  .search-bar input { flex: 1; border: 0; background: none; outline: none; font: var(--typography-body); font-size: 14px; color: var(--color-text-primary); caret-color: var(--color-brand); }
+  .search-bar input::placeholder { color: var(--color-text-tertiary); }
+
+  .section { font: var(--typography-label); color: var(--color-text-secondary); margin: var(--spacing-x6) 0 var(--spacing-x3); }
+  .row { display: flex; align-items: center; gap: var(--spacing-x3); padding: var(--spacing-x2) 0; }
+  .art { width: 48px; height: 48px; border-radius: var(--radius-small); background: var(--color-surface); }
+  .title { font: var(--typography-body-medium); color: var(--color-text-primary); }
+  .artist { font: var(--typography-caption); color: var(--color-text-secondary); }
+
+  /* components/button.md — outline */
+  .btn-outline { display: inline-flex; align-items: center; height: 40px; padding: 0 var(--spacing-x5); border: 1px solid var(--color-border);
+    border-radius: var(--radius-full); background: none; font: var(--typography-callout); color: var(--color-text-primary); margin-top: var(--spacing-x4); }
+</style>
+</head>
+<body>
+<div class="device">
+  <h1>검색</h1>
+  <label class="search-bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+    <input placeholder="아티스트, 곡 검색">
+  </label>
+
+  <p class="section">최근 검색</p>
+  <div class="row"><div class="art"></div><div><p class="title">곡 제목</p><p class="artist">아티스트</p></div></div>
+  <div class="row"><div class="art"></div><div><p class="title">곡 제목</p><p class="artist">아티스트</p></div></div>
+
+  <button class="btn-outline">아티스트 요청하기</button>
+</div>
+</body>
+</html>
