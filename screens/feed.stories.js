@@ -1,4 +1,5 @@
 import { story } from './_story.js'
+import { CoachLive as live } from './coach-live.js'
 export default { title: 'Screens/1. 피드', parameters: { layout: 'centered' } }
 
 const mode = { mode: { control: 'inline-radio', options: ['following', 'random'] } }
@@ -9,8 +10,12 @@ export const SearchResult = story('feed', { query: '실리카겔', track: 'bigvo
 export const Search = story('feed-search')
 export const TrackDetail = story('track-detail')
 export const PushPopup = story('feed-push-popup')
-const gesture = { gesture: { control: 'inline-radio', options: ['double-tap', 'hyped', 'swipe-up'] }, handY: { control: { type: 'range', min: 120, max: 700, step: 2 } }, captionTop: { control: { type: 'range', min: 120, max: 720, step: 2 } } }
+const gesture = { gesture: { control: 'inline-radio', options: ['double-tap', 'hyped', 'swipe-up'] }, handY: { control: { type: 'range', min: 120, max: 700, step: 2 } }, captionTop: { control: { type: 'range', min: 120, max: 720, step: 2 } }, speed: { control: { type: 'range', min: 0.5, max: 3, step: 0.1 }, description: '모션 빠르기 (1 = 기본, 2 = 두 배 빠르게)' } }
 export const Coach = story('feed-coach', {}, gesture)
 export const CoachHyped = story('feed-coach-hyped', {}, gesture)
 export const CoachSwipe = story('feed-coach-swipe', {}, gesture)
 export const WhatsNew = story('whats-new')
+
+// 직접 해 보기: 더블탭 → 아무 곳 탭 → 위로 쓸기. 처음부터 다시 하려면 Controls 값을 바꾸거나 새로고침
+export const CoachLive = { name: '코치마크 — 직접 해 보기', render: live, args: { speed: 1, handY: 390, captionTop: 525 },
+  argTypes: { speed: gesture.speed, handY: gesture.handY, captionTop: gesture.captionTop } }
