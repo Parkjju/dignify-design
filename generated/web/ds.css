@@ -240,6 +240,35 @@ body.embed { padding: 0; background: transparent; }
 .ds-button__spinner { width: 20px; height: 20px; border-radius: 50%; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; animation: ds-spin .8s linear infinite; }
 @keyframes ds-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .ds-button { transition: opacity 150ms; } .ds-button:active { transform: none; } }
+/* components/coach-gesture/coach-gesture.md */
+.ds-coach-gesture { position: absolute; inset: 0; z-index: 95; pointer-events: none; }
+.ds-coach-gesture__mark { position: absolute; left: 0; right: 0; height: 0; display: flex; justify-content: center; }
+.ds-coach-gesture__caption { position: absolute; left: var(--spacing-x6); right: var(--spacing-x6); padding: var(--spacing-x4) var(--spacing-x5); border-radius: var(--radius-medium);
+  background: var(--color-pick-elevated); color: #fff; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+.ds-coach-gesture__caption b { display: block; font: var(--typography-headline); }
+.ds-coach-gesture__caption p { font: var(--typography-callout); font-weight: 400; color: rgba(255,255,255,.7); margin-top: var(--spacing-x1); }
+
+/* 손: 손끝이 중심점에 오도록 살짝 왼쪽 위로 */
+.ds-coach-gesture__hand { position: relative; width: 72px; height: 72px; translate: 6px -14px; }
+.ds-coach-gesture__hand > .ic { position: absolute; inset: 0; font-size: 72px; color: #fff; filter: drop-shadow(0 4px 10px rgba(0,0,0,.45)); }
+.ds-coach-gesture__ring { position: absolute; left: 14px; top: 2px; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.9); opacity: 0; }
+
+.is-double-tap > .ic { animation: dsg-tap 3s ease-out infinite; transform-origin: 30% 10%; }
+.is-double-tap .ds-coach-gesture__ring { animation: dsg-ring 3s ease-out infinite; }
+@keyframes dsg-tap { 0%, 10%, 21%, 100% { transform: scale(1); } 5%, 16% { transform: scale(.86); } }
+@keyframes dsg-ring { 0% { opacity: 0; transform: scale(.4); } 5% { opacity: 1; } 11% { opacity: 0; transform: scale(1.6); }
+  12% { opacity: 0; transform: scale(.4); } 16% { opacity: 1; } 23%, 100% { opacity: 0; transform: scale(1.6); } }
+
+.is-swipe-up { animation: dsg-swipe 2.4s cubic-bezier(.3,0,.2,1) infinite; }
+@keyframes dsg-swipe { 0% { transform: translateY(70px); opacity: 0; } 12% { opacity: 1; } 50% { transform: translateY(-70px); opacity: 1; } 60%, 100% { transform: translateY(-70px); opacity: 0; } }
+
+.ds-coach-gesture__hype { font-size: 160px; color: var(--color-brand); translate: 0 -80px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); animation: dsg-pop .45s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes dsg-pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-coach-gesture *, .ds-coach-gesture__hand { animation: none !important; }
+  .is-swipe-up { opacity: 1; }
+}
 /* components/coach-mark/coach-mark.md */
 .ds-coach { width: 345px; padding: var(--spacing-x6); border-radius: 28px; background: var(--color-pick-elevated); text-align: center; color: #fff; }
 .ds-coach h2 { font-size: 20px; font-weight: 700; }
@@ -523,11 +552,6 @@ body.embed { padding: 0; background: transparent; }
 .ds-track-row__select { width: 44px; height: 44px; display: grid; place-items: center; }
 .ds-track-row__select i { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--color-text-tertiary); font-style: normal; }
 .ds-track-row__select i.is-on { border: 0; background: var(--color-brand); color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
-/* components/tutorial-page/tutorial-page.md */
-.ds-tutorial { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x8); text-align: center; padding: 0 32px; color: var(--color-text-primary); }
-.ds-tutorial__circle { width: 140px; height: 140px; border-radius: 50%; background: var(--color-brand-light); display: grid; place-items: center; color: var(--color-brand); font-size: 56px; }
-.ds-tutorial h1 { font: var(--typography-title1); text-wrap: balance; }
-.ds-tutorial p { font: var(--typography-body); color: var(--color-text-secondary); line-height: 1.5; margin-top: var(--spacing-x3); }
 /* components/type-hero/type-hero.md */
 .ds-type-hero { padding: var(--spacing-x8) var(--spacing-x6); border-radius: var(--radius-large); text-align: center; color: #fff;
   background: linear-gradient(var(--color-brand), var(--color-brand-deep)); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x2); }
