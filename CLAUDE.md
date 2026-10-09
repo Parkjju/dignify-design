@@ -7,7 +7,7 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. 여�
 1. `patterns/`에서 해당 지면 규칙을 확인한다. Picks 탭이면 `picks-dark-surface.md`를 읽는다.
 2. 쓰려는 컴포넌트의 `components/<name>.md`를 **전부 읽는다.** 수치(높이·여백·라운드)를 기억으로 채우면 틀린다.
 3. `examples/`에서 가장 가까운 예제를 **복사**해 수정한다. 처음부터 새로 짜지 않는다.
-4. 결과물은 `examples/<화면-이름>.html`로 저장한다.
+4. 결과물은 `examples/<화면-이름>.html`로 저장하고 `node scripts/build.mjs`를 돌린다. 토큰은 `<style id="tokens"></style>` 자리에 인라인으로 채워진다. 외부 CSS를 `<link>`로 걸지 않는다(뷰어나 단독 공유에서 끊긴다).
 
 ### 규칙
 - **값은 토큰으로만 쓴다.** CSS에서 hex·px를 직접 쓰지 않고 `var(--color-*)`, `var(--spacing-*)`, `var(--radius-*)`, `font: var(--typography-*)`를 쓴다. 토큰에 없는 값이 필요하면 시안에 억지로 넣지 말고 "토큰 제안"으로 따로 적는다.

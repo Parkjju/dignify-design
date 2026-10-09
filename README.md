@@ -28,7 +28,7 @@ node scripts/build.mjs --check  # 커밋 전: 생성물이 최신인지 확인
 |---|---|---|
 | iOS | `generated/ios/DSTokens.swift` | `dignify/Core/DesignSystem/` — `DSColor.swift`·`DSTypography.swift`·`DSRadius.swift`를 이 파일 하나로 교체 |
 | Android | `generated/android/DSTokens.kt` | `core/designsystem/` — `DesignSystem.kt` 안의 `DSColor`·`DSTypography`·`DSRadius` object를 지우고 이 파일 추가 |
-| HTML 시안 | `generated/web/tokens.css` | `examples/`에서 상대경로로 참조 |
+| HTML 시안 | `examples/*.html` | `build.mjs`가 각 시안의 `<style id="tokens">`에 토큰을 인라인으로 채운다. 파일 하나만 보내도 그대로 열린다 |
 
 기존 값은 모두 그대로 들어 있어서(이름·값 1:1 대조 완료) 교체해도 화면은 바뀌지 않는다. 새로 생긴 것은 `DSSpacing`과 `[제안]` 표시가 붙은 토큰뿐이다.
 
