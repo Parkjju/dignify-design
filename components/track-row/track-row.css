@@ -1,0 +1,12 @@
+/* components/track-row/track-row.md */
+.ds-track-row { display: flex; align-items: center; gap: var(--spacing-x3); padding: var(--spacing-x1) 0; }
+.ds-track-row__thumb { position: relative; width: 52px; height: 52px; flex: none; border-radius: 10px; overflow: hidden; }
+.ds-track-row__thumb .art { width: 100%; height: 100%; }
+.ds-track-row__thumb .ic { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); font-size: 15px; color: rgba(255,255,255,.85); filter: drop-shadow(0 1px 3px rgba(0,0,0,.45)); }
+.ds-track-row__thumb .ic.is-playing { color: #fff; }
+.ds-track-row__text { flex: 1; min-width: 0; }
+.ds-track-row__text b { display: block; font-size: 14px; font-weight: 500; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-track-row__text span { display: block; font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; }
+.ds-track-row__select { width: 44px; height: 44px; display: grid; place-items: center; }
+.ds-track-row__select i { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--color-text-tertiary); font-style: normal; }
+.ds-track-row__select i.is-on { border: 0; background: var(--color-brand); color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 700; }

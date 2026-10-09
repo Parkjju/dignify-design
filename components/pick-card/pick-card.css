@@ -1,0 +1,22 @@
+/* components/pick-card/pick-card.md */
+.ds-pick-card { padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface); color: var(--color-text-on-dark); display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
+.ds-pick-card__who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
+.ds-pick-card__who b { font-size: 15px; font-weight: 600; color: var(--color-text-on-dark); }
+.ds-pick-card__seal { font-size: 13px; color: var(--color-pick-accent); }
+.ds-pick-card__dot { color: rgba(255,255,255,.3); }
+.ds-pick-card__more { margin-left: auto; font-size: 18px; color: rgba(255,255,255,.6); }
+.ds-pick-card__title { font-size: 17px; font-weight: 700; }
+.ds-pick-card__media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
+.ds-pick-card__blur { position: absolute; inset: -30px; filter: blur(28px); }
+.ds-pick-card__media::after { content: ""; position: absolute; inset: 0; background: var(--color-scrim); }
+.ds-pick-card__stack { position: relative; height: 150px; z-index: 1; }
+.ds-pick-card__stack .art { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+.ds-pick-card__stack b { position: absolute; left: 0; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); z-index: 5; background: rgba(0,0,0,.5); display: grid; place-items: center; font-size: 26px; font-weight: 700; }
+.ds-pick-card__bar { display: flex; align-items: center; gap: var(--spacing-x2); }
+.ds-pick-card__react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: var(--color-fill-on-dark-subtle); display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
+.ds-pick-card__react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
+.ds-pick-card__react.is-mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
+.ds-pick-card__react.is-mine b { color: var(--color-brand); }
+.ds-pick-card__meta { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: var(--color-text-on-dark-tertiary); }
+.ds-pick-card__meta .ic { font-size: 12px; }
+.ds-pick-card__share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: var(--color-fill-on-dark-subtle); display: grid; place-items: center; font-size: 16px; color: rgba(255,255,255,.8); }

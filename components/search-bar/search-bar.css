@@ -1,0 +1,7 @@
+/* components/search-bar/search-bar.md */
+.ds-search-bar { height: 40px; display: flex; align-items: center; gap: var(--spacing-x2); padding: 0 var(--spacing-x3-5);
+  background: var(--color-surface); border: 1px solid var(--color-border-light); border-radius: var(--radius-medium); color: var(--color-text-tertiary); }
+.ds-search-bar > .ic { font-size: 15px; }
+.ds-search-bar__field { flex: 1; font-size: 14px; color: var(--color-text-primary); }
+.ds-search-bar__field.is-placeholder { color: var(--color-text-tertiary); }
+.ds-search-bar__caret { display: inline-block; width: 2px; height: 18px; background: var(--color-brand); vertical-align: -4px; margin-left: 1px; }

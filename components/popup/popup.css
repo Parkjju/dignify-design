@@ -1,0 +1,8 @@
+/* components/popup/popup.md */
+.ds-popup { width: 329px; padding: 28px var(--spacing-x6) var(--spacing-x5); border-radius: var(--radius-large); background: var(--color-background);
+  box-shadow: 0 8px 24px rgba(0,0,0,.18); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x3-5); text-align: center; color: var(--color-text-primary); }
+.ds-popup__mark { width: 44px; height: 44px; border-radius: 11px; background: var(--color-brand-light); display: grid; place-items: center; margin-bottom: 2px; }
+.ds-popup__mark .brand-mark { width: 28px; height: 28px; }
+.ds-popup h2 { font: var(--typography-title2); }
+.ds-popup p { font: var(--typography-body); line-height: 1.55; color: var(--color-text-secondary); margin-bottom: var(--spacing-x1); }
+.ds-popup__decline { font: var(--typography-body); color: var(--color-text-tertiary); margin-top: 2px; }

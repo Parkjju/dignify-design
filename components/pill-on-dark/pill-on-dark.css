@@ -1,0 +1,7 @@
+/* components/pill-on-dark/pill-on-dark.md */
+.ds-pill { display: inline-flex; align-items: center; gap: var(--spacing-x1); white-space: nowrap; border-radius: var(--radius-full); color: var(--color-text-on-dark); }
+.ds-pill .ic { font-size: 9px; }
+.ds-pill--chip { padding: 5px var(--spacing-x2-5); font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); background: var(--color-fill-on-dark); border: 1px solid var(--color-stroke-on-dark); }
+.ds-pill--mode { padding: 5px var(--spacing-x2-5); font-size: 12px; font-weight: 500; background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.25); }
+.ds-pill--query { padding: 5px var(--spacing-x2-5); font-size: 12px; font-weight: 500; background: var(--color-brand); }
+.ds-pill--badge { padding: 7px var(--spacing-x3-5); font: var(--typography-label); background: var(--color-scrim-strong); border: 1px solid var(--color-stroke-on-dark); }

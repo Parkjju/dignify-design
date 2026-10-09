@@ -1,0 +1,4 @@
+/* components/shimmer/shimmer.md */
+.ds-shimmer { position: relative; overflow: hidden; background: rgba(255,255,255,.14); }
+.ds-shimmer::after { content: ""; position: absolute; inset: 0; width: 60%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent); animation: ds-shimmer 1.2s linear infinite; }
+@keyframes ds-shimmer { from { transform: translateX(-100%); } to { transform: translateX(270%); } }

@@ -1,0 +1,9 @@
+/* components/coach-mark/coach-mark.md */
+.ds-coach { width: 345px; padding: var(--spacing-x6); border-radius: 28px; background: var(--color-pick-elevated); text-align: center; color: #fff; }
+.ds-coach h2 { font-size: 20px; font-weight: 700; }
+.ds-coach p { font-size: 15px; color: rgba(255,255,255,.7); line-height: 1.5; margin-top: var(--spacing-x2-5); }
+.ds-coach__dots { display: flex; justify-content: center; gap: var(--spacing-x2); margin-top: var(--spacing-x5); }
+.ds-coach__dots i { width: 8px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.25); }
+.ds-coach__dots i.is-on { width: 20px; background: #fff; }
+.ds-coach b { display: grid; place-items: center; height: 52px; border-radius: var(--radius-full); background: var(--color-brand); font-size: 16px; font-weight: 600; margin-top: var(--spacing-x5); }
+.ds-spotlight { position: absolute; border-radius: 50%; box-shadow: 0 0 0 2000px rgba(0,0,0,.72); border: 1px solid rgba(255,255,255,.5); }

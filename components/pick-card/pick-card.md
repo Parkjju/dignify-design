@@ -30,7 +30,7 @@ Picks 탭 목록, 내가 만든 픽 목록, 새 픽 미리보기. 지면이 라�
 
 ## 동작
 - 미디어 탭 = 픽 재생(줌 전환 → `screens/pick-play.html`).
-- `···` = 메뉴 시트(`components/menu-sheet.md`).
+- `···` = 메뉴 시트(`components/menu-sheet/menu-sheet.md`).
 - 내 픽엔 반응을 누를 수 없다(표시만).
 
 ## 플랫폼

@@ -1,0 +1,16 @@
+/* components/settings-row/settings-row.md */
+.ds-settings-row { height: 48px; padding: 0 var(--spacing-x5); display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }
+.ds-settings-row .ic { font-size: 13px; color: var(--color-border); }
+.ds-settings-row.is-destructive { color: var(--color-destructive); }
+.ds-settings-toggle { padding: var(--spacing-x3) var(--spacing-x5); }
+.ds-settings-toggle > div { display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }
+.ds-settings-toggle p { font: var(--typography-caption); color: var(--color-text-tertiary); margin-top: var(--spacing-x1); line-height: 1.45; }
+.ds-switch { width: 63px; height: 28px; border-radius: 14px; background: rgba(120,120,128,.16); position: relative; flex: none; }
+.ds-switch::after { content: ""; position: absolute; left: 2px; top: 2px; width: 37px; height: 24px; border-radius: 12px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,.15); }
+.ds-switch.is-on { background: var(--color-brand); }
+.ds-switch.is-on::after { left: auto; right: 2px; }
+.ds-settings-card { margin: 0 var(--spacing-x5); padding: var(--spacing-x3); border-radius: 14px; background: var(--color-surface); display: flex; align-items: center; gap: var(--spacing-x3); }
+.ds-settings-card__icon { width: 40px; height: 40px; border-radius: 10px; background: var(--color-brand); color: #fff; display: grid; place-items: center; font-size: 19px; }
+.ds-settings-card div b { display: block; font: var(--typography-body-medium); color: var(--color-text-primary); }
+.ds-settings-card div span { display: block; font: var(--typography-caption); color: var(--color-brand); margin-top: 2px; }
+.ds-settings-card > .ic { margin-left: auto; font-size: 13px; color: var(--color-border); }

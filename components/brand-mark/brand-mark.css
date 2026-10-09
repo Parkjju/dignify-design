@@ -1,0 +1,3 @@
+/* components/brand-mark/brand-mark.md */
+.ds-brand-mark { display: inline-grid; background: var(--color-brand-light); box-sizing: border-box; }
+.ds-brand-mark .brand-mark { width: 100%; height: 100%; }

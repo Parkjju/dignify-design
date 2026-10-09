@@ -96,15 +96,16 @@ const outputs = {
 // 외부 CSS·이미지 참조는 뷰어·단독 공유에서 끊긴다. 앨범 커버만 네트워크(iTunes CDN)에서 받는다.
 const assets = ':root {\n' + readdirSync(join(root, 'assets')).filter(f => f.endsWith('.png')).sort().map(f =>
   `  --asset-${f.replace('.png', '')}: url(data:image/png;base64,${readFileSync(join(root, 'assets', f)).toString('base64')});\n`).join('') + '}\n'
-const ds = css() + assets + readFileSync(join(root, 'screens', '_shared.css'), 'utf8')
+// 컴포넌트 CSS(components/*/*.css)도 같이 묶는다 — 시안과 Storybook이 같은 CSS 한 벌을 쓴다.
+const componentCss = readdirSync(join(root, 'components'), { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name).sort()
+  .flatMap(n => readdirSync(join(root, 'components', n)).filter(f => f.endsWith('.css')).map(f => readFileSync(join(root, 'components', n, f), 'utf8')))
+const ds = css() + assets + readFileSync(join(root, 'screens', '_shared.css'), 'utf8') + componentCss.join('')
+outputs['generated/web/ds.css'] = `/* ${HEADER} — 토큰 + 애셋 + screens/_shared.css + 컴포넌트별 css. Storybook preview가 이 파일을 쓴다 */\n` + ds
 const DS_BLOCK = /<style id="ds">[\s\S]*?<\/style>/
-const TOKENS_JSON = /<script id="tokens" type="application\/json">[\s\S]*?<\/script>/
 for (const f of readdirSync(join(root, 'screens')).filter(f => f.endsWith('.html'))) {
   const src = readFileSync(join(root, 'screens', f), 'utf8')
   if (!DS_BLOCK.test(src)) throw new Error(`screens/${f}: <style id="ds"></style> 자리가 없습니다`)
   outputs[`screens/${f}`] = src.replace(DS_BLOCK, () => `<style id="ds">\n${ds}</style>`)
-    // 토큰 목록 페이지용: 설명([제안] 포함)까지 JSON으로 넣는다.
-    .replace(TOKENS_JSON, () => `<script id="tokens" type="application/json">${JSON.stringify(tokens).replace(/</g, "\\u003c")}</script>`)
 }
 
 if (process.argv.includes('--check')) {

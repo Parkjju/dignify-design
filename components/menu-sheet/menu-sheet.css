@@ -1,0 +1,7 @@
+/* components/menu-sheet/menu-sheet.md */
+.ds-menu-sheet { position: relative; width: 377px; padding: 24px 0; border-radius: 28px; background: var(--color-pick-elevated); color: #fff; }
+.ds-menu-sheet__grabber { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 36px; height: 5px; border-radius: 3px; background: rgba(255,255,255,.3); }
+.ds-menu-sheet__row { height: 60px; padding: 0 32px; display: flex; align-items: center; font-size: 17px; font-weight: 600; }
+.ds-menu-sheet__row.is-destructive { color: var(--color-destructive); }
+.ds-menu-sheet__div { display: block; height: 1px; margin: 0 16px; background: rgba(255,255,255,.08); }
+.ds-menu-sheet__cancel { margin: 16px 16px 0; height: 56px; border-radius: var(--radius-medium); background: rgba(255,255,255,.08); display: grid; place-items: center; font-size: 17px; font-weight: 600; }
