@@ -243,7 +243,7 @@ body.embed { padding: 0; background: transparent; }
 /* components/coach-gesture/coach-gesture.md */
 .ds-coach-gesture { position: absolute; inset: 0; z-index: 95; pointer-events: none; }
 .ds-coach-gesture__mark { position: absolute; left: 0; right: 0; height: 0; display: flex; justify-content: center; }
-.ds-coach-gesture__caption { position: absolute; left: var(--spacing-x6); right: var(--spacing-x6); padding: var(--spacing-x4) var(--spacing-x5); border-radius: var(--radius-medium);
+.ds-coach-gesture__caption { position: absolute; left: 0; right: 0; padding: var(--spacing-x4) var(--spacing-x5); border-radius: var(--radius-medium);
   background: var(--color-pick-elevated); color: #fff; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
 .ds-coach-gesture__caption b { display: block; font: var(--typography-headline); }
 .ds-coach-gesture__caption p { font: var(--typography-callout); font-weight: 400; color: rgba(255,255,255,.7); margin-top: var(--spacing-x1); }
@@ -321,7 +321,8 @@ body.embed { padding: 0; background: transparent; }
 .ds-feed-track__bg { position: absolute; inset: -40px; filter: blur(28px); transform: scale(1.1); }
 .ds-feed-track__scrim { position: absolute; inset: 0; background: linear-gradient(transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.85) 75%); }
 .ds-feed-track__body { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
-.ds-feed-track__cover { border-radius: var(--radius-large); box-shadow: 0 16px 24px rgba(0,0,0,.5); margin: auto 0; }
+.ds-feed-track__stage { position: relative; margin: auto 0; z-index: 3; }   /* 아트워크 + 그 위에 붙는 오버레이(코치마크) */
+.ds-feed-track__cover { display: block; border-radius: var(--radius-large); box-shadow: 0 16px 24px rgba(0,0,0,.5); }
 .ds-feed-track__meta { width: 100%; padding: 0 var(--spacing-x5); display: flex; flex-direction: column; gap: var(--spacing-x4); }
 .ds-feed-track__title { font-size: 18px; font-weight: 700; color: var(--color-text-on-dark); margin-top: var(--spacing-x2); }
 .ds-feed-track__artist { font-size: 14px; color: var(--color-text-on-dark-secondary); margin-top: 3px; }

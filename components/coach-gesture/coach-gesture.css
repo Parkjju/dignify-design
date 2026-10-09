@@ -1,7 +1,7 @@
 /* components/coach-gesture/coach-gesture.md */
 .ds-coach-gesture { position: absolute; inset: 0; z-index: 95; pointer-events: none; }
 .ds-coach-gesture__mark { position: absolute; left: 0; right: 0; height: 0; display: flex; justify-content: center; }
-.ds-coach-gesture__caption { position: absolute; left: var(--spacing-x6); right: var(--spacing-x6); padding: var(--spacing-x4) var(--spacing-x5); border-radius: var(--radius-medium);
+.ds-coach-gesture__caption { position: absolute; left: 0; right: 0; padding: var(--spacing-x4) var(--spacing-x5); border-radius: var(--radius-medium);
   background: var(--color-pick-elevated); color: #fff; text-align: center; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
 .ds-coach-gesture__caption b { display: block; font: var(--typography-headline); }
 .ds-coach-gesture__caption p { font: var(--typography-callout); font-weight: 400; color: rgba(255,255,255,.7); margin-top: var(--spacing-x1); }

@@ -3,7 +3,8 @@
 .ds-feed-track__bg { position: absolute; inset: -40px; filter: blur(28px); transform: scale(1.1); }
 .ds-feed-track__scrim { position: absolute; inset: 0; background: linear-gradient(transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.85) 75%); }
 .ds-feed-track__body { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
-.ds-feed-track__cover { border-radius: var(--radius-large); box-shadow: 0 16px 24px rgba(0,0,0,.5); margin: auto 0; }
+.ds-feed-track__stage { position: relative; margin: auto 0; z-index: 3; }   /* 아트워크 + 그 위에 붙는 오버레이(코치마크) */
+.ds-feed-track__cover { display: block; border-radius: var(--radius-large); box-shadow: 0 16px 24px rgba(0,0,0,.5); }
 .ds-feed-track__meta { width: 100%; padding: 0 var(--spacing-x5); display: flex; flex-direction: column; gap: var(--spacing-x4); }
 .ds-feed-track__title { font-size: 18px; font-weight: 700; color: var(--color-text-on-dark); margin-top: var(--spacing-x2); }
 .ds-feed-track__artist { font-size: 14px; color: var(--color-text-on-dark-secondary); margin-top: 3px; }
