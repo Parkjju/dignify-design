@@ -1,7 +1,7 @@
 {
   "radius": {
     "$type": "dimension",
-    "small": { "$value": 12, "$description": "[제안] 썸네일·작은 카드. 현재 하드코딩 최다값" },
+    "small": { "$value": 12, "$description": "썸네일·작은 카드" },
     "medium": { "$value": 16, "$description": "버튼·입력창" },
     "large": { "$value": 24, "$description": "카드·아트워크" },
     "extraLarge": { "$value": 28, "$description": "시트" },

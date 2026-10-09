@@ -11,7 +11,7 @@
     },
     "brandDeep": {
       "$value": "#2A2350",
-      "$description": "[제안] 공유 카드 그라데이션 끝색. 현재 iOS 3곳 하드코딩"
+      "$description": "브랜드 그라데이션 끝색(디깅 프로필 유형 카드·공유 카드)"
     },
     "background": {
       "$value": "#FFFFFF"
@@ -60,63 +60,63 @@
     },
     "textOnDark": {
       "$value": "#FFFFFF",
-      "$description": "[제안] 피드·Picks 같은 어두운 지면 위 주 텍스트"
+      "$description": "피드·Picks 같은 어두운 지면 위 주 텍스트"
     },
     "textOnDarkSecondary": {
       "$value": {
         "hex": "#FFFFFF",
         "alpha": 0.75
       },
-      "$description": "[제안] 어두운 지면 위 보조 텍스트(피드 아티스트명)"
+      "$description": "어두운 지면 위 보조 텍스트(피드 아티스트명)"
     },
     "textOnDarkTertiary": {
       "$value": {
         "hex": "#FFFFFF",
         "alpha": 0.45
       },
-      "$description": "[제안] 어두운 지면 위 메타(Picks 시간·곡 수)"
+      "$description": "어두운 지면 위 메타(Picks 시간·곡 수)"
     },
     "iconOnDark": {
       "$value": {
         "hex": "#FFFFFF",
         "alpha": 0.82
       },
-      "$description": "[제안] 어두운 지면 위 액션 아이콘(피드 상세·공유)"
+      "$description": "어두운 지면 위 액션 아이콘(피드 상세·공유)"
     },
     "fillOnDark": {
       "$value": {
         "hex": "#FFFFFF",
         "alpha": 0.15
       },
-      "$description": "[제안] 어두운 지면 위 칩 지면"
+      "$description": "어두운 지면 위 칩 지면"
     },
     "fillOnDarkSubtle": {
       "$value": {
         "hex": "#FFFFFF",
         "alpha": 0.07
       },
-      "$description": "[제안] Picks 반응·공유 버튼 지면"
+      "$description": "Picks 반응·공유 버튼 지면"
     },
     "strokeOnDark": {
       "$value": {
         "hex": "#FFFFFF",
         "alpha": 0.2
       },
-      "$description": "[제안] 어두운 지면 위 칩 테두리"
+      "$description": "어두운 지면 위 칩 테두리"
     },
     "scrim": {
       "$value": {
         "hex": "#000000",
         "alpha": 0.45
       },
-      "$description": "[제안] 아트워크 위 어둡게 까는 막(Picks 미디어)"
+      "$description": "아트워크 위 어둡게 까는 막(Picks 미디어)"
     },
     "scrimStrong": {
       "$value": {
         "hex": "#000000",
         "alpha": 0.55
       },
-      "$description": "[제안] 아트워크 위 배지·남은 곡 수"
+      "$description": "아트워크 위 배지·남은 곡 수"
     }
   }
 }

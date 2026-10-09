@@ -7,10 +7,10 @@
     "headline": { "$value": { "fontSize": 17, "fontWeight": 600 } },
     "body": { "$value": { "fontSize": 15, "fontWeight": 400 } },
     "bodyMedium": { "$value": { "fontSize": 15, "fontWeight": 500 } },
-    "callout": { "$value": { "fontSize": 14, "fontWeight": 500 }, "$description": "[제안] 14 medium. 검색창·칩·보조 버튼. 현재 하드코딩 다수" },
-    "label": { "$value": { "fontSize": 13, "fontWeight": 600 }, "$description": "[제안] 13 semibold. iOS에서 가장 많이 하드코딩된 조합" },
+    "callout": { "$value": { "fontSize": 14, "fontWeight": 500 }, "$description": "보조 버튼·칩·\"전체 보기\" 링크" },
+    "label": { "$value": { "fontSize": 13, "fontWeight": 600 }, "$description": "날짜 헤더·섹션 라벨·배지" },
     "caption": { "$value": { "fontSize": 12, "fontWeight": 400 } },
-    "captionStrong": { "$value": { "fontSize": 12, "fontWeight": 600 }, "$description": "[제안] 12 semibold. 배지·메타 강조" },
+    "captionStrong": { "$value": { "fontSize": 12, "fontWeight": 600 }, "$description": "배지·메타 정보 강조" },
     "micro": { "$value": { "fontSize": 10.5, "fontWeight": 400 } },
     "title": { "$value": "{typography.title1}", "$description": "title1 별칭(기존 코드 호환)" }
   }

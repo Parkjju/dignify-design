@@ -12,7 +12,7 @@ object DSColor {
     val brand = Color(0xFF4B3FD8)
     /** brand 위 옅은 지면(브랜드마크 배경 등) */
     val brandLight = Color(0xFFEEF0FF)
-    /** [제안] 공유 카드 그라데이션 끝색. 현재 iOS 3곳 하드코딩 */
+    /** 브랜드 그라데이션 끝색(디깅 프로필 유형 카드·공유 카드) */
     val brandDeep = Color(0xFF2A2350)
     val background = Color(0xFFFFFFFF)
     /** 카드·입력창 지면 */
@@ -33,23 +33,23 @@ object DSColor {
     val pickElevated = Color(0xFF282836)
     /** 다크 위 brand. #4B3FD8은 다크에 묻혀서 밝기만 올림 */
     val pickAccent = Color(0xFF8F86FF)
-    /** [제안] 피드·Picks 같은 어두운 지면 위 주 텍스트 */
+    /** 피드·Picks 같은 어두운 지면 위 주 텍스트 */
     val textOnDark = Color(0xFFFFFFFF)
-    /** [제안] 어두운 지면 위 보조 텍스트(피드 아티스트명) */
+    /** 어두운 지면 위 보조 텍스트(피드 아티스트명) */
     val textOnDarkSecondary = Color(0xBFFFFFFF)
-    /** [제안] 어두운 지면 위 메타(Picks 시간·곡 수) */
+    /** 어두운 지면 위 메타(Picks 시간·곡 수) */
     val textOnDarkTertiary = Color(0x73FFFFFF)
-    /** [제안] 어두운 지면 위 액션 아이콘(피드 상세·공유) */
+    /** 어두운 지면 위 액션 아이콘(피드 상세·공유) */
     val iconOnDark = Color(0xD1FFFFFF)
-    /** [제안] 어두운 지면 위 칩 지면 */
+    /** 어두운 지면 위 칩 지면 */
     val fillOnDark = Color(0x26FFFFFF)
-    /** [제안] Picks 반응·공유 버튼 지면 */
+    /** Picks 반응·공유 버튼 지면 */
     val fillOnDarkSubtle = Color(0x12FFFFFF)
-    /** [제안] 어두운 지면 위 칩 테두리 */
+    /** 어두운 지면 위 칩 테두리 */
     val strokeOnDark = Color(0x33FFFFFF)
-    /** [제안] 아트워크 위 어둡게 까는 막(Picks 미디어) */
+    /** 아트워크 위 어둡게 까는 막(Picks 미디어) */
     val scrim = Color(0x73000000)
-    /** [제안] 아트워크 위 배지·남은 곡 수 */
+    /** 아트워크 위 배지·남은 곡 수 */
     val scrimStrong = Color(0x8C000000)
 }
 
@@ -60,12 +60,12 @@ object DSTypography {
     val headline = TextStyle(fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
     val body = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Normal)
     val bodyMedium = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Medium)
-    /** [제안] 14 medium. 검색창·칩·보조 버튼. 현재 하드코딩 다수 */
+    /** 보조 버튼·칩·"전체 보기" 링크 */
     val callout = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium)
-    /** [제안] 13 semibold. iOS에서 가장 많이 하드코딩된 조합 */
+    /** 날짜 헤더·섹션 라벨·배지 */
     val label = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
     val caption = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal)
-    /** [제안] 12 semibold. 배지·메타 강조 */
+    /** 배지·메타 정보 강조 */
     val captionStrong = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
     val micro = TextStyle(fontSize = 10.5f.sp, fontWeight = FontWeight.Normal)
     /** title1 별칭(기존 코드 호환) */
@@ -73,7 +73,7 @@ object DSTypography {
 }
 
 object DSRadius {
-    /** [제안] 썸네일·작은 카드. 현재 하드코딩 최다값 */
+    /** 썸네일·작은 카드 */
     val small = 12.dp
     /** 버튼·입력창 */
     val medium = 16.dp

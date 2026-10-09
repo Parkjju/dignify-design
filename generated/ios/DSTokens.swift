@@ -6,7 +6,7 @@ enum DSColor {
     static let brand = Color(hex: 0x4B3FD8)
     /// brand 위 옅은 지면(브랜드마크 배경 등)
     static let brandLight = Color(hex: 0xEEF0FF)
-    /// [제안] 공유 카드 그라데이션 끝색. 현재 iOS 3곳 하드코딩
+    /// 브랜드 그라데이션 끝색(디깅 프로필 유형 카드·공유 카드)
     static let brandDeep = Color(hex: 0x2A2350)
     static let background = Color(hex: 0xFFFFFF)
     /// 카드·입력창 지면
@@ -27,23 +27,23 @@ enum DSColor {
     static let pickElevated = Color(hex: 0x282836)
     /// 다크 위 brand. #4B3FD8은 다크에 묻혀서 밝기만 올림
     static let pickAccent = Color(hex: 0x8F86FF)
-    /// [제안] 피드·Picks 같은 어두운 지면 위 주 텍스트
+    /// 피드·Picks 같은 어두운 지면 위 주 텍스트
     static let textOnDark = Color(hex: 0xFFFFFF)
-    /// [제안] 어두운 지면 위 보조 텍스트(피드 아티스트명)
+    /// 어두운 지면 위 보조 텍스트(피드 아티스트명)
     static let textOnDarkSecondary = Color(hex: 0xFFFFFF, alpha: 0.75)
-    /// [제안] 어두운 지면 위 메타(Picks 시간·곡 수)
+    /// 어두운 지면 위 메타(Picks 시간·곡 수)
     static let textOnDarkTertiary = Color(hex: 0xFFFFFF, alpha: 0.45)
-    /// [제안] 어두운 지면 위 액션 아이콘(피드 상세·공유)
+    /// 어두운 지면 위 액션 아이콘(피드 상세·공유)
     static let iconOnDark = Color(hex: 0xFFFFFF, alpha: 0.82)
-    /// [제안] 어두운 지면 위 칩 지면
+    /// 어두운 지면 위 칩 지면
     static let fillOnDark = Color(hex: 0xFFFFFF, alpha: 0.15)
-    /// [제안] Picks 반응·공유 버튼 지면
+    /// Picks 반응·공유 버튼 지면
     static let fillOnDarkSubtle = Color(hex: 0xFFFFFF, alpha: 0.07)
-    /// [제안] 어두운 지면 위 칩 테두리
+    /// 어두운 지면 위 칩 테두리
     static let strokeOnDark = Color(hex: 0xFFFFFF, alpha: 0.2)
-    /// [제안] 아트워크 위 어둡게 까는 막(Picks 미디어)
+    /// 아트워크 위 어둡게 까는 막(Picks 미디어)
     static let scrim = Color(hex: 0x000000, alpha: 0.45)
-    /// [제안] 아트워크 위 배지·남은 곡 수
+    /// 아트워크 위 배지·남은 곡 수
     static let scrimStrong = Color(hex: 0x000000, alpha: 0.55)
 }
 
@@ -54,12 +54,12 @@ enum DSTypography {
     static let headline = Font.system(size: 17, weight: .semibold)
     static let body = Font.system(size: 15, weight: .regular)
     static let bodyMedium = Font.system(size: 15, weight: .medium)
-    /// [제안] 14 medium. 검색창·칩·보조 버튼. 현재 하드코딩 다수
+    /// 보조 버튼·칩·"전체 보기" 링크
     static let callout = Font.system(size: 14, weight: .medium)
-    /// [제안] 13 semibold. iOS에서 가장 많이 하드코딩된 조합
+    /// 날짜 헤더·섹션 라벨·배지
     static let label = Font.system(size: 13, weight: .semibold)
     static let caption = Font.system(size: 12, weight: .regular)
-    /// [제안] 12 semibold. 배지·메타 강조
+    /// 배지·메타 정보 강조
     static let captionStrong = Font.system(size: 12, weight: .semibold)
     static let micro = Font.system(size: 10.5, weight: .regular)
     /// title1 별칭(기존 코드 호환)
@@ -67,7 +67,7 @@ enum DSTypography {
 }
 
 enum DSRadius {
-    /// [제안] 썸네일·작은 카드. 현재 하드코딩 최다값
+    /// 썸네일·작은 카드
     static let small: CGFloat = 12
     /// 버튼·입력창
     static let medium: CGFloat = 16
