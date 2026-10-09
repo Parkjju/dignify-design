@@ -88,6 +88,14 @@ const outputs = {
   'generated/web/tokens.css': css(),
 }
 
+// 시안 HTML은 토큰을 <style id="tokens"> 안에 인라인으로 품는다. 외부 CSS 참조는 뷰어·단독 공유에서 끊긴다.
+const TOKENS_BLOCK = /<style id="tokens">[\s\S]*?<\/style>/
+for (const f of readdirSync(join(root, 'examples')).filter(f => f.endsWith('.html'))) {
+  const src = readFileSync(join(root, 'examples', f), 'utf8')
+  if (!TOKENS_BLOCK.test(src)) throw new Error(`examples/${f}: <style id="tokens"></style> 자리가 없습니다`)
+  outputs[`examples/${f}`] = src.replace(TOKENS_BLOCK, () => `<style id="tokens">\n${css()}</style>`)
+}
+
 if (process.argv.includes('--check')) {
   const stale = Object.entries(outputs).filter(([p, s]) => {
     try { return readFileSync(join(root, p), 'utf8') !== s } catch { return true }
