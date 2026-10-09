@@ -1,0 +1,17 @@
+{
+  "name": "dignify-design",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tokens": "node scripts/build.mjs",
+    "check": "node scripts/build.mjs --check",
+    "dev": "node scripts/build.mjs && storybook dev -p 6006",
+    "build": "node scripts/build.mjs && storybook build -o storybook-static"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "10.6.0",
+    "@storybook/html-vite": "10.6.0",
+    "storybook": "10.6.0",
+    "vite": "7.3.6"
+  }
+}

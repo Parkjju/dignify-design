@@ -1,0 +1,22 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="소개" />
+
+# Dignify Design
+
+Dignify iOS·Android가 같이 쓰는 디자인 시스템이다. 왼쪽 메뉴는 세 층이다.
+
+| 메뉴 | 내용 | 정본 |
+|---|---|---|
+| **Foundations** | 색·타이포그래피·라운드·여백·아이콘 | `tokens/*.json` → iOS `DSTokens.swift` · Android `DSTokens.kt` 생성 |
+| **Components** | 컴포넌트별 명세(Docs)와 상태별 미리보기. 오른쪽 아래 Controls로 값을 바꿔 본다 | `components/<이름>/` (명세 md · 마크업 js · 스타일 css · 스토리) |
+| **Screens** | 지금 앱(iOS 1.2.1)의 모든 화면과, 컴포넌트를 조립한 새 시안 | `screens/` |
+
+수치·문구는 전부 앱 코드에서 가져왔다. 각 컴포넌트 명세 맨 아래에 대응하는 Swift·Kotlin 이름이 있다.
+
+## 시안 → 개발
+
+1. Claude에게 시안을 요청한다(예: "디깅 프로필에 이번 달 아티스트 섹션 추가한 시안"). 컴포넌트를 조립한 스토리로 만들어진다.
+2. PR이 머지되면 이 사이트가 자동으로 다시 배포된다. 링크만 공유하면 된다.
+3. 새 값·새 컴포넌트가 필요하면 시안과 함께 토큰·명세 변경이 같은 PR에 들어간다.
+4. 개발은 컴포넌트 명세의 플랫폼 표를 보고 iOS·Android를 같이 구현한다.
