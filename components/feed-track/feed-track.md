@@ -19,7 +19,10 @@
 | | 하입 아이콘 |
 |---|---|
 | 하입 전 | `color.textTertiary` |
-| 하입 후 | `color.brand` (더블탭 시 버스트 이펙트) |
+| 하입 후 | `color.brand` |
+| 하입하는 순간(`burst`) | 버튼이 1.35배로 팡 → 삽 조각 8개가 위로 튀었다가 아래로 우수수 떨어지며 사라짐. 버튼·더블탭 둘 다 |
+
+버스트 길이 ≈ 1.2초(조각이 다 떨어질 때까지). `speed`로 빠르기 조절(1 = 기본, 2 = 두 배 빠르게).
 
 ## 플랫폼
 | iOS | `TrackCardView` (`Features/Feed/FeedView.swift`) |

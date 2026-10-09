@@ -11,20 +11,24 @@
 .ds-coach-gesture__hand > .ic { position: absolute; inset: 0; font-size: 72px; color: #fff; filter: drop-shadow(0 4px 10px rgba(0,0,0,.45)); }
 .ds-coach-gesture__ring { position: absolute; left: 14px; top: 2px; width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; border: 2px solid rgba(255,255,255,.9); opacity: 0; }
 
-.is-double-tap > .ic { animation: dsg-tap 3s ease-out infinite; transform-origin: 30% 10%; }
-.is-double-tap .ds-coach-gesture__ring { animation: dsg-ring 3s ease-out infinite; }
+.is-double-tap > .ic { animation: dsg-tap calc(3s * var(--k, 1)) ease-out infinite; transform-origin: 30% 10%; }
+.is-double-tap .ds-coach-gesture__ring { animation: dsg-ring calc(3s * var(--k, 1)) ease-out infinite; }
 @keyframes dsg-tap { 0%, 10%, 21%, 100% { transform: scale(1); } 5%, 16% { transform: scale(.86); } }
 @keyframes dsg-ring { 0% { opacity: 0; transform: scale(.4); } 5% { opacity: 1; } 11% { opacity: 0; transform: scale(1.6); }
   12% { opacity: 0; transform: scale(.4); } 16% { opacity: 1; } 23%, 100% { opacity: 0; transform: scale(1.6); } }
 
-.is-swipe-up { animation: dsg-swipe 2.4s cubic-bezier(.3,0,.2,1) infinite; }
+.is-swipe-up { animation: dsg-swipe calc(2.4s * var(--k, 1)) cubic-bezier(.3,0,.2,1) infinite; }
 @keyframes dsg-swipe { 0% { transform: translateY(70px); opacity: 0; } 12% { opacity: 1; } 50% { transform: translateY(-70px); opacity: 1; } 60%, 100% { transform: translateY(-70px); opacity: 0; } }
 
-.ds-coach-gesture__hype { font-size: 160px; color: var(--color-brand); translate: 0 -80px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); animation: dsg-pop 2.4s infinite; }
+.ds-coach-gesture__hype { font-size: 160px; color: var(--color-brand); translate: 0 -80px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); animation: dsg-pop calc(2.4s * var(--k, 1)) infinite; }
 /* 팝(0.45s, 오버슈트) → 머묾 → 페이드아웃(0.4s). 시안에선 반복해서 보여 주고, 앱에선 1회 */
 @keyframes dsg-pop { 0% { transform: scale(.3); opacity: 0; animation-timing-function: cubic-bezier(.2,1.4,.4,1); }
   19% { transform: scale(1); opacity: 1; } 60% { transform: scale(1); opacity: 1; animation-timing-function: ease-in; }
   77%, 100% { transform: scale(1.08); opacity: 0; } }
+
+/* 사라질 때: 캡션·마크가 함께 0.2s 페이드 */
+.ds-coach-gesture { transition: opacity calc(.2s * var(--k, 1)) ease-out; }
+.ds-coach-gesture.is-leaving { opacity: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .ds-coach-gesture *, .ds-coach-gesture__hand { animation: none !important; }

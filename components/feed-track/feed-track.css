@@ -10,4 +10,17 @@
 .ds-feed-track__actions { display: flex; align-items: center; gap: var(--spacing-x4); }
 .ds-feed-track__hype { font-size: 28px; color: var(--color-text-tertiary); margin-right: auto; display: grid; }
 .ds-feed-track__hype.is-on { color: var(--color-brand); }
+/* 하입 버스트 — 버튼이 팡 커졌다가, 삽 조각이 위로 튀고 우수수 떨어진다. --k = 1/속도. 시안은 2초마다 반복 */
+.ds-feed-track__hype { position: relative; }
+.ds-feed-track__hype.is-burst > .ic-hype:first-child { animation: dsf-pop calc(2s * var(--k, 1)) infinite; }
+.ds-feed-track__bit { position: absolute; left: 50%; top: 50%; margin: -.5em 0 0 -.5em; opacity: 0; color: var(--color-brand); pointer-events: none; z-index: 2;
+  animation: dsf-bit calc(2s * var(--k, 1)) infinite; }
+@keyframes dsf-pop { 0% { transform: scale(1); } 8% { transform: scale(1.35); } 18%, 100% { transform: scale(1); } }
+@keyframes dsf-bit {
+  0% { transform: translate(0, 0) scale(.3) rotate(0); opacity: 0; animation-timing-function: cubic-bezier(.2,.8,.4,1); }
+  5% { opacity: 1; }
+  20% { transform: translate(calc(var(--x) * .7), var(--up)) scale(1) rotate(calc(var(--r) * .3)); opacity: 1; animation-timing-function: cubic-bezier(.5,0,.9,.6); }
+  60% { transform: translate(var(--x), 150px) scale(.9) rotate(var(--r)); opacity: 0; }
+  100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ds-feed-track__bit { display: none; } .ds-feed-track__hype > .ic-hype { animation: none !important; } }
 .ds-feed-track__act { width: 32px; height: 32px; display: grid; place-items: center; font-size: 24px; color: var(--color-icon-on-dark); }
