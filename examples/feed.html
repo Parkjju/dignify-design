@@ -1,0 +1,146 @@
+<!doctype html>
+<!-- 예제: 피드(메인). iOS FeedView · TrackCardView 실측값.
+     값 규칙: 토큰이 있으면 토큰, 없으면 앱 코드 실측값 + 출처 주석. 아트워크는 그라데이션 자리표시.
+     id가 tokens인 style 블록은 node scripts/build.mjs가 채운다. 직접 고치지 말 것. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 — 피드</title>
+<style id="tokens">
+/* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
+:root {
+  --color-brand: #4B3FD8;
+  --color-brand-light: #EEF0FF;
+  --color-brand-deep: #2A2350;
+  --color-background: #FFFFFF;
+  --color-surface: #F3F4F6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-tertiary: #9CA3AF;
+  --color-border: #D1D5DB;
+  --color-border-light: #E5E7EB;
+  --color-divider: #F3F4F6;
+  --color-destructive: #EF4444;
+  --color-pick-background: #141420;
+  --color-pick-surface: #1E1E2A;
+  --color-pick-elevated: #282836;
+  --color-pick-accent: #8F86FF;
+  --typography-display: 700 40px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title1: 700 24px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title2: 700 18px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-headline: 600 17px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-body: 400 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-body-medium: 500 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-callout: 500 14px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-label: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-caption: 400 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-caption-strong: 600 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-micro: 400 10.5px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title: var(--typography-title1);
+  --radius-small: 12px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+  --radius-extra-large: 28px;
+  --radius-full: 999px;
+  --spacing-x0-5: 2px;
+  --spacing-x1: 4px;
+  --spacing-x1-5: 6px;
+  --spacing-x2: 8px;
+  --spacing-x2-5: 10px;
+  --spacing-x3: 12px;
+  --spacing-x3-5: 14px;
+  --spacing-x4: 16px;
+  --spacing-x5: 20px;
+  --spacing-x6: 24px;
+  --spacing-x8: 32px;
+  --spacing-x10: 40px;
+}
+</style>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #E9E9EE; display: flex; justify-content: center; padding: var(--spacing-x6) 0; font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; }
+  .device { position: relative; width: 393px; height: 852px; border-radius: 55px; overflow: hidden; background: #000; box-shadow: 0 0 0 10px #111; }
+  .status { position: absolute; inset: 0 0 auto; height: 59px; display: flex; justify-content: space-between; align-items: center; padding: 6px 32px 0; color: #fff; font-weight: 600; font-size: 16px; z-index: 5; }
+
+  /* 배경: 아트워크 확대 + blur 28 + 하단 그라데이션 (FeedView.feedSlot) */
+  .bg { position: absolute; inset: -40px; background: var(--art); filter: blur(28px); transform: scale(1.1); }
+  .scrim { position: absolute; inset: 0; background: linear-gradient(transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.85) 75%); }
+
+  /* 상단 컨트롤: 성향 + 검색 버튼 40×40, 그 아래 모드 필 (searchControls) */
+  .controls { position: absolute; top: calc(59px + 8px); right: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacing-x2); z-index: 4; }
+  .icon-btns { display: flex; }
+  .icon-btn { width: 40px; height: 40px; display: grid; place-items: center; color: #fff; }
+  .icon-btn svg { width: 22px; height: 22px; }
+  .mode-pill { display: flex; align-items: center; gap: var(--spacing-x1); padding: 5px var(--spacing-x2-5); border-radius: var(--radius-full);
+    background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.25); color: #fff; font-size: 12px; font-weight: 500; }
+
+  /* 카드: 폭 = 화면 - 48, radius large, 그림자 (TrackCardView) */
+  .card { position: absolute; inset: calc(59px + 64px) 0 calc(34px + 72px); display: flex; flex-direction: column; align-items: center; }
+  .art { width: 345px; height: 345px; border-radius: var(--radius-large); background: var(--art); box-shadow: 0 16px 24px rgba(0,0,0,.5); margin: auto 0; }  /* 위아래 Spacer 사이 가운데 */
+  .meta { width: 100%; padding: 0 var(--spacing-x5); display: flex; flex-direction: column; gap: var(--spacing-x4); }
+  .chips { display: flex; gap: var(--spacing-x1-5); }
+  .chip { padding: 5px var(--spacing-x2-5); border-radius: var(--radius-full); font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2); }
+  .title { font-size: 18px; font-weight: 700; color: #fff; margin-top: var(--spacing-x2); }
+  .artist { font-size: 14px; color: rgba(255,255,255,.75); margin-top: 3px; }
+  .actions { display: flex; align-items: center; }
+  .actions .right { margin-left: auto; display: flex; gap: var(--spacing-x4); }
+  .act { width: 32px; height: 32px; display: grid; place-items: center; color: rgba(255,255,255,.82); }
+  .act svg { width: 24px; height: 24px; }
+  .hype { color: var(--color-text-tertiary); }      /* 하입 전 textTertiary, 하입 후 brand */
+  .hype.on { color: var(--color-brand); }
+
+  /* 탭바: 떠 있는 캡슐 (iOS 26 시스템 탭바, tint brand) */
+  .tabbar { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); width: 300px; height: 62px; border-radius: var(--radius-full);
+    display: flex; padding: 4px; backdrop-filter: blur(20px); z-index: 4; }
+  .tabbar.light { background: rgba(255,255,255,.72); border: 1px solid rgba(0,0,0,.06); }
+  .tabbar.dark { background: rgba(80,80,90,.55); border: 1px solid rgba(255,255,255,.12); }
+  .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: var(--radius-full); font-size: 10px; font-weight: 600; }
+  .tabbar.light .tab { color: var(--color-text-primary); }
+  .tabbar.dark .tab { color: #fff; }
+  .tab.on { color: var(--color-brand) !important; background: rgba(120,120,128,.18); }
+  .tab svg { width: 24px; height: 24px; }
+</style>
+</head>
+<body>
+<div class="device" style="--art: linear-gradient(160deg, #E8D9A8 0%, #8A6B3E 45%, #2B2014 100%)">
+  <div class="status"><span>10:28</span><span>97%</span></div>
+  <div class="bg"></div><div class="scrim"></div>
+
+  <div class="controls">
+    <div class="icon-btns">
+      <span class="icon-btn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 2l1.6 5.4L17 9l-5.4 1.6L10 16l-1.6-5.4L3 9l5.4-1.6zM18 13l.8 2.2L21 16l-2.2.8L18 19l-.8-2.2L15 16l2.2-.8z"/></svg></span>
+      <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg></span>
+    </div>
+    <span class="mode-pill">하입한 곡 따라가는 중 ⇆</span>
+  </div>
+
+  <div class="card">
+    <div class="art"></div>
+    <div class="meta">
+      <div>
+        <!-- 칩은 한 자리만: 무드로 뽑혔으면 "비슷한 곡: 내 하입 곡", 아니면 장르명 -->
+        <div class="chips"><span class="chip">비슷한 곡: Blame</span></div>
+        <p class="title">Cannons</p>
+        <p class="artist">Phil Wickham</p>
+      </div>
+      <div class="actions">
+        <!-- 하입(삽) 28pt -->
+        <span class="act hype"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 2.5l1.4-1.4 2.8 2.8-1.4 1.4 1.4 1.4-6.4 6.4 1.4 1.4-1.4 1.4-1.4-1.4-5 5c-.8.8-2 .8-2.8 0s-.8-2 0-2.8l5-5-1.4-1.4 1.4-1.4 1.4 1.4 6.4-6.4z"/></svg></span>
+        <div class="right">
+          <span class="act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 6a6 6 0 0 1 6 6"/></svg></span>
+          <span class="act"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tabbar light">
+    <span class="tab on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 11.5h3V21h5v-6h4v6h5v-9.5h3z"/></svg>피드</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="7" width="14" height="14" rx="3"/><rect x="7" y="3.5" width="10" height="2" rx="1"/></svg>픽</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg>마이</span>
+  </nav>
+</div>
+</body>
+</html>

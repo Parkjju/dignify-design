@@ -1,0 +1,143 @@
+<!doctype html>
+<!-- 예제: Picks 탭(다크 지면). iOS PickListView · PickCard · PickThumbnailStack 실측값. patterns/picks-dark-surface.md
+     값 규칙: 토큰이 있으면 토큰, 없으면 앱 코드 실측값 + 출처 주석. 아트워크는 그라데이션 자리표시.
+     id가 tokens인 style 블록은 node scripts/build.mjs가 채운다. 직접 고치지 말 것. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 — Picks</title>
+<style id="tokens">
+/* 자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens */
+:root {
+  --color-brand: #4B3FD8;
+  --color-brand-light: #EEF0FF;
+  --color-brand-deep: #2A2350;
+  --color-background: #FFFFFF;
+  --color-surface: #F3F4F6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --color-text-tertiary: #9CA3AF;
+  --color-border: #D1D5DB;
+  --color-border-light: #E5E7EB;
+  --color-divider: #F3F4F6;
+  --color-destructive: #EF4444;
+  --color-pick-background: #141420;
+  --color-pick-surface: #1E1E2A;
+  --color-pick-elevated: #282836;
+  --color-pick-accent: #8F86FF;
+  --typography-display: 700 40px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title1: 700 24px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title2: 700 18px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-headline: 600 17px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-body: 400 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-body-medium: 500 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-callout: 500 14px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-label: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-caption: 400 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-caption-strong: 600 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-micro: 400 10.5px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-title: var(--typography-title1);
+  --radius-small: 12px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+  --radius-extra-large: 28px;
+  --radius-full: 999px;
+  --spacing-x0-5: 2px;
+  --spacing-x1: 4px;
+  --spacing-x1-5: 6px;
+  --spacing-x2: 8px;
+  --spacing-x2-5: 10px;
+  --spacing-x3: 12px;
+  --spacing-x3-5: 14px;
+  --spacing-x4: 16px;
+  --spacing-x5: 20px;
+  --spacing-x6: 24px;
+  --spacing-x8: 32px;
+  --spacing-x10: 40px;
+}
+</style>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { background: #E9E9EE; display: flex; justify-content: center; padding: var(--spacing-x6) 0; font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif; }
+  .device { position: relative; width: 393px; height: 852px; border-radius: 55px; overflow: hidden; background: var(--color-pick-background); box-shadow: 0 0 0 10px #111; }
+  .status { position: absolute; inset: 0 0 auto; height: 59px; display: flex; justify-content: space-between; align-items: center; padding: 6px 32px 0; color: #fff; font-weight: 600; font-size: 16px; z-index: 5; }
+
+  .scroll { position: absolute; inset: 59px 0 0; overflow: hidden; padding-top: var(--spacing-x4); }
+  .page-title { font-size: 34px; font-weight: 700; color: #fff; padding: 0 var(--spacing-x4) var(--spacing-x3); }
+
+  /* 카드: pickSurface, radius large, padding 14, 좌우 16 (PickCard) */
+  .pick { margin: 0 var(--spacing-x4) var(--spacing-x5); padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface);
+    display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
+  .who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: rgba(255,255,255,.45); }
+  .who b { font-size: 15px; font-weight: 600; color: #fff; }
+  .who .dot { color: rgba(255,255,255,.3); }
+  .who .more { margin-left: auto; color: rgba(255,255,255,.6); letter-spacing: 2px; font-weight: 700; }
+  .pick h3 { font-size: 17px; font-weight: 700; color: #fff; }
+
+  /* 미디어: 첫 커버 blur 28 + 검정 45%, 그 위 커버 3장 겹침(150, 40씩, 4° 기울기), 높이 220, radius 18 */
+  .media { position: relative; height: 220px; border-radius: 18px; overflow: hidden; display: grid; place-items: center; }
+  .media::before { content: ""; position: absolute; inset: -30px; background: var(--c1); filter: blur(28px); }
+  .media::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.45); }
+  .stack { position: relative; width: 230px; height: 150px; z-index: 1; }
+  .stack i { position: absolute; top: 0; width: 150px; height: 150px; border-radius: var(--radius-large); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
+  .stack i:nth-child(1) { left: 80px; transform: rotate(4deg); background: var(--c3); }
+  .stack i:nth-child(2) { left: 40px; transform: rotate(2deg); background: var(--c2); }
+  .stack i:nth-child(3) { left: 0; background: var(--c1); display: grid; place-items: center; }
+  .stack i:nth-child(3)::after { content: attr(data-extra); position: absolute; inset: 0; border-radius: inherit; background: rgba(0,0,0,.5);
+    display: grid; place-items: center; color: #fff; font-size: 26px; font-weight: 700; font-style: normal; }
+
+  .bubbles { display: flex; align-items: center; gap: var(--spacing-x2); }
+  .react { height: 36px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); background: rgba(255,255,255,.07);
+    display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 15px; }
+  .react b { font-size: 14px; font-weight: 600; color: rgba(255,255,255,.8); }
+  .react.mine { background: color-mix(in srgb, var(--color-brand) 18%, transparent); }
+  .react.mine b { color: var(--color-brand); }
+  .count { display: flex; align-items: center; gap: 5px; padding-left: var(--spacing-x1); font-size: 13px; font-weight: 500; color: rgba(255,255,255,.45); }
+  .share { margin-left: auto; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.07); display: grid; place-items: center; color: rgba(255,255,255,.8); }
+  .share svg { width: 17px; height: 17px; }
+
+  /* 새 픽: brand 캡슐 48, 그림자 brand 35% (composeButton) */
+  .compose { position: absolute; left: 50%; bottom: calc(26px + 62px + var(--spacing-x4)); transform: translateX(-50%); z-index: 4; height: 48px; padding: 0 var(--spacing-x5);
+    border-radius: var(--radius-full); background: var(--color-brand); color: #fff; display: flex; align-items: center; gap: var(--spacing-x1-5);
+    font-size: 15px; font-weight: 600; box-shadow: 0 6px 12px color-mix(in srgb, var(--color-brand) 35%, transparent); }
+  .tab.on.dark-accent { color: var(--color-pick-accent) !important; }   /* 다크 위 강조는 pickAccent */
+  /* 탭바: 떠 있는 캡슐 (iOS 26 시스템 탭바, tint brand) */
+  .tabbar { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); width: 300px; height: 62px; border-radius: var(--radius-full);
+    display: flex; padding: 4px; backdrop-filter: blur(20px); z-index: 4; }
+  .tabbar.light { background: rgba(255,255,255,.72); border: 1px solid rgba(0,0,0,.06); }
+  .tabbar.dark { background: rgba(80,80,90,.55); border: 1px solid rgba(255,255,255,.12); }
+  .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: var(--radius-full); font-size: 10px; font-weight: 600; }
+  .tabbar.light .tab { color: var(--color-text-primary); }
+  .tabbar.dark .tab { color: #fff; }
+  .tab.on { color: var(--color-brand) !important; background: rgba(120,120,128,.18); }
+  .tab svg { width: 24px; height: 24px; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="status"><span>12:56</span><span>41%</span></div>
+  <div class="scroll">
+    <h1 class="page-title">Picks</h1>
+    <article class="pick" style="--c1:linear-gradient(135deg,#5B7FA6,#C9D6E3);--c2:linear-gradient(135deg,#E8E3D6,#9A9A9A);--c3:linear-gradient(135deg,#2D2D2D,#E2C24B)">
+      <div class="who"><b>@digger_lover</b><span class="dot">·</span>12분 전<span class="more">···</span></div>
+      <h3>모두가 사랑하는 밴드</h3>
+      <div class="media"><div class="stack"><i></i><i></i><i data-extra="+9"></i></div></div>
+      <div class="bubbles"><span class="react mine">🔥<b>3</b></span><span class="count">♪ 12곡</span><span class="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></svg></span></div>
+    </article>
+    <article class="pick" style="--c1:linear-gradient(135deg,#C9CED8,#5A6274);--c2:linear-gradient(135deg,#E9EEF5,#7C8CA8);--c3:linear-gradient(135deg,#3B3B48,#A0A7B8)">
+      <div class="who"><b>@digger_lover</b><span class="dot">·</span>13분 전<span class="more">···</span></div>
+      <h3>국내 브릿팝 루키 🔥</h3>
+      <div class="media"><div class="stack"><i></i><i></i><i data-extra="+7"></i></div></div>
+      <div class="bubbles"><span class="react">🔥<b>1</b></span><span class="count">♪ 10곡</span><span class="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4M6 11H5v10h14V11h-1"/></svg></span></div>
+    </article>
+  </div>
+  <span class="compose"><b style="font-size:18px">+</b> 새 픽</span>
+    <nav class="tabbar dark">
+    <span class="tab"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 2 11.5h3V21h5v-6h4v6h5v-9.5h3z"/></svg>피드</span>
+    <span class="tab on dark-accent"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="7" width="14" height="14" rx="3"/><rect x="7" y="3.5" width="10" height="2" rx="1"/></svg>픽</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/></svg>마이</span>
+  </nav>
+</div>
+</body>
+</html>
