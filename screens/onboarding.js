@@ -4,6 +4,7 @@ import { Device } from './device.js'
 import { Button } from '../components/button/button.js'
 import { SearchBar } from '../components/search-bar/search-bar.js'
 import { SeedGrid } from '../components/seed-tile/seed-tile.js'
+import { FeedBuilding } from '../components/feed-building/feed-building.js'
 
 const skip = '<span style="position:absolute;top:54px;right:20px;height:44px;display:flex;align-items:center;font:var(--typography-body-medium);color:var(--color-text-tertiary)">건너뛰기</span>'
 
@@ -24,6 +25,11 @@ export function SignInScreen({ error = '', gate = false } = {}) {
 export function LoadingScreen() {
   return Device({ time: '1:06', battery: 36, children: `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
     <i class="brand-mark" style="width:56px;height:56px"></i><h1 style="font:var(--typography-title)">Dignify</h1></div>` })
+}
+
+// 추천 기준 곡을 고른 직후 첫 피드를 받는 동안 — 최소 1초, 늦으면 응답까지
+export function FeedBuildingScreen({ covers = [] } = {}) {
+  return Device({ time: '1:06', battery: 36, children: `<div style="position:absolute;inset:0;display:grid;place-items:center;padding:0 24px">${FeedBuilding({ covers })}</div>` })
 }
 
 // 게스트가 Picks·마이 탭을 눌렀을 때. 로그인 → SignInScreen({ gate: true })

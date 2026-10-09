@@ -2,7 +2,9 @@
 // step: { screen: 'feed', label: '피드', note: '설명', args: { …화면 Controls 값 덮어쓰기 } }
 import { renderScreen, SCREENS } from '../screens/registry.js'
 
-export function FlowBoard({ steps = [], scale = 0.5, wrap = false } = {}) {
+export function FlowBoard({ steps = [], scale = 0.5, wrap = false } = {}, { globals = {} } = {}) {
+  // 실기기 모드: 한 장씩 탭으로 넘긴다(넘기기는 .storybook/preview.js)
+  if (globals.fullscreen) return `<div class="sb-proto">${steps.map((s, i) => `<div class="sb-proto__step${i ? '' : ' is-on'}">${renderScreen(s.screen, s.args)}</div>`).join('')}</div>`
   const W = Math.round(440 * scale), H = Math.round(900 * scale)
   const card = (s, i) => {
     const name = s.label ?? SCREENS[s.screen]?.[0] ?? s.screen

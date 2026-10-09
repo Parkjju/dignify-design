@@ -13,10 +13,10 @@ export default {
   args: { scale: 0.5, wrap: false },
 }
 
-// 첫 실행 3갈래 (feed_coachmark 1.0). 코치마크는 피드에서만, 따라 해야 넘어간다
+// 첫 실행 3갈래 (feed_coachmark 1.0). 코치마크는 피드에서만, 따라 해야 넘어간다. 바로 로그인은 곡 선택 → 피드 구성 → 코치마크
 const coach = [
   { screen: 'feed-coach', note: '손 모션: 1초 안에 두 번 탭 → 2초 쉼 반복. 유저가 더블탭해야 넘어감' },
-  { screen: 'feed-coach-hyped', note: '하입 아이콘 팝. 화면 아무 곳 터치 → 사라짐' },
+  { screen: 'feed-coach-hyped', note: '하입 아이콘 팝 → 페이드아웃. 캡션은 화면 아무 곳 터치 → 사라짐' },
   { screen: 'feed-coach-swipe', note: '손 모션: 위로 쓸어 올림. 유저가 다음 곡으로 넘기면 끝' },
 ]
 
@@ -30,8 +30,9 @@ export const FirstLaunchGuest = { name: '첫 실행 — 로그인 없이 둘러�
 
 export const FirstLaunch = { name: '첫 실행 — 바로 로그인', args: { steps: [
   { screen: 'onboarding-signin', note: 'Apple로 계속하기' },
-  ...coach,
   { screen: 'onboarding-seed', note: '곡 선택 (최대 3곡 → 피드 기준)' },
+  { screen: 'onboarding-building', note: '최소 1초, 피드가 늦으면 올 때까지' },
+  ...coach,
   { screen: 'feed', label: '바로 시작', args: { track: { cover: 'a-wss', title: 'work, shit, sleep', artist: 'jisokuryClub' }, chip: '비슷한 곡: work, shit, sleep' } },
 ] } }
 
@@ -39,6 +40,7 @@ export const GuestThenSignIn = { name: '둘러보기 후 로그인', args: { ste
   { screen: 'onboarding-signin-gate', note: '게스트가 Picks·마이에서 로그인' },
   { screen: 'onboarding-loading', note: '곡 선택 후보를 받는 동안 · 코치마크는 이미 봤으니 생략' },
   { screen: 'onboarding-seed', note: '곡 선택' },
+  { screen: 'onboarding-building', note: '최소 1초, 피드가 늦으면 올 때까지' },
   { screen: 'feed', label: '바로 시작', args: { track: { cover: 'a-wss', title: 'work, shit, sleep', artist: 'jisokuryClub' }, chip: '비슷한 곡: work, shit, sleep' } },
 ] } }
 
