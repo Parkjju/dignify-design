@@ -11,6 +11,7 @@ const seedTiles = [
   { ...T.findme }, { ...T.wss, number: 1 }, { ...T.loveya, artist: '혁오 & Sunset Rollercoaster' }, { ...T.bigvoid, title: 'BIG VOID (Single Version)' },
   { ...T.billann, number: 2, playing: true }, { ...T.truth }, { ...T.comedown }, { ...T.seasons }, { ...T.bulssi }, { ...T.ohio }, { ...T.shanty }, { ...T.always },
 ]
+const seedTilesFull = seedTiles.map(t => t.cover === T.seasons.cover ? { ...t, number: 3 } : { ...t, playing: false })
 
 export const SCREENS = {
   'feed': ['피드', Feed.FeedScreen, { track: T.cannons, chip: '비슷한 곡: Blame', hyped: false, mode: 'following', context: '', query: '', lift: 20 }],
@@ -46,6 +47,7 @@ export const SCREENS = {
   'guest-prompt': ['로그인 유도(게스트)', On.GuestPromptScreen, { tab: 'my' }],
   'onboarding-loading': ['로딩', On.LoadingScreen, {}],
   'onboarding-seed': ['추천 기준 곡 고르기', On.SeedOnboardingScreen, { tiles: seedTiles, search: '', titleFont: 'title1', titleBreak: true }],
+  'onboarding-seed-full': ['추천 기준 곡 고르기 · 3곡 다 고름', On.SeedOnboardingScreen, { tiles: seedTilesFull, search: '', titleFont: 'title1', titleBreak: true }],
   'onboarding-building': ['피드 구성 중', On.FeedBuildingScreen, { covers: ['a-wss', 'a-billann'] }],
   'share-card': ['공유 카드', ShareCard, { variant: 'track' }],
 }

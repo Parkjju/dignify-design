@@ -4,6 +4,7 @@ import { Device } from './device.js'
 import { Button } from '../components/button/button.js'
 import { SearchBar } from '../components/search-bar/search-bar.js'
 import { SeedGrid } from '../components/seed-tile/seed-tile.js'
+import { SeedTray } from '../components/seed-tray/seed-tray.js'
 import { FeedBuilding } from '../components/feed-building/feed-building.js'
 
 const skip = '<span style="position:absolute;top:54px;right:20px;height:44px;display:flex;align-items:center;font:var(--typography-body-medium);color:var(--color-text-tertiary)">건너뛰기</span>'
@@ -46,11 +47,11 @@ export function GuestPromptScreen({ tab = 'my' } = {}) {
 // 제목 줄 수가 바뀌어도 검색창·그리드가 따라 내려오게 세로로 쌓는다(앱 VStack과 같음)
 export function SeedOnboardingScreen({ tiles = [], search = '', titleFont = 'title1', titleBreak = true } = {}) {
   return Device({ time: '1:06', battery: 36, children: `${skip}
-    <div style="position:absolute;top:98px;left:24px;right:24px;bottom:120px;display:flex;flex-direction:column">
+    <div style="position:absolute;top:98px;left:24px;right:24px;bottom:184px;display:flex;flex-direction:column">
       <div style="display:flex;flex-direction:column;gap:6px">
         <h1 style="font:var(--typography-${titleFont})">마음에 드는 노래를${titleBreak ? '<br>' : ' '}3곡까지 골라주세요.</h1><p style="font:var(--typography-body);color:var(--color-text-secondary)">선택한 곡을 기준으로 추천해 드릴게요.</p></div>
       <div style="margin-top:12px">${SearchBar({ text: search })}</div>
       <div style="margin-top:14px;flex:1;min-height:0;overflow:hidden">${SeedGrid({ items: tiles })}</div>
     </div>
-    <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 24px 34px;background:var(--color-background)">${Button({ label: '디깅 시작', disabled: !tiles.some(t => t.number) })}</div>` })
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 24px 34px;background:var(--color-background);display:flex;flex-direction:column;gap:12px;box-shadow:0 -1px 0 var(--color-divider)">${SeedTray({ items: tiles.filter(t => t.number) })}${Button({ label: '디깅 시작', disabled: !tiles.some(t => t.number) })}</div>` })
 }
