@@ -28,6 +28,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
      - Picks: `PickListView.swift` `PicksCoach.steps`(재생·반응·공유·새 픽), 플래그 `seenPicksCoach`
      - 마이: `MyPageView.swift` `MyPageCoach.steps`(하입한 곡 따라가기·추천 기준 곡), 플래그 `seenMyPageCoach`
      - 추천 기준 곡: `SeedPickerView.swift` `SeedCoach.steps`(곡 칸·저장), 플래그 `seenSeedCoach`
+   - Android: `PickListScreen.kt`·`MyPageScreen.kt`·`SeedPickerScreen.kt`의 `CoachOverlay(...)`, `CoachSeen` 플래그, `feature/onboarding/CoachMarks.kt`
    - TO-BE: 셋 다 안 뜬다. 앱의 코치마크는 피드 제스처 코치마크(`FeedCoachGesture.swift`) 하나만 남는다
    - 같이 지울 것: `.coachMarks(...)`·`CoachMarkOverlay` 호출, `*Coach.steps`, `.coachAnchor(...)` 표시, `@AppStorage` 플래그 3개와 디버그 초기화(`MyPageView.swift` 디버그 리셋)에서 그 플래그. 쓰는 곳이 다 없어지면 `CoachMarks.swift`도 삭제
    - 코치마크 노출 계측(`screen: "mypage"`·`"seed_picker"`·Picks)도 같이 사라진다 — PostHog 대시보드에서 그 이벤트를 쓰는 곳이 있으면 정리
