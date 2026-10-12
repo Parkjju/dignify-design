@@ -68,6 +68,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
 12. **피드 하단 액션 배치** (`feed`, Components › FeedTrack)
     - AS-IS: 제목·아티스트 아래 줄에 왼쪽 하입 28, 오른쪽 상세(`opticaldisc`) · 공유
     - TO-BE: 아트워크 바로 아래(12) 오른쪽에 공유 · 더보기(`ellipsis`). 하입은 오른쪽, 아래끝을 아티스트명 아래선에 맞춤(`alignment: .bottom`), 크기 28 그대로
+    - 더보기는 SF Symbol `ellipsis` 22 regular, 흰색 82% — 공유·지금 디스크 버튼(`TrackActionButton`)과 같은 스타일, 32 탭 영역
     - 더보기(•••)가 트랙 상세를 연다 — 지금 디스크 버튼이 하던 일(`onOpenDetail`). 공유는 그대로.
     - 앱: `FeedView.swift` `TrackCardView`의 액션 HStack
 13. **피드 정보 줄 올리기** (`feed`, 피드 화면 Controls `lift`)
