@@ -27,7 +27,16 @@
   20% { transform: translate(calc(var(--x) * .7), var(--up)) scale(1) rotate(calc(var(--r) * .3)); opacity: 1; animation-timing-function: cubic-bezier(.5,0,.9,.6); }
   60% { transform: translate(var(--x), 150px) scale(.9) rotate(var(--r)); opacity: 0; }
   100% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .ds-feed-track__bit { display: none; } .ds-feed-track__hype > .ic { animation: none !important; } }
+/* 좋아요 큰 하트: 아트워크 가운데 160 brand. 팝 0.45s(오버슈트) → hold 머묾 → 페이드 0.4s.
+   시안은 버스트와 같은 2s 주기로 반복, 직접 해 보기·앱은 1회(.sb-live) */
+.ds-feed-track__big { position: absolute; left: 50%; top: 50%; margin: -80px 0 0 -80px; font-size: 160px; color: var(--color-brand); pointer-events: none;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); animation: dsf-big calc(2s * var(--k, 1)) infinite; }
+@keyframes dsf-big { 0% { transform: scale(.3); opacity: 0; animation-timing-function: cubic-bezier(.2,1.4,.4,1); }
+  22% { transform: scale(1); opacity: 1; } 50% { transform: scale(1); opacity: 1; animation-timing-function: ease-in; }
+  70%, 100% { transform: scale(1.08); opacity: 0; } }
+@keyframes dsf-big-in { from { transform: scale(.3); opacity: 0; } }
+@keyframes dsf-big-out { to { transform: scale(1.08); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ds-feed-track__big { display: none; } .ds-feed-track__bit { display: none; } .ds-feed-track__hype > .ic { animation: none !important; } }
 .ds-feed-track__act { width: 32px; height: 32px; display: grid; place-items: center; font-size: 24px; color: var(--color-icon-on-dark); }
 /* 앱 SF Symbol 22pt regular가 실제로 그리는 크기에 맞춤: 공유 19×24, 더보기 21×5 */
 .ds-feed-track__act > .ic-share { font-size: 30px; }

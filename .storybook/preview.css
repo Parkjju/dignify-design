@@ -4,3 +4,5 @@ body { display: block; min-height: 0; padding: 0; background: #fff; }
 /* 직접 해 보기(screens/coach-live.js) — 제스처를 브라우저가 가로채지 않게, 애니메이션은 1회 */
 .sb-live { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: pointer; }
 .sb-live .ds-feed-track__bit, .sb-live .is-burst > .ic:first-child { animation-iteration-count: 1; animation-fill-mode: forwards; }
+.sb-live .ds-feed-track__big { animation: dsf-big-in calc(.45s * var(--k, 1)) cubic-bezier(.2,1.4,.4,1) both,
+  dsf-big-out calc(.4s * var(--k, 1)) ease-in calc(.45s * var(--k, 1) + var(--hold, .3s)) forwards; }

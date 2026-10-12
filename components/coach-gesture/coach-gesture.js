@@ -9,8 +9,9 @@ export const COACH_GESTURE = {
 }
 export function CoachGesture({ gesture = 'double-tap', title, body, handOffset = -18, captionBelow = 25, speed = 1, hold = 0.3, once = false } = {}) {
   const [t, b] = COACH_GESTURE[gesture] || COACH_GESTURE['double-tap']
+  // hyped: 큰 하트는 FeedTrack(burst)이 그린다 — 일반 피드 좋아요와 같은 모션. 여기선 캡션만
   const mark = gesture === 'hyped'
-    ? '<i class="ic ic-heart-fill ds-coach-gesture__hype"></i>'
+    ? ''
     : `<span class="ds-coach-gesture__hand is-${gesture}"><i class="ds-coach-gesture__ring"></i><i class="ic ic-hand-tap"></i></span>`
   return `<div class="ds-coach-gesture${once ? ' is-once' : ''}" style="--k:${1 / speed};--hold:${hold}s">
   <div class="ds-coach-gesture__mark" style="top:calc(50% + ${handOffset}px)">${mark}</div>
