@@ -47,7 +47,7 @@ export const GuestThenSignIn = { name: '둘러보기 후 로그인', args: { ste
 export const Discover = { name: '피드에서 발견하기', args: { steps: [
   { screen: 'feed', note: '스와이프로 넘기며 듣기' },
   { screen: 'feed', label: '하입', note: '더블탭 또는 삽 버튼', args: { hyped: true } },
-  { screen: 'track-detail', note: '디스크 버튼 → 상세·스토어' },
+  { screen: 'track-detail', note: '••• 버튼 → 상세·스토어' },
   { screen: 'feed-search', note: '검색 버튼' },
   { screen: 'feed', label: '검색 결과', args: { query: '실리카겔', track: { cover: 'a-bigvoid', title: 'BIG VOID', artist: '실리카겔' }, chip: '록' } },
 ] } }
