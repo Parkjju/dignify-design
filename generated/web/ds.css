@@ -338,7 +338,7 @@ body.embed { padding: 0; background: transparent; }
 .ds-feed-track__actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--spacing-x4); margin-top: var(--spacing-x3); }
 .ds-feed-track__info { display: flex; align-items: center; gap: var(--spacing-x4); }
 .ds-feed-track__info > div { flex: 1; min-width: 0; }
-.ds-feed-track__hype { font-size: 36px; color: var(--color-text-tertiary); display: grid; }
+.ds-feed-track__hype { font-size: 28px; color: var(--color-text-tertiary); display: grid; }
 .ds-feed-track__hype.is-on { color: var(--color-brand); }
 /* 하입 버스트 — 버튼이 팡 커졌다가, 삽 조각이 위로 튀고 우수수 떨어진다. --k = 1/속도. 시안은 2초마다 반복 */
 .ds-feed-track__hype { position: relative; }
