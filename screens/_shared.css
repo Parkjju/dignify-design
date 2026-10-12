@@ -27,7 +27,9 @@ body.embed { padding: 0; background: transparent; }
 /* ── 아이콘 — <i class="ic ic-search"></i>. 크기 = font-size, 색 = color (SF Symbols 근사) ── */
 .ic { display: inline-block; width: 1em; height: 1em; flex: none; font-style: normal; background: currentColor;
   -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
-.ic-hype { --i: var(--asset-hype-icon); }   /* 앱 애셋 HypeIcon (template 렌더) */
+.ic-hype { --i: var(--asset-hype-icon); }   /* 앱 애셋 HypeIcon (template 렌더) — 1.1부터 하입 버튼은 하트로, 남은 쓰임 없음 */
+.ic-heart { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.3s-7.6-4.6-9-9.6C2.1 7.3 4.3 4 7.6 4c1.9 0 3.4 1 4.4 2.6C13 5 14.5 4 16.4 4c3.3 0 5.5 3.3 4.6 6.7-1.4 5-9 9.6-9 9.6z' stroke='black' fill='none' stroke-linejoin='round' stroke-width='1.9'/%3E%3C/svg%3E"); }   /* 하입(좋아요) 안 함 — SF heart */
+.ic-heart-fill { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.3s-7.6-4.6-9-9.6C2.1 7.3 4.3 4 7.6 4c1.9 0 3.4 1 4.4 2.6C13 5 14.5 4 16.4 4c3.3 0 5.5 3.3 4.6 6.7-1.4 5-9 9.6-9 9.6z'/%3E%3C/svg%3E"); }   /* 하입(좋아요) 함 — SF heart.fill */
 .brand-mark { display: inline-block; background: var(--asset-brand-mark) center / contain no-repeat; }
 
 /* ── 앨범 커버 — <i class="art a-cannons"></i>. 오프라인이면 그라데이션으로 대체 ── */

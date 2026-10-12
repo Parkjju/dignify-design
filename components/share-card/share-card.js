@@ -9,6 +9,6 @@ export function ShareCard({ variant = 'track', cover = 'a-cannons', title = 'Can
   const top = variant === 'pick'
     ? `<i class="art ${cover} ds-share__cover is-pick"></i><h1 class="ds-share__title is-pick">${title}</h1><p class="ds-share__by is-pick">@${nickname}</p>
        <div class="ds-share__rows">${tracks.slice(0, 5).map(([t, a], k) => `<p><i>${k + 1}</i><b>${t}</b><span>${a}</span></p>`).join('')}${more ? `<p class="more">외 ${more}곡</p>` : ''}</div>`
-    : `<div class="ds-share__cover-wrap"><i class="art ${cover} ds-share__cover"></i><span class="ds-share__hype"><i class="ic ic-hype"></i></span></div><h1 class="ds-share__title">${title}</h1><p class="ds-share__by">${artist}</p>${genre ? `<span class="ds-share__genre">${genre}</span>` : ''}`
+    : `<div class="ds-share__cover-wrap"><i class="art ${cover} ds-share__cover"></i><span class="ds-share__hype"><i class="ic ic-heart-fill"></i></span></div><h1 class="ds-share__title">${title}</h1><p class="ds-share__by">${artist}</p>${genre ? `<span class="ds-share__genre">${genre}</span>` : ''}`
   return `<div class="ds-share is-${variant}"><i class="art ${cover} ds-share__bg"></i><div class="ds-share__body"><span class="ds-share__label">${variant === 'pick' ? 'PICK' : 'DIGGING'}</span><i class="ds-share__fill"></i>${top}<i class="ds-share__fill"></i>${footer}</div></div>`
 }

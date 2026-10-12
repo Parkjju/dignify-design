@@ -89,7 +89,9 @@ body.embed { padding: 0; background: transparent; }
 /* ── 아이콘 — <i class="ic ic-search"></i>. 크기 = font-size, 색 = color (SF Symbols 근사) ── */
 .ic { display: inline-block; width: 1em; height: 1em; flex: none; font-style: normal; background: currentColor;
   -webkit-mask: var(--i) center / contain no-repeat; mask: var(--i) center / contain no-repeat; }
-.ic-hype { --i: var(--asset-hype-icon); }   /* 앱 애셋 HypeIcon (template 렌더) */
+.ic-hype { --i: var(--asset-hype-icon); }   /* 앱 애셋 HypeIcon (template 렌더) — 1.1부터 하입 버튼은 하트로, 남은 쓰임 없음 */
+.ic-heart { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.3s-7.6-4.6-9-9.6C2.1 7.3 4.3 4 7.6 4c1.9 0 3.4 1 4.4 2.6C13 5 14.5 4 16.4 4c3.3 0 5.5 3.3 4.6 6.7-1.4 5-9 9.6-9 9.6z' stroke='black' fill='none' stroke-linejoin='round' stroke-width='1.9'/%3E%3C/svg%3E"); }   /* 하입(좋아요) 안 함 — SF heart */
+.ic-heart-fill { --i: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20.3s-7.6-4.6-9-9.6C2.1 7.3 4.3 4 7.6 4c1.9 0 3.4 1 4.4 2.6C13 5 14.5 4 16.4 4c3.3 0 5.5 3.3 4.6 6.7-1.4 5-9 9.6-9 9.6z'/%3E%3C/svg%3E"); }   /* 하입(좋아요) 함 — SF heart.fill */
 .brand-mark { display: inline-block; background: var(--asset-brand-mark) center / contain no-repeat; }
 
 /* ── 앨범 커버 — <i class="art a-cannons"></i>. 오프라인이면 그라데이션으로 대체 ── */
@@ -346,9 +348,9 @@ body.embed { padding: 0; background: transparent; }
 .ds-feed-track__info > div { flex: 1; min-width: 0; }
 .ds-feed-track__hype { font-size: 28px; color: var(--color-text-tertiary); display: grid; }
 .ds-feed-track__hype.is-on { color: var(--color-brand); }
-/* 하입 버스트 — 버튼이 팡 커졌다가, 삽 조각이 위로 튀고 우수수 떨어진다. --k = 1/속도. 시안은 2초마다 반복 */
+/* 하입 버스트 — 버튼이 팡 커졌다가, 하트 조각이 위로 튀고 우수수 떨어진다. --k = 1/속도. 시안은 2초마다 반복 */
 .ds-feed-track__hype { position: relative; }
-.ds-feed-track__hype.is-burst > .ic-hype:first-child { animation: dsf-pop calc(2s * var(--k, 1)) infinite; }
+.ds-feed-track__hype.is-burst > .ic:first-child { animation: dsf-pop calc(2s * var(--k, 1)) infinite; }
 .ds-feed-track__bit { position: absolute; left: 50%; top: 50%; margin: -.5em 0 0 -.5em; opacity: 0; color: var(--color-brand); pointer-events: none; z-index: 2;
   animation: dsf-bit calc(2s * var(--k, 1)) infinite; }
 @keyframes dsf-pop { 0% { transform: scale(1); } 8% { transform: scale(1.35); } 18%, 100% { transform: scale(1); } }
@@ -358,7 +360,7 @@ body.embed { padding: 0; background: transparent; }
   20% { transform: translate(calc(var(--x) * .7), var(--up)) scale(1) rotate(calc(var(--r) * .3)); opacity: 1; animation-timing-function: cubic-bezier(.5,0,.9,.6); }
   60% { transform: translate(var(--x), 150px) scale(.9) rotate(var(--r)); opacity: 0; }
   100% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .ds-feed-track__bit { display: none; } .ds-feed-track__hype > .ic-hype { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) { .ds-feed-track__bit { display: none; } .ds-feed-track__hype > .ic { animation: none !important; } }
 .ds-feed-track__act { width: 32px; height: 32px; display: grid; place-items: center; font-size: 24px; color: var(--color-icon-on-dark); }
 /* 앱 SF Symbol 22pt regular가 실제로 그리는 크기에 맞춤: 공유 19×24, 더보기 21×5 */
 .ds-feed-track__act > .ic-share { font-size: 30px; }

@@ -10,7 +10,7 @@ export const COACH_GESTURE = {
 export function CoachGesture({ gesture = 'double-tap', title, body, handOffset = -18, captionBelow = 25, speed = 1, hold = 0.3, once = false } = {}) {
   const [t, b] = COACH_GESTURE[gesture] || COACH_GESTURE['double-tap']
   const mark = gesture === 'hyped'
-    ? '<i class="ic ic-hype ds-coach-gesture__hype"></i>'
+    ? '<i class="ic ic-heart-fill ds-coach-gesture__hype"></i>'
     : `<span class="ds-coach-gesture__hand is-${gesture}"><i class="ds-coach-gesture__ring"></i><i class="ic ic-hand-tap"></i></span>`
   return `<div class="ds-coach-gesture${once ? ' is-once' : ''}" style="--k:${1 / speed};--hold:${hold}s">
   <div class="ds-coach-gesture__mark" style="top:calc(50% + ${handOffset}px)">${mark}</div>
