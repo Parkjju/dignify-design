@@ -36,6 +36,10 @@ import { Meta } from '@storybook/addon-docs/blocks'
    - TO-BE: 셋 다 안 뜬다. 앱의 코치마크는 피드 제스처 코치마크(`FeedCoachGesture.swift`) 하나만 남는다
    - 같이 지울 것: `.coachMarks(...)`·`CoachMarkOverlay` 호출, `*Coach.steps`, `.coachAnchor(...)` 표시, `@AppStorage` 플래그 3개와 디버그 초기화(`MyPageView.swift` 디버그 리셋)에서 그 플래그. 쓰는 곳이 다 없어지면 `CoachMarks.swift`도 삭제
    - 코치마크 노출 계측(`screen: "mypage"`·`"seed_picker"`·Picks)도 같이 사라진다 — PostHog 대시보드에서 그 이벤트를 쓰는 곳이 있으면 정리
+3. **피드 구성 중 최소 노출 2초** (`onboarding-building`, Components › FeedBuilding)
+   - AS-IS: 최소 1초, 응답이 늦으면 올 때까지
+   - TO-BE: **최소 2초.** 첫 피드 요청과 2초 타이머를 같이 시작해 둘 다 끝나야 넘어간다 — 응답이 빨라도 2초, 늦으면 응답이 올 때까지
+   - 앱: `NewUserOnboardingView.swift` `minBuildingTime`
 
 ---
 
@@ -160,7 +164,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
    - 쓸어 올리는 동안 코치마크가 화면과 같이 끌려가며 흐려진다(화면 1/4에서 0). 넘어가지 않으면 다시 나타난다.
    - 손 아이콘은 `ic-hand-tap`(디자인 레포 아이콘)으로 확정.
 6. **피드 구성 중** (`onboarding-building`, 명세: Components › FeedBuilding)
-   - 곡 고르기를 마친 뒤 첫 피드를 받는 동안. 최소 1초, 응답이 늦으면 올 때까지.
+   - 곡 고르기를 마친 뒤 첫 피드를 받는 동안. 최소 1초, 응답이 늦으면 올 때까지. → 1.2에서 바뀜(최소 2초)
 7. **하입 버스트** (Components › FeedTrack › 하입 버스트)
    - 하입하면 삽 조각이 튀었다가 떨어지고 버튼이 1.35배로 튄다. 더블탭·버튼 하입 둘 다.
    - 조각 모양 삽 → 하트 → 1.1에서 바뀜

@@ -31,7 +31,7 @@ export const FirstLaunchGuest = { name: '첫 실행 — 로그인 없이 둘러�
 export const FirstLaunch = { name: '첫 실행 — 바로 로그인', args: { steps: [
   { screen: 'onboarding-signin', note: 'Apple로 계속하기' },
   { screen: 'onboarding-seed', note: '곡 선택 (최대 3곡 → 피드 기준)' },
-  { screen: 'onboarding-building', note: '최소 1초, 피드가 늦으면 올 때까지' },
+  { screen: 'onboarding-building', note: '최소 2초, 피드가 늦으면 올 때까지' },
   ...coach,
   { screen: 'feed', label: '바로 시작', args: { track: { cover: 'a-wss', title: 'work, shit, sleep', artist: 'jisokuryClub' }, chip: '비슷한 곡: work, shit, sleep' } },
 ] } }
@@ -40,7 +40,7 @@ export const GuestThenSignIn = { name: '둘러보기 후 로그인', args: { ste
   { screen: 'onboarding-signin-gate', note: '게스트가 Picks·마이 또는 두 번째 좋아요에서 로그인 · 코치마크 좋아요는 이때 저장' },
   { screen: 'onboarding-loading', note: '곡 선택 후보를 받는 동안 · 코치마크는 이미 봤으니 생략' },
   { screen: 'onboarding-seed', note: '곡 선택' },
-  { screen: 'onboarding-building', note: '최소 1초, 피드가 늦으면 올 때까지' },
+  { screen: 'onboarding-building', note: '최소 2초, 피드가 늦으면 올 때까지' },
   { screen: 'feed', label: '바로 시작', args: { track: { cover: 'a-wss', title: 'work, shit, sleep', artist: 'jisokuryClub' }, chip: '비슷한 곡: work, shit, sleep' } },
 ] } }
 

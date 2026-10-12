@@ -28,7 +28,7 @@ export function LoadingScreen() {
     <span role="progressbar" aria-label="불러오는 중" style="margin-top:12px;width:20px;height:20px;border-radius:50%;border:2px solid var(--color-border-light);border-top-color:var(--color-text-tertiary);animation:ds-spin .8s linear infinite"></span></div>` })
 }
 
-// 추천 기준 곡을 고른 직후 첫 피드를 받는 동안 — 최소 1초, 늦으면 응답까지
+// 추천 기준 곡을 고른 직후 첫 피드를 받는 동안 — 최소 2초, 늦으면 응답까지
 export function FeedBuildingScreen({ covers = [] } = {}) {
   return Device({ time: '1:06', battery: 36, children: `<div style="position:absolute;inset:0;display:grid;place-items:center;padding:0 24px">${FeedBuilding({ covers })}</div>` })
 }
