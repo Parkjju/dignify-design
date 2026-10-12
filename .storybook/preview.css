@@ -3,6 +3,9 @@ body { display: block; min-height: 0; padding: 0; background: #fff; }
 
 /* 직접 해 보기(screens/coach-live.js) — 제스처를 브라우저가 가로채지 않게, 애니메이션은 1회 */
 .sb-live { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: pointer; }
-.sb-live .ds-feed-track__bit, .sb-live .is-burst > .ic:first-child { animation-iteration-count: 1; animation-fill-mode: forwards; }
-.sb-live .ds-feed-track__big { animation: dsf-big-in calc(.45s * var(--k, 1)) cubic-bezier(.2,1.4,.4,1) both,
-  dsf-big-out calc(.4s * var(--k, 1)) ease-in calc(.45s * var(--k, 1) + var(--hold, .3s)) forwards; }
+/* 좋아요 순간 1회: 0~0.3s 팝·솟음 → hold 머묾(조각은 떨어지는 중) → 0.4s 페이드. 큰 하트와 조각이 같은 순간에 끝난다 */
+.sb-live .is-burst > .ic:first-child { animation: dsf-pop-once calc(.3s * var(--k, 1)) ease-out; }
+.sb-live .ds-feed-track__big { animation: dsf-big-in calc(.3s * var(--k, 1)) cubic-bezier(.2,1.4,.4,1) both,
+  dsf-big-out calc(.4s * var(--k, 1)) ease-in calc(.3s * var(--k, 1) + var(--hold, .3s)) forwards; }
+.sb-live .ds-feed-track__bit { animation: dsf-bit-up calc(.3s * var(--k, 1)) cubic-bezier(.2,.8,.4,1) both,
+  dsf-bit-down calc(.4s * var(--k, 1) + var(--hold, .3s)) cubic-bezier(.5,0,.9,.6) calc(.3s * var(--k, 1)) forwards; }
