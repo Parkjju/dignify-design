@@ -1,0 +1,102 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="가이드/앱 반영 목록" />
+
+# 앱 반영 목록
+
+시안 버전마다 **앱에 고쳐야 할 것**을 빠짐없이 적는다. 맨 위가 최신 버전이다.
+
+- 기준은 **출시된 앱**이다(지금 iOS 1.2.1). 아직 앱에 안 들어간 버전은 아래 버전부터 차례로 반영한다.
+- 같은 화면을 뒤 버전이 다시 고쳤으면 뒤 버전 값이 이긴다. 그 항목에는 「→ 1.x에서 바뀜」이라고 적어 둔다.
+- 앱에 반영하면 그 버전 제목 옆 상태를 「반영됨 (iOS x.y.z)」로 바꾼다.
+- 문구는 한국어가 정본이다. 앱 문자열 키가 영어라서 **영어 값도 같이 바꿔야 한다.** 영어 문구가 정해지지 않았으면 「영어 미정」으로 적는다.
+- 항목 하나 = 시안 화면 id · 지금 앱(AS-IS) · 바꿀 값(TO-BE) · 앱 위치.
+
+---
+
+## feed_coachmark 1.1 — 2026-10-11 · 상태: 미반영
+
+1.0 시안을 다듬은 버전이다. 1.0과 같이 반영한다.
+
+### 문구
+
+1. **로그인 화면 부제** (`onboarding-signin`, `onboarding-signin-gate`)
+   - AS-IS: 인디 음악을 발굴하고 당신만의 취향을 쌓아가세요.
+   - TO-BE: 인디 음악을 발굴하고, 취향을 쌓아가요.
+   - 앱: `Localizable.xcstrings` 해당 키 · 영어 미정
+2. **나만의 취향 만들기 본문** (`guest-prompt`)
+   - AS-IS: 로그인하면 트랙에 하입하고, 피드를 취향에 맞추고, 담은 곡을 모아볼 수 있어요.
+   - TO-BE: 로그인하면 마음에 드는 노래를 찜하고, 내 취향에 맞는 피드를 만들 수 있어요.
+   - 앱: `MainTabView.swift` `GuestSignInPromptView` ("Sign in to hype tracks, …") · 영어 미정
+3. **나만의 취향 만들기 버튼** (`guest-prompt`)
+   - AS-IS: 로그인
+   - TO-BE: 내 취향 찾으러 가기
+   - 앱: 같은 뷰 ("Sign in") · 영어 미정
+4. **곡 고르기 제목** (`onboarding-seed`)
+   - AS-IS: 어떤 소리가 끌려요?
+   - TO-BE: 마음에 드는 노래를 3곡까지 골라주세요.
+   - 앱: `SeedPoolPickerView.swift` header ("Which sound pulls you in?") · 3은 `Self.limit`로 넣는다 · 영어 미정
+5. **곡 고르기 부제** (`onboarding-seed`)
+   - AS-IS: 눌러서 들어보고 3곡까지 골라주세요.
+   - TO-BE: 선택한 곡을 기준으로 추천해 드릴게요.
+   - 앱: 같은 header ("Tap to listen, then pick up to …") · 영어 미정
+6. **곡 고르기 둘째 부제 삭제** (`onboarding-seed`)
+   - AS-IS: 이제 하입한 곡을 기준으로 피드가 만들어져요. (업데이트 유저에게만 보임)
+   - TO-BE: 없음. `isUpdate` 분기의 Text를 지운다.
+   - 앱: 같은 header ("Your feed follows the tracks you hype now.")
+7. **더블탭 코치마크 본문** (`feed-coach`)
+   - 1.0 시안: 빠르게 두 번 탭해볼까요?
+   - TO-BE: 빠르게 두 번 클릭해 볼까요?
+
+### 화면·모션
+
+8. **로그인 후 로딩에 원형 인디케이터 추가** (`onboarding-loading`)
+   - AS-IS: 로고 + Dignify만
+   - TO-BE: 아래에 원형 인디케이터(`ProgressView()`), 12 간격
+   - 앱: 둘러보기 후 로그인 → 곡 후보를 받는 동안의 화면. 앱 실행 로딩(`AppRootView.swift` `LaunchLoadingView`)과 같은 모양이라 둘 다 바꿀지는 정해야 한다. 시안은 둘러보기 후 로그인만 바꿨다.
+9. **더블탭 손 모션 주기** (`feed-coach`)
+   - 1.0 시안: 1초 안에 두 번 탭 → 2초 쉼 (주기 3초)
+   - TO-BE: 1초 안에 두 번 탭 → 1초 쉼 (주기 2초)
+10. **코치마크 기본값 확정** (`feed-coach*`, 「코치마크 — 직접 해 보기」)
+    - speed 1.0 · hold 0.3초 · handOffset −18 · captionBelow 25
+    - hold = 하입 아이콘이 다 커진 뒤 사라지기 전까지 머무는 시간. 1.0 시안은 1초였다.
+    - handOffset·captionBelow는 1.0과 같다.
+
+---
+
+## feed_coachmark 1.0 — 2026-10-09 · 상태: 미반영
+
+온보딩을 튜토리얼 카드에서 피드 제스처 코치마크로 바꾼 버전이다.
+
+### 흐름
+
+1. **튜토리얼 카드 삭제**
+   - AS-IS: 신규 유저 = 튜토리얼 카드 → 곡 고르기 → 피드 (`NewUserOnboardingView.swift`)
+   - TO-BE: `TutorialView` 삭제. 곡 고르기 → 피드 구성 중 → 피드(코치마크)
+2. **첫 실행 세 갈래** (Flows › 첫 실행)
+   - 로그인 없이 둘러보기: 로그인 → 피드(코치마크) → Picks·마이를 누르면 「나만의 취향 만들기」
+   - 바로 로그인: 로그인 → 곡 고르기 → 피드 구성 중 → 피드(코치마크)
+   - 둘러보기 후 로그인: 로그인 시트 → 로딩 → 곡 고르기 → 피드 구성 중 → 피드
+3. **Picks 탭도 「나만의 취향 만들기」** (`guest-prompt`, tab = picks)
+   - AS-IS: 게스트에게 마이 탭만 막는다 (`MainTabView.swift` `content(for:)`가 `.myPage`만 검사)
+   - TO-BE: Picks 탭도 같은 화면
+4. **게스트용 로그인 시트** (`onboarding-signin-gate`)
+   - 왼쪽 위 「취소」, 「로그인 없이 둘러보기」 없음
+
+### 새 화면·컴포넌트
+
+5. **피드 제스처 코치마크** (`feed-coach` → `feed-coach-hyped` → `feed-coach-swipe`, 명세: Components › CoachGesture)
+   - 피드의 기존 스포트라이트 코치마크(`FeedView.swift` `FeedCoach.steps`)를 대신한다. Picks·마이 코치마크는 그대로.
+   - 문구·더블탭 주기·hold 기본값 → 1.1에서 바뀜
+   - 더블탭 → 하입 아이콘 팝(hold 후 페이드) → 화면 터치 → 위로 쓸기. 따라 해야 넘어가고 「다음」 버튼이 없다.
+   - 위치는 아트워크 기준이다(`coachAnchor`와 같은 원리). 좌표를 적지 않는다.
+   - 쓸어 올리는 동안 코치마크가 화면과 같이 끌려가며 흐려진다(화면 1/4에서 0). 넘어가지 않으면 다시 나타난다.
+   - 손 아이콘은 `ic-hand-tap`(디자인 레포 아이콘)으로 확정.
+6. **피드 구성 중** (`onboarding-building`, 명세: Components › FeedBuilding)
+   - 곡 고르기를 마친 뒤 첫 피드를 받는 동안. 최소 1초, 응답이 늦으면 올 때까지.
+7. **하입 버스트** (Components › FeedTrack › 하입 버스트)
+   - 하입하면 삽 조각이 튀었다가 떨어지고 버튼이 1.35배로 튄다. 더블탭·버튼 하입 둘 다.
+
+### 정해지지 않은 것
+
+- **게스트 하입:** 지금 앱은 게스트가 하입하면 로그인 시트를 띄운다(`FeedView.swift` `requireAccount()`). 둘러보기 코치마크가 더블탭(= 하입)을 시키므로 이 처리가 필요하다. 안: 연습 하입을 기기에 보관했다가 로그인하면 반영. 팀 확정 대기.
