@@ -36,6 +36,18 @@ import { Meta } from '@storybook/addon-docs/blocks'
    - TO-BE: 셋 다 안 뜬다. 앱의 코치마크는 피드 제스처 코치마크(`FeedCoachGesture.swift`) 하나만 남는다
    - 같이 지울 것: `.coachMarks(...)`·`CoachMarkOverlay` 호출, `*Coach.steps`, `.coachAnchor(...)` 표시, `@AppStorage` 플래그 3개와 디버그 초기화(`MyPageView.swift` 디버그 리셋)에서 그 플래그. 쓰는 곳이 다 없어지면 `CoachMarks.swift`도 삭제
    - 코치마크 노출 계측(`screen: "mypage"`·`"seed_picker"`·Picks)도 같이 사라진다 — PostHog 대시보드에서 그 이벤트를 쓰는 곳이 있으면 정리
+3. **곡 고르기 — 3곡 다 고르면 나머지 비활성** (`onboarding-seed-full`, Components › SeedTile `disabled`)
+   - AS-IS: 3곡을 고른 뒤에도 다른 타일이 그대로 보이고, 눌러도 반응이 분명하지 않다
+   - TO-BE: 안 고른 타일을 연한 회색으로 — 커버 흑백 + 바탕색 60% 덮개, 고르기 원 숨김, 제목·아티스트 `textTertiary` 60%. 탭해도 안 골라진다. **미리듣기는 그대로 된다**
+   - 하나를 빼면 바로 풀린다
+   - 앱: `SeedPoolPickerView.swift` 셀(`cell(_:)`)에 비활성 상태
+4. **곡 고르기 — 고른 곡 트레이** (`onboarding-seed`·`onboarding-seed-full`, Components › SeedTray 신규)
+   - AS-IS: 고른 곡을 확인하려면 그리드를 스크롤해 번호를 찾아야 한다
+   - TO-BE: 「디깅 시작」 버튼 바로 위(12)에 고정 트레이. 왼쪽 「선택한 곡 n/3」 + 안내(평소 「누르면 그 곡으로 가요」, 꽉 차면 「바꾸려면 빼 주세요」), 오른쪽 52 칸 3개 — 고른 순서대로 커버 + 순서 번호 + ✕, 빈 칸은 점선. 아래 영역 위에 1px `divider`
+   - 커버 탭 → 그리드를 그 곡까지 스크롤(`ScrollViewReader`) + 타일 0.6s 강조. 검색 결과 중이면 검색을 닫고 풀로 돌아가서 스크롤
+   - ✕ 탭 → 그 곡 빼기, 뒤 번호가 당겨진다
+   - 수치·동작 정본: Components › SeedTray 명세
+   - 앱: `SeedPoolPickerView.swift` 하단 영역
 3. **피드 구성 중 최소 노출 2초** (`onboarding-building`, Components › FeedBuilding)
    - AS-IS: 최소 1초, 응답이 늦으면 올 때까지
    - TO-BE: **최소 2초.** 첫 피드 요청과 2초 타이머를 같이 시작해 둘 다 끝나야 넘어간다 — 응답이 빨라도 2초, 늦으면 응답이 올 때까지
