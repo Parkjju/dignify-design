@@ -35,7 +35,9 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     // 화면 살짝 올라가는 힌트(dsg-peek) 중간에 잡으면 그 위치에서 이어 끈다 — 툭 튀지 않게
     const card = cur.querySelector('.ds-feed-track'), base = new DOMMatrix(getComputedStyle(card).transform).m42
     card.style.animation = 'none'
-    return { y0: y - base, t0: performance.now(), dy: base, moved: false, cur, next, coach, card, H: cur.offsetHeight }
+    const hand = cur.querySelector('.ds-coach-gesture__hand')
+    if (hand) hand.style.animationPlayState = 'paused'   // 손도 그 자리에 멈춘다
+    return { y0: y - base, t0: performance.now(), dy: base, moved: false, cur, next, coach, card, hand, H: cur.offsetHeight }
   }
   const place = (d, dy, ms = 0) => {
     const t = ms ? `transform ${ms}ms cubic-bezier(.2,.8,.2,1), opacity ${ms}ms` : 'none'
@@ -44,6 +46,14 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     d.next.style.transform = `translateY(calc(100% + ${dy}px))`
     if (d.coach) { d.coach.style.transition = t; d.coach.style.opacity = Math.max(0, 1 + dy / (d.H * 0.25)) }   // 화면 1/4 끌면 다 사라짐
   }
+  // 놓고 제자리로 돌아오면 손과 화면 힌트를 같은 순간에 처음부터 다시 — 박자가 안 어긋나게
+  const restart = d => {
+    const els = [d.card, d.hand].filter(Boolean)
+    els.forEach(e => { e.style.animation = 'none' })
+    void d.card.offsetWidth
+    els.forEach(e => { e.style.animation = e.style.animationPlayState = '' })
+  }
+  const back = d => { d.next.remove(); d.cur.style.transform = d.cur.style.transition = ''; if (d.coach) d.coach.style.transition = ''; restart(d) }
   const settle = (d, go) => {
     const ms = 320 * k
     busy = true
@@ -51,7 +61,7 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     setTimeout(() => {
       busy = false
       if (go) { step = 'feed'; i++; hyped = false; draw() }
-      else { d.next.remove(); d.cur.style.transform = d.cur.style.transition = ''; d.card.style.animation = ''; if (d.coach) d.coach.style.transition = '' }
+      else back(d)
     }, ms)
   }
 
@@ -76,7 +86,8 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     if (drag) {
       const d = drag; drag = null
       if (d.moved) return settle(d, d.dy < -d.H * 0.2 || d.dy / (now - d.t0) < -0.6)
-      d.next.remove(); d.cur.style.transform = ''; d.card.style.animation = ''; if (d.coach) { d.coach.style.transition = ''; d.coach.style.opacity = '' }
+      // 끌지 않고 뗐으면(힌트 중간에 눌렀다 뗌) 짧게 제자리로. busy를 안 걸어야 피드 더블탭이 막히지 않는다
+      place(d, 0, 160 * k); setTimeout(() => back(d), 160 * k)
     }
     const dbl = now - lastUp < 350
     lastUp = dbl ? 0 : now
