@@ -67,9 +67,8 @@ import { Meta } from '@storybook/addon-docs/blocks'
     - 앱: `FeedView.swift` `searchControls`, `contextBadge` 세로 위치
 12. **피드 하단 액션 배치** (`feed`, Components › FeedTrack)
     - AS-IS: 제목·아티스트 아래 줄에 왼쪽 하입 28, 오른쪽 상세(`opticaldisc`) · 공유
-    - TO-BE: 아트워크 바로 아래(12) 오른쪽에 공유 · 더보기(`ellipsis`). 하입은 제목 줄 오른쪽(세로 가운데), 36
+    - TO-BE: 아트워크 바로 아래(12) 오른쪽에 공유 · 더보기(`ellipsis`). 하입은 제목 줄 오른쪽(세로 가운데), 크기 28 그대로
     - 더보기(•••)가 트랙 상세를 연다 — 지금 디스크 버튼이 하던 일(`onOpenDetail`). 공유는 그대로.
-    - 하입 36은 받은 이미지 비율로 잡은 값이다. 앱에서 보고 조정한다.
     - 앱: `FeedView.swift` `TrackCardView`의 액션 HStack
 
 ---
@@ -107,6 +106,11 @@ import { Meta } from '@storybook/addon-docs/blocks'
 7. **하입 버스트** (Components › FeedTrack › 하입 버스트)
    - 하입하면 삽 조각이 튀었다가 떨어지고 버튼이 1.35배로 튄다. 더블탭·버튼 하입 둘 다.
 
-### 정해지지 않은 것
+### 게스트 하입
 
-- **게스트 하입:** 지금 앱은 게스트가 하입하면 로그인 시트를 띄운다(`FeedView.swift` `requireAccount()`). 둘러보기 코치마크가 더블탭(= 하입)을 시키므로 이 처리가 필요하다. 안: 연습 하입을 기기에 보관했다가 로그인하면 반영. 팀 확정 대기.
+8. **게스트 하입** (2026-10-11 확정)
+   - AS-IS: 게스트가 하입하면 바로 로그인 시트(`FeedView.swift` `requireAccount()`)
+   - TO-BE 첫 번째(코치마크 더블탭): 로그인 시트 없이 하입 처리. 곡 id를 기기(UserDefaults)에 보관하고, 로그인하면 서버에 하입으로 저장한 뒤 지운다.
+   - 저장은 **하입 기록으로만** 남긴다. 곡 고르기 화면에 미리 골라 두지 않고, 3곡 기준에도 넣지 않는다.
+   - 이미 하입된 곡이면 서버가 `HYPE_ALREADY_REGISTERED`를 준다 — 성공으로 보고 지운다.
+   - TO-BE 두 번째부터(버튼·더블탭 모두): 지금처럼 로그인 시트(`onboarding-signin-gate`) → 둘러보기 후 로그인 흐름.
