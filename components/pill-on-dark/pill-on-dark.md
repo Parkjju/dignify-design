@@ -9,7 +9,7 @@
 | variant | 지면 | 테두리 | 글꼴 | 쓰는 곳 |
 |---|---|---|---|---|
 | chip (표시) | `color.fillOnDark` | `color.strokeOnDark` | 11 semibold, white 90% | 카드 "비슷한 곡: …" / 장르 — **한 자리만**, 둘 중 하나 |
-| mode (버튼) | white 20% | white 25% | 12 medium + ⇆ 9 bold | "하입한 곡 따라가는 중" / "무작위" — 탭하면 전환 |
+| mode (버튼) | white 20% | white 25% | 12 medium + ⇆ 9 bold | "좋아요한 곡 따라가는 중" / "무작위" — 탭하면 전환 |
 | query (버튼) | `color.brand` | — | 12 medium + ✕ | 검색 결과 보는 중, 탭하면 전체 피드 |
 | badge (표시) | `color.scrimStrong` | `color.strokeOnDark` | `typography.label` | "이번 주 특집 3/5", "@닉네임의 픽 3/12" |
 

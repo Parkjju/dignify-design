@@ -4,7 +4,7 @@
 // handOffset: 손(또는 하입 아이콘) 중심이 아트워크 가운데에서 위아래로 얼마나 · captionBelow: 캡션이 아트워크 아래로 삐져나오는 길이
 export const COACH_GESTURE = {
   'double-tap': ['마음에 드는 노래를 찾았어요!', '빠르게 두 번 클릭해 볼까요?'],
-  'hyped': ['마음에 드는 노래를 하입했어요!', '관심이 가는 노래를 더 찾으러 가볼까요?'],
+  'hyped': ['마음에 드는 노래에 좋아요를 눌렀어요!', '관심이 가는 노래를 더 찾으러 가볼까요?'],
   'swipe-up': ['다음 노래로 넘어가 볼까요?', '화면을 위로 쓸어 올려보세요'],
 }
 export function CoachGesture({ gesture = 'double-tap', title, body, handOffset = -18, captionBelow = 25, speed = 1, hold = 0.3, once = false } = {}) {

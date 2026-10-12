@@ -1,7 +1,7 @@
 // components/feed-track/feed-track.md — 지면(블러 배경·그라데이션)까지 포함한 한 장
 import { PillOnDark } from '../pill-on-dark/pill-on-dark.js'
 
-// 하입 버스트: 하트 조각이 위로 튀었다가 떨어진다. [dx, 솟는 높이, 회전, 크기]
+// 좋아요 버스트: 하트 조각이 위로 튀었다가 떨어진다. [dx, 솟는 높이, 회전, 크기]
 const BURST = [[-58, 70, -200, 14], [-34, 96, 160, 18], [-10, 84, -120, 12], [14, 104, 220, 20], [36, 78, -160, 14], [58, 92, 140, 16], [-46, 52, 260, 12], [46, 58, -240, 12]]
   .map(([x, up, r, size], i) => `<i class="ic ic-heart-fill ds-feed-track__bit" style="--x:${x}px;--up:${-up}px;--r:${r}deg;font-size:${size}px;animation-delay:calc(${i % 3 * 0.03}s * var(--k))"></i>`).join('')
 export function FeedTrack({ cover = 'a-cannons', title = 'Cannons', artist = 'Phil Wickham', chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, overlay = '', width = 393, height = 640, top = 24, bottom = 24 } = {}) {

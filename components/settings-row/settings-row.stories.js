@@ -10,5 +10,5 @@ export default {
 }
 export const Link = {}
 export const Destructive = { args: { variant: 'destructive', label: '계정 삭제' } }
-export const Toggle = { args: { variant: 'toggle', label: '하입한 곡 따라가기', caption: '켜면 하입한 곡과 소리가 비슷한 곡이 나오고, 끄면 조건 없이 아무 곡이나 나와요.' } }
+export const Toggle = { args: { variant: 'toggle', label: '좋아요한 곡 따라가기', caption: '켜면 좋아요한 곡과 소리가 비슷한 곡이 나오고, 끄면 조건 없이 아무 곡이나 나와요.' } }
 export const Card = { args: { variant: 'card', label: '디깅 프로필', caption: '🔁 충성파' } }

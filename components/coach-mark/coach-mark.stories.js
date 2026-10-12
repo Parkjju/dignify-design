@@ -8,4 +8,4 @@ export default {
 }
 export const Feed = {}
 export const PicksLast = { args: { title: '직접 만들어보기', body: '담아둔 곡을 묶어서 나만의 픽을 올려보세요.', step: 4, total: 4 } }
-export const FeedMode = { args: { title: '지금 무엇을 따라가는지', body: '피드가 하입을 따라가는 중인지 무작위인지 여기서 알 수 있어요. 누르면 바뀌어요.', step: 2, total: 2 } }
+export const FeedMode = { args: { title: '지금 무엇을 따라가는지', body: '피드가 좋아요한 곡을 따라가는 중인지 무작위인지 여기서 알 수 있어요. 누르면 바뀌어요.', step: 2, total: 2 } }

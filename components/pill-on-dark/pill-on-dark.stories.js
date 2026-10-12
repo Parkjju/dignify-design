@@ -9,6 +9,6 @@ export default {
   args: { variant: 'chip', label: '비슷한 곡: Blame' },
 }
 export const Chip = {}
-export const Mode = { args: { variant: 'mode', label: '하입한 곡 따라가는 중' } }
+export const Mode = { args: { variant: 'mode', label: '좋아요한 곡 따라가는 중' } }
 export const Query = { args: { variant: 'query', label: '실리카겔' } }
 export const Badge = { args: { variant: 'badge', label: '이번 주 특집 3/5' } }

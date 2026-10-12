@@ -39,7 +39,7 @@ const composeSheet = children => Device({ surface: 'media', time: '12:58', batte
 export function PickComposeScreen({ sections = [], selected = 3 } = {}) {
   const rows = sections.map(({ date, tracks }, i) => `<div style="padding:${i ? 10 : 0}px 0 6px;font-size:12px;font-weight:600;color:var(--color-text-tertiary)">${date}</div>${tracks.map(TrackRow).join('')}`).join('')
   return composeSheet(`<div class="grabber"></div><div style="margin-top:4px">${NavBar({ title: '새 픽', back: false, left: '취소' })}</div>
-    <div style="padding:8px 20px 20px">${SearchBar({})}</div>${SectionHeader({ variant: 'label', title: '하입한 곡' })}
+    <div style="padding:8px 20px 20px">${SearchBar({})}</div>${SectionHeader({ variant: 'label', title: '좋아요한 곡' })}
     <div style="flex:1;overflow:hidden;padding:14px 20px 0;display:flex;flex-direction:column;gap:6px">${rows}</div>
     <div style="display:flex;align-items:center;gap:14px;padding:12px 20px 42px;border-top:1px solid rgba(0,0,0,.06)"><span style="flex:1;font-size:14px;color:${selected ? 'var(--color-text-primary)' : 'var(--color-text-tertiary)'}">${selected ? `${selected}곡 선택됨` : '곡을 선택해주세요'}</span>${Button({ variant: 'small', label: '다음', disabled: !selected })}</div>`)
 }

@@ -12,7 +12,7 @@ import { ReleaseNotes } from '../components/release-notes/release-notes.js'
 import { Button } from '../components/button/button.js'
 
 // 피드 한 장: 아트워크 지면 + 위 오버레이. 다른 피드 화면이 이 위에 무언가를 얹는다.
-// lift: 제목·아티스트·하입 줄을 앱(safe+72)보다 더 올리는 양 — 탭바와 간격 (1.1 검토 중)
+// lift: 제목·아티스트·좋아요 줄을 앱(safe+72)보다 더 올리는 양 — 탭바와 간격 (1.1 검토 중)
 export const LIFT = 20
 const feedLayer = ({ track, chip, hyped, burst, speed, overlay, mode, context, query, pick, lift = LIFT, peek = 32 }) =>
   `<div style="position:absolute;inset:0;--peek:${peek}px">${FeedTrack({ ...track, chip, hyped, burst, speed, overlay, height: 852, top: 118, bottom: 106 + lift })}</div>

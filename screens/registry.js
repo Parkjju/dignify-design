@@ -18,7 +18,7 @@ export const SCREENS = {
   'track-detail': ['트랙 상세', Feed.TrackDetailScreen, { track: T.cannons, detail: { genre: 'CCM', released: '2007.06.19' } }],
   'feed-push-popup': ['이번 주 특집 끝 · 알림 권유', Feed.FeedPopupScreen, { track: T.seasons, title: '이번 주 특집, 여기까지예요', message: '방금 보신 곡들은 저희가 직접 판 거예요. 매주 새로 파고 있는데, 다음 편 올라오면 알려드릴까요?' }],
   'feed-coach': ['코치마크 · 더블탭', Feed.FeedCoachScreen, { track: T.billann, gesture: 'double-tap', handOffset: -18, captionBelow: 25, speed: 1 }],
-  'feed-coach-hyped': ['코치마크 · 하입함', Feed.FeedCoachScreen, { track: T.billann, gesture: 'hyped', handOffset: -18, captionBelow: 25, speed: 1 }],
+  'feed-coach-hyped': ['코치마크 · 좋아요함', Feed.FeedCoachScreen, { track: T.billann, gesture: 'hyped', handOffset: -18, captionBelow: 25, speed: 1 }],
   'feed-coach-swipe': ['코치마크 · 다음 곡', Feed.FeedCoachScreen, { track: T.billann, gesture: 'swipe-up', handOffset: -18, captionBelow: 25, speed: 1, hyped: true, peek: 32 }],
   'whats-new': ['새로운 기능', Feed.WhatsNewScreen, { track: T.cannons }],
   'picks': ['Picks', Picks.PicksScreen, { picks: PICKS, scroll: 0 }],
@@ -35,7 +35,7 @@ export const SCREENS = {
     artists: { explore: [['혁오', 6], ['잔나비', 4], ['실리카겔', 3], ['wave to earth', 2], ['Jio', 2]], keep: [['혁오', 5], ['잔나비', 3], ['wave to earth', 2], ['Jio', 2], ['윤상', 1]] },
     myPick: { cover: 'a-loveya', title: '모두가 사랑하는 밴드', count: 3 } }],
   'my-picks': ['내가 만든 픽', My.MyPicksScreen, { picks: [{ ...PICKS[0], verified: false, plays: 27 }, { ...PICKS[1], nickname: 'digger_lover', time: '3일 전', title: '새벽 드라이브' }] }],
-  'hype-history': ['하입 기록', My.HypeHistoryScreen, { editing: false, crateDays: CRATE, scroll: 0 }],
+  'hype-history': ['좋아요 기록', My.HypeHistoryScreen, { editing: false, crateDays: CRATE, scroll: 0 }],
   'seed-picker': ['추천 기준 곡', My.SeedPickerScreen, { crateDays: CRATE, selected: ['a-seasons', 'a-ohio'] }],
   'artist-requests': ['아티스트 요청', My.ArtistRequestsScreen, { sheet: false, sent: false, value: '검정치마', requests: [
     { artist: '실리카겔', status: 'added', date: '2026년 10월 3일' }, { artist: '쏜애플', status: 'pending', date: '2026년 10월 6일' },

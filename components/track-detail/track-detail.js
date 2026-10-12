@@ -5,7 +5,7 @@ export function TrackDetail({ cover = 'a-cannons', title = 'Cannons', artist = '
   return `<div class="ds-detail">
   <div class="ds-detail__head"><i class="art ${cover}"></i><div><h2>${title}</h2><p class="by">${artist}</p><p class="album">${album}</p><div class="tags"><span>${genre}</span><span>${released}</span></div></div></div>
   <div class="ds-detail__div"></div>
-  <div class="ds-detail__hypers"><h3>하입한 유저</h3>${hypers.length ? hypers.map(([n, d]) => `<p>@${n}<span>${d}</span></p>`).join('') : '<p class="is-empty">아직 하입한 유저가 없어요</p>'}</div>
+  <div class="ds-detail__hypers"><h3>좋아요한 유저</h3>${hypers.length ? hypers.map(([n, d]) => `<p>@${n}<span>${d}</span></p>`).join('') : '<p class="is-empty">아직 좋아요한 유저가 없어요</p>'}</div>
   <div class="ds-detail__stores">${Button({ variant: 'dark', label: 'Apple Music에서 듣기', icon: 'music-note' })}${Button({ variant: 'outline-block', label: 'YouTube Music에서 찾기', icon: 'play' })}</div>
 </div>`
 }
