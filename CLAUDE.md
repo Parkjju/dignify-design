@@ -25,7 +25,7 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Story
 ### 쓸 수 있는 것
 - 컴포넌트: `components/*/` 의 함수들 (Storybook Components 메뉴에서 이름·인자 확인)
 - 공통 CSS(`screens/_shared.css`): `.device`·`.status`·`.island`·`.home` · `.nav`·`.glass-btn`·`.large-title` · `.dim`·`.sheet`·`.sheet.floating`·`.grabber` · `.keyboard` · `.toast` · `.tabbar`
-- 아이콘: `<i class="ic ic-이름">`(크기 = font-size, 색 = color). 목록은 Foundations › 아이콘. 하입은 `ic-hype`, 로고는 `<i class="brand-mark">`
+- 아이콘: `<i class="ic ic-이름">`(크기 = font-size, 색 = color). 목록은 Foundations › 아이콘. 하입(좋아요)은 `ic-heart`(안 함)·`ic-heart-fill`(함) — 1.1부터 삽(`ic-hype`) 대신 하트, 로고는 `<i class="brand-mark">`
 - 커버: `<i class="art a-cannons">` 등. 목록은 Foundations › 앨범 커버
 
 ### 값 규칙

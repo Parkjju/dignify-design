@@ -26,7 +26,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
    - 앱: `Localizable.xcstrings` 해당 키
 2. **나만의 취향 만들기 본문** (`guest-prompt`)
    - AS-IS: 로그인하면 트랙에 하입하고, 피드를 취향에 맞추고, 담은 곡을 모아볼 수 있어요.
-   - TO-BE: 로그인하면 마음에 드는 노래를 찜하고, 내 취향에 맞는 피드를 만들 수 있어요.
+   - TO-BE: 로그인하면 마음에 드는 노래를 찜하고,(줄바꿈) 내 취향에 맞는 피드를 만들 수 있어요. 「찜하고,」 뒤에서 일부러 줄을 바꾼다
    - 앱: `MainTabView.swift` `GuestSignInPromptView` ("Sign in to hype tracks, …")
 3. **나만의 취향 만들기 버튼** (`guest-prompt`)
    - AS-IS: 로그인
@@ -77,6 +77,20 @@ import { Meta } from '@storybook/addon-docs/blocks'
     - AS-IS: 칩·제목·아티스트 아래끝이 safe+72 — 탭바와 간격 23
     - TO-BE: safe+92 (20 올림) — 탭바와 간격 43. 아트워크는 위아래 사이 가운데라 10 같이 올라간다
     - 앱: `FeedView.swift` `.padding(.bottom, safeAreaInsets.bottom + 72)` → `+ 92`
+
+### 하입 아이콘 → 하트 (2026-10-11, 기획 논의)
+
+삽 아이콘만으로는 무슨 버튼인지 분명하지 않아서 「좋아요」로 읽히는 기본 하트로 바꾼다. 기능 이름(하입)·서버 API는 그대로, **아이콘만** 바꾼다.
+
+14. **피드 하입 버튼** (`feed`, `feed-hyped`, Components › FeedTrack)
+    - AS-IS: `HypeIcon`(삽) 28, 전 `textTertiary` / 후 `brand`
+    - TO-BE: 전 SF `heart` / 후 SF `heart.fill`, 크기 28·색은 그대로
+    - 앱: `FeedView.swift` `Image("HypeIcon")`
+15. **하입 버스트** (Components › FeedTrack › 하입 버스트) — 튀었다 떨어지는 조각을 삽 → 찬 하트로
+16. **코치마크 하입 단계** (`feed-coach-hyped`) — 가운데 팝 아이콘을 삽 → 찬 하트(160, `brand`)로
+17. **공유 카드 하입 배지** (Components › ShareCard) — 커버 오른쪽 위 원 안 아이콘을 찬 하트로. 앱: `ShareCardView.swift`
+18. **디깅 프로필 「담음」 칸** (Components › LensColumns) — 캡션 아이콘을 찬 하트로. 앱: `DiggingProfileView.swift`
+- 문구에 남은 「하입」(예: 코치마크 「마음에 드는 노래를 하입했어요!」)은 이번엔 그대로다. 바꿀지는 따로 정한다.
 
 ---
 
