@@ -38,7 +38,7 @@ export function GuestPromptScreen({ tab = 'my' } = {}) {
   return Device({ tab, time: '1:06', battery: 36, children: `<div style="position:absolute;inset:0 40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center">
     <i class="brand-mark" style="width:56px;height:56px"></i>
     <h1 style="font:var(--typography-title2)">나만의 취향 만들기</h1>
-    <p style="font:var(--typography-body);color:var(--color-text-secondary);line-height:1.6">로그인하면 마음에 드는 노래를 찜하고, 내 취향에 맞는 피드를 만들 수 있어요.</p>
+    <p style="font:var(--typography-body);color:var(--color-text-secondary);line-height:1.6">로그인하면 마음에 드는 노래를 찜하고,<br>내 취향에 맞는 피드를 만들 수 있어요.</p>
     <div style="align-self:stretch;margin-top:8px">${Button({ label: '내 취향 찾으러 가기' })}</div></div>` })
 }
 
