@@ -11,3 +11,9 @@
 .ds-seed b { font-size: 11px; font-weight: 600; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ds-seed > span { font-size: 10.5px; color: var(--color-text-tertiary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: -4px; }
 .ds-seed-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 10px; row-gap: var(--spacing-x4); }
+/* 3곡 다 고른 뒤 안 고른 곡: 흑백 + 바탕색 60% 덮개 = 연한 회색. 고르기 원 숨김, 미리듣기 아이콘만 남는다 */
+.ds-seed.is-disabled .ds-seed__thumb .art { filter: grayscale(1); }
+.ds-seed.is-disabled .ds-seed__thumb::after { background: color-mix(in srgb, var(--color-background) 60%, transparent); }
+.ds-seed.is-disabled .ds-seed__pick { display: none; }
+.ds-seed.is-disabled .ds-seed__play { color: var(--color-text-tertiary); }
+.ds-seed.is-disabled b, .ds-seed.is-disabled > span { color: var(--color-text-tertiary); opacity: .6; }
