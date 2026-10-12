@@ -6,7 +6,7 @@ const BURST = [[-58, 70, -200, 14], [-34, 96, 160, 18], [-10, 84, -120, 12], [14
   .map(([x, up, r, size], i) => `<i class="ic ic-hype ds-feed-track__bit" style="--x:${x}px;--up:${-up}px;--r:${r}deg;font-size:${size}px;animation-delay:calc(${i % 3 * 0.03}s * var(--k))"></i>`).join('')
 export function FeedTrack({ cover = 'a-cannons', title = 'Cannons', artist = 'Phil Wickham', chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, overlay = '', width = 393, height = 640, top = 24, bottom = 24 } = {}) {
   // 기기 안에서는 top = safe+64(118), bottom = safe+72(106) — patterns/feed-media-surface.md
-  return `<div class="ds-feed-track" style="width:${width}px;height:${height}px">
+  return `<div class="ds-feed-track" style="width:${width}px;height:${height}px;--k:${1 / speed}">
   <i class="art ${cover} ds-feed-track__bg"></i><div class="ds-feed-track__scrim"></div>
   <div class="ds-feed-track__body" style="top:${top}px;bottom:${bottom}px">
     <div class="ds-feed-track__center">

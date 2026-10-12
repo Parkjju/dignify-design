@@ -7,7 +7,7 @@ import { T } from './data.js'
 
 const TRACKS = [T.billann, T.seasons, T.loveya, T.bigvoid, T.wss]
 
-export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3 } = {}) {
+export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32 } = {}) {
   const el = document.createElement('div')
   el.className = 'sb-live'
   let step = 'double-tap', i = 0, hyped = false, since = 0, lastUp = 0, busy = false, drag = null
@@ -16,7 +16,7 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     const track = TRACKS[i % TRACKS.length]
     el.innerHTML = step === 'feed'
       ? FeedScreen({ track, chip: '', hyped, burst, speed })
-      : FeedCoachScreen({ track, gesture: step, hyped, handOffset, captionBelow, speed, hold, once: true })
+      : FeedCoachScreen({ track, gesture: step, hyped, handOffset, captionBelow, speed, hold, peek, once: true })
     since = performance.now()
   }
 
@@ -32,7 +32,10 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     cur.after(next)
     const coach = cur.querySelector('.ds-coach-gesture')
     if (coach) coach.style.transition = 'none'
-    return { y0: y, t0: performance.now(), dy: 0, moved: false, cur, next, coach, H: cur.offsetHeight }
+    // 화면 살짝 올라가는 힌트(dsg-peek) 중간에 잡으면 그 위치에서 이어 끈다 — 툭 튀지 않게
+    const card = cur.querySelector('.ds-feed-track'), base = new DOMMatrix(getComputedStyle(card).transform).m42
+    card.style.animation = 'none'
+    return { y0: y - base, t0: performance.now(), dy: base, moved: false, cur, next, coach, card, H: cur.offsetHeight }
   }
   const place = (d, dy, ms = 0) => {
     const t = ms ? `transform ${ms}ms cubic-bezier(.2,.8,.2,1), opacity ${ms}ms` : 'none'
@@ -48,7 +51,7 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     setTimeout(() => {
       busy = false
       if (go) { step = 'feed'; i++; hyped = false; draw() }
-      else { d.next.remove(); d.cur.style.transform = d.cur.style.transition = ''; if (d.coach) d.coach.style.transition = '' }
+      else { d.next.remove(); d.cur.style.transform = d.cur.style.transition = ''; d.card.style.animation = ''; if (d.coach) d.coach.style.transition = '' }
     }, ms)
   }
 
@@ -56,7 +59,7 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     if (busy || !canDrag()) return
     drag = startDrag(e.clientY)
     try { el.setPointerCapture(e.pointerId) } catch {}   // 화면 밖으로 끌어도 계속 받기
-    place(drag, 0)
+    place(drag, drag.dy)
   })
   el.addEventListener('pointermove', e => {
     if (!drag) return
@@ -73,7 +76,7 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
     if (drag) {
       const d = drag; drag = null
       if (d.moved) return settle(d, d.dy < -d.H * 0.2 || d.dy / (now - d.t0) < -0.6)
-      d.next.remove(); d.cur.style.transform = ''; if (d.coach) { d.coach.style.transition = ''; d.coach.style.opacity = '' }
+      d.next.remove(); d.cur.style.transform = ''; d.card.style.animation = ''; if (d.coach) { d.coach.style.transition = ''; d.coach.style.opacity = '' }
     }
     const dbl = now - lastUp < 350
     lastUp = dbl ? 0 : now

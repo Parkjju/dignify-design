@@ -19,7 +19,7 @@ export const SCREENS = {
   'feed-push-popup': ['이번 주 특집 끝 · 알림 권유', Feed.FeedPopupScreen, { track: T.seasons, title: '이번 주 특집, 여기까지예요', message: '방금 보신 곡들은 저희가 직접 판 거예요. 매주 새로 파고 있는데, 다음 편 올라오면 알려드릴까요?' }],
   'feed-coach': ['코치마크 · 더블탭', Feed.FeedCoachScreen, { track: T.billann, gesture: 'double-tap', handOffset: -18, captionBelow: 25, speed: 1 }],
   'feed-coach-hyped': ['코치마크 · 하입함', Feed.FeedCoachScreen, { track: T.billann, gesture: 'hyped', handOffset: -18, captionBelow: 25, speed: 1 }],
-  'feed-coach-swipe': ['코치마크 · 다음 곡', Feed.FeedCoachScreen, { track: T.billann, gesture: 'swipe-up', handOffset: -18, captionBelow: 25, speed: 1, hyped: true }],
+  'feed-coach-swipe': ['코치마크 · 다음 곡', Feed.FeedCoachScreen, { track: T.billann, gesture: 'swipe-up', handOffset: -18, captionBelow: 25, speed: 1, hyped: true, peek: 32 }],
   'whats-new': ['새로운 기능', Feed.WhatsNewScreen, { track: T.cannons }],
   'picks': ['Picks', Picks.PicksScreen, { picks: PICKS, scroll: 0 }],
   'pick-play': ['픽 재생', Picks.PickPlayScreen, { track: T.loveya, chip: '록', hyped: true, nickname: 'digger_lover', index: 3, total: 12 }],

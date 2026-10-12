@@ -261,6 +261,11 @@ body.embed { padding: 0; background: transparent; }
   18% { opacity: 0; transform: scale(.4); } 24% { opacity: 1; } 34.5%, 100% { opacity: 0; transform: scale(1.6); } }
 
 .is-swipe-up { animation: dsg-swipe calc(2.4s * var(--k, 1)) cubic-bezier(.3,0,.2,1) infinite; }
+/* 손이 쓸어 올리는 동안 화면(트랙 한 장 전체)도 --peek만큼 따라 올라갔다가 튕기듯 돌아온다 — 손과 같은 2.4s 주기 */
+.ds-feed-track:has(.ds-coach-gesture__hand.is-swipe-up) { animation: dsg-peek calc(2.4s * var(--k, 1)) infinite; }
+@keyframes dsg-peek { 0%, 12% { transform: translateY(0); animation-timing-function: cubic-bezier(.45,0,.55,1); }
+  48% { transform: translateY(calc(-1 * var(--peek, 32px))); animation-timing-function: cubic-bezier(.2,.9,.3,1.15); }
+  72%, 100% { transform: translateY(0); } }
 @keyframes dsg-swipe { 0% { transform: translateY(70px); opacity: 0; } 12% { opacity: 1; } 50% { transform: translateY(-70px); opacity: 1; } 60%, 100% { transform: translateY(-70px); opacity: 0; } }
 
 .ds-coach-gesture__hype { font-size: 160px; color: var(--color-brand); translate: 0 -80px; filter: drop-shadow(0 6px 18px rgba(0,0,0,.35)); animation: dsg-pop calc(2.4s * var(--k, 1)) infinite; }
@@ -282,6 +287,7 @@ body.embed { padding: 0; background: transparent; }
 @media (prefers-reduced-motion: reduce) {
   .ds-coach-gesture *, .ds-coach-gesture__hand { animation: none !important; }
   .is-swipe-up { opacity: 1; }
+  .ds-feed-track { animation: none !important; }
 }
 /* components/coach-mark/coach-mark.md */
 .ds-coach { width: 345px; padding: var(--spacing-x6); border-radius: 28px; background: var(--color-pick-elevated); text-align: center; color: #fff; }
