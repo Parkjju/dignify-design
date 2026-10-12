@@ -45,7 +45,7 @@ export const SCREENS = {
   'onboarding-signin-gate': ['로그인 시트(게스트)', On.SignInScreen, { error: '', gate: true }],
   'guest-prompt': ['로그인 유도(게스트)', On.GuestPromptScreen, { tab: 'my' }],
   'onboarding-loading': ['로딩', On.LoadingScreen, {}],
-  'onboarding-seed': ['추천 기준 곡 고르기', On.SeedOnboardingScreen, { tiles: seedTiles, search: '' }],
+  'onboarding-seed': ['추천 기준 곡 고르기', On.SeedOnboardingScreen, { tiles: seedTiles, search: '', titleFont: 'title1', titleBreak: false }],
   'onboarding-building': ['피드 구성 중', On.FeedBuildingScreen, { covers: ['a-wss', 'a-billann'] }],
   'share-card': ['공유 카드', ShareCard, { variant: 'track' }],
 }

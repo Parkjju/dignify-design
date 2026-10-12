@@ -42,11 +42,15 @@ export function GuestPromptScreen({ tab = 'my' } = {}) {
     <div style="align-self:stretch;margin-top:8px">${Button({ label: '내 취향 찾으러 가기' })}</div></div>` })
 }
 
-export function SeedOnboardingScreen({ tiles = [], search = '' } = {}) {
+// titleFont: 제목 타이포 토큰(1.1 검토 중 — title1은 두 줄로 넘어간다) · titleBreak: "노래를" 뒤에서 일부러 줄바꿈
+// 제목 줄 수가 바뀌어도 검색창·그리드가 따라 내려오게 세로로 쌓는다(앱 VStack과 같음)
+export function SeedOnboardingScreen({ tiles = [], search = '', titleFont = 'title1', titleBreak = false } = {}) {
   return Device({ time: '1:06', battery: 36, children: `${skip}
-    <div style="position:absolute;top:98px;left:24px;right:24px;display:flex;flex-direction:column;gap:6px">
-      <h1 style="font:var(--typography-title1)">마음에 드는 노래를 3곡까지 골라주세요.</h1><p style="font:var(--typography-body);color:var(--color-text-secondary)">선택한 곡을 기준으로 추천해 드릴게요.</p></div>
-    <div style="position:absolute;top:204px;left:24px;right:24px">${SearchBar({ text: search })}</div>
-    <div style="position:absolute;top:258px;left:24px;right:24px;bottom:120px;overflow:hidden">${SeedGrid({ items: tiles })}</div>
+    <div style="position:absolute;top:98px;left:24px;right:24px;bottom:120px;display:flex;flex-direction:column">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <h1 style="font:var(--typography-${titleFont})">마음에 드는 노래를${titleBreak ? '<br>' : ' '}3곡까지 골라주세요.</h1><p style="font:var(--typography-body);color:var(--color-text-secondary)">선택한 곡을 기준으로 추천해 드릴게요.</p></div>
+      <div style="margin-top:12px">${SearchBar({ text: search })}</div>
+      <div style="margin-top:14px;flex:1;min-height:0;overflow:hidden">${SeedGrid({ items: tiles })}</div>
+    </div>
     <div style="position:absolute;left:0;right:0;bottom:0;padding:12px 24px 34px;background:var(--color-background)">${Button({ label: '디깅 시작', disabled: !tiles.some(t => t.number) })}</div>` })
 }
