@@ -11,7 +11,7 @@
 .ds-feed-track__artist { font-size: 14px; color: var(--color-text-on-dark-secondary); margin-top: 3px; }
 /* 1.1: 공유·더보기(트랙 상세)는 아트워크 바로 아래 오른쪽, 하입은 제목 줄 오른쪽 */
 .ds-feed-track__actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--spacing-x4); margin-top: var(--spacing-x3); }
-.ds-feed-track__info { display: flex; align-items: center; gap: var(--spacing-x4); }
+.ds-feed-track__info { display: flex; align-items: flex-end; gap: var(--spacing-x4); }
 .ds-feed-track__info > div { flex: 1; min-width: 0; }
 .ds-feed-track__hype { font-size: 28px; color: var(--color-text-tertiary); display: grid; }
 .ds-feed-track__hype.is-on { color: var(--color-brand); }

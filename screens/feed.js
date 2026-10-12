@@ -12,16 +12,18 @@ import { ReleaseNotes } from '../components/release-notes/release-notes.js'
 import { Button } from '../components/button/button.js'
 
 // 피드 한 장: 아트워크 지면 + 위 오버레이. 다른 피드 화면이 이 위에 무언가를 얹는다.
-const feedLayer = ({ track, chip, hyped, burst, speed, overlay, mode, context, query, pick }) =>
-  `<div style="position:absolute;inset:0">${FeedTrack({ ...track, chip, hyped, burst, speed, overlay, height: 852, top: 118, bottom: 106 })}</div>
+// lift: 제목·아티스트·하입 줄을 앱(safe+72)보다 더 올리는 양 — 탭바와 간격 (1.1 검토 중)
+export const LIFT = 20
+const feedLayer = ({ track, chip, hyped, burst, speed, overlay, mode, context, query, pick, lift = LIFT }) =>
+  `<div style="position:absolute;inset:0">${FeedTrack({ ...track, chip, hyped, burst, speed, overlay, height: 852, top: 118, bottom: 106 + lift })}</div>
    <div style="position:absolute;top:54px;inset-inline:0;z-index:10">${FeedHeader({ mode, context, query, pick })}</div>`
 
-export function FeedScreen({ track, chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, mode = 'following', context = '', query = '', time = '10:28', battery = 97 } = {}) {
-  return Device({ surface: 'media', tab: 'feed', time, battery, children: feedLayer({ track, chip, hyped, burst, speed, mode, context, query }) })
+export function FeedScreen({ track, chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, mode = 'following', context = '', query = '', time = '10:28', battery = 97, lift = LIFT } = {}) {
+  return Device({ surface: 'media', tab: 'feed', time, battery, children: feedLayer({ track, chip, hyped, burst, speed, mode, context, query, lift }) })
 }
 
 export function FeedSearchScreen({ track, text = '실리카겔', terms = ['잔나비', 'wave to earth', '혁오'], keyboard = true } = {}) {
-  return Device({ surface: 'media', tab: 'feed', children: `<div style="position:absolute;inset:0">${FeedTrack({ ...track, chip: '', height: 852, top: 118, bottom: 106 })}</div>
+  return Device({ surface: 'media', tab: 'feed', children: `<div style="position:absolute;inset:0">${FeedTrack({ ...track, chip: '', height: 852, top: 118, bottom: 106 + LIFT })}</div>
     <div style="position:absolute;top:62px;left:16px;right:16px;z-index:10">${SearchBar({ text, focused: true })}</div>
     <div style="position:absolute;inset:110px 0 0;z-index:9;background:var(--color-background)">${RecentSearches({ terms, typed: text })}</div>`,
     overlay: keyboard ? Keyboard({ returnKey: '검색' }) : '' })

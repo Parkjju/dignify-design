@@ -9,7 +9,7 @@
 | 그라데이션 | 투명 0% → 검정 40% 35% → 검정 85% 75% (위 → 아래) |
 | 카드 | 아트워크 폭 = 화면 − 48, `radius.large`, 그림자 검정 50% / 24 / y16. 위 safe+64 · 아래 safe+72 사이에서 세로 가운데 |
 | 정보 | 좌우 20. 알약(`components/pill-on-dark/pill-on-dark.md`) → 제목 18 bold white → 아티스트 14 `textOnDarkSecondary` → 액션 행 |
-| 액션 | 아트워크 아래 오른쪽 공유 · 더보기(`ellipsis`, 트랙 상세) 22 `iconOnDark`. 하입(HypeIcon 28, 전 `textTertiary` / 후 `brand`)은 제목 줄 오른쪽 (1.1) |
+| 액션 | 아트워크 아래 오른쪽 공유 · 더보기(`ellipsis`, 트랙 상세) 22 `iconOnDark`. 하입(HypeIcon 28, 전 `textTertiary` / 후 `brand`)은 오른쪽, 아래끝을 아티스트명 아래선에 맞춤. 정보 줄 아래끝 safe+92 (1.1) |
 | 상단 | 왼쪽 성향(sparkles/shuffle) + 모드 알약, 오른쪽 검색. 20 semibold white, 40 탭 영역 (1.1) |
 | 탭바 | `components/tab-bar/tab-bar.md` media variant |
 

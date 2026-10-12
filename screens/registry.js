@@ -13,7 +13,7 @@ const seedTiles = [
 ]
 
 export const SCREENS = {
-  'feed': ['피드', Feed.FeedScreen, { track: T.cannons, chip: '비슷한 곡: Blame', hyped: false, mode: 'following', context: '', query: '' }],
+  'feed': ['피드', Feed.FeedScreen, { track: T.cannons, chip: '비슷한 곡: Blame', hyped: false, mode: 'following', context: '', query: '', lift: 20 }],
   'feed-search': ['피드 검색', Feed.FeedSearchScreen, { track: T.cannons, text: '실리카겔', terms: ['잔나비', 'wave to earth', '혁오'], keyboard: true }],
   'track-detail': ['트랙 상세', Feed.TrackDetailScreen, { track: T.cannons, detail: { genre: 'CCM', released: '2007.06.19' } }],
   'feed-push-popup': ['이번 주 특집 끝 · 알림 권유', Feed.FeedPopupScreen, { track: T.seasons, title: '이번 주 특집, 여기까지예요', message: '방금 보신 곡들은 저희가 직접 판 거예요. 매주 새로 파고 있는데, 다음 편 올라오면 알려드릴까요?' }],
