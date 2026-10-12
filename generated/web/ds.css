@@ -318,8 +318,8 @@ body.embed { padding: 0; background: transparent; }
 @media (prefers-reduced-motion: reduce) { .ds-building * { animation: none !important; } }
 /* components/feed-header/feed-header.md */
 .ds-feed-header { position: relative; height: 120px; color: var(--color-text-on-dark); }
-.ds-feed-header__right { position: absolute; top: 8px; right: 16px; display: flex; flex-direction: column; align-items: flex-end; gap: var(--spacing-x2); }
-.ds-feed-header__right > div { display: flex; }
+.ds-feed-header__row { position: absolute; top: 8px; left: 16px; right: 16px; display: flex; align-items: center; gap: var(--spacing-x1); }
+.ds-feed-header__search { margin-left: auto; }
 .ds-feed-header__btn { width: 40px; height: 40px; display: grid; place-items: center; font-size: 22px; }
 .ds-feed-header__badge { position: absolute; left: 50%; transform: translateX(-50%); }
 .ds-feed-header__close { position: absolute; top: 8px; left: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,.35); display: grid; place-items: center; font-size: 17px; color: #fff; }
@@ -328,13 +328,17 @@ body.embed { padding: 0; background: transparent; }
 .ds-feed-track__bg { position: absolute; inset: -40px; filter: blur(28px); transform: scale(1.1); }
 .ds-feed-track__scrim { position: absolute; inset: 0; background: linear-gradient(transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.85) 75%); }
 .ds-feed-track__body { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
-.ds-feed-track__stage { position: relative; margin: auto 0; z-index: 3; }   /* 아트워크 + 그 위에 붙는 오버레이(코치마크) */
+.ds-feed-track__center { margin: auto 0; }
+.ds-feed-track__stage { position: relative; z-index: 3; }   /* 아트워크 + 그 위에 붙는 오버레이(코치마크) */
 .ds-feed-track__cover { display: block; border-radius: var(--radius-large); box-shadow: 0 16px 24px rgba(0,0,0,.5); }
 .ds-feed-track__meta { width: 100%; padding: 0 var(--spacing-x5); display: flex; flex-direction: column; gap: var(--spacing-x4); }
 .ds-feed-track__title { font-size: 18px; font-weight: 700; color: var(--color-text-on-dark); margin-top: var(--spacing-x2); }
 .ds-feed-track__artist { font-size: 14px; color: var(--color-text-on-dark-secondary); margin-top: 3px; }
-.ds-feed-track__actions { display: flex; align-items: center; gap: var(--spacing-x4); }
-.ds-feed-track__hype { font-size: 28px; color: var(--color-text-tertiary); margin-right: auto; display: grid; }
+/* 1.1: 공유·더보기(트랙 상세)는 아트워크 바로 아래 오른쪽, 하입은 제목 줄 오른쪽 */
+.ds-feed-track__actions { display: flex; justify-content: flex-end; align-items: center; gap: var(--spacing-x4); margin-top: var(--spacing-x3); }
+.ds-feed-track__info { display: flex; align-items: center; gap: var(--spacing-x4); }
+.ds-feed-track__info > div { flex: 1; min-width: 0; }
+.ds-feed-track__hype { font-size: 36px; color: var(--color-text-tertiary); display: grid; }
 .ds-feed-track__hype.is-on { color: var(--color-brand); }
 /* 하입 버스트 — 버튼이 팡 커졌다가, 삽 조각이 위로 튀고 우수수 떨어진다. --k = 1/속도. 시안은 2초마다 반복 */
 .ds-feed-track__hype { position: relative; }

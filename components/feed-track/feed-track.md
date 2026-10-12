@@ -9,11 +9,12 @@
 ```
          ┌ 아트워크 (화면 − 48), radius.large, 그림자 ┐
          └──────────────────────────────────────────┘
- (비슷한 곡: Blame)        ← pill-on-dark chip, 한 자리
- Cannons                   ← 18 bold white
- Phil Wickham              ← 14 textOnDarkSecondary
- [삽 28]            (◎) (⇪) ← 하입 / 상세 · 공유 22 iconOnDark
+                       (⇪) (•••) ← 공유 · 더보기(트랙 상세) 22 iconOnDark, 아트워크 아래 12
+ (비슷한 곡: Blame)
+ Cannons             [삽 36] ← 18 bold white · 하입은 제목 줄 오른쪽, 세로 가운데
+ Phil Wickham                ← 14 textOnDarkSecondary
 ```
+1.1(2026-10-11)에서 바뀐 배치다. 이전: 제목 아래 줄에 왼쪽 하입 28, 오른쪽 상세(◎)·공유. 하입 36은 받은 시안 이미지 비율로 잡은 값이라 앱에서 확인한다.
 
 ## States
 | | 하입 아이콘 |

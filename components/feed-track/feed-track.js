@@ -9,12 +9,14 @@ export function FeedTrack({ cover = 'a-cannons', title = 'Cannons', artist = 'Ph
   return `<div class="ds-feed-track" style="width:${width}px;height:${height}px">
   <i class="art ${cover} ds-feed-track__bg"></i><div class="ds-feed-track__scrim"></div>
   <div class="ds-feed-track__body" style="top:${top}px;bottom:${bottom}px">
-    <div class="ds-feed-track__stage"><i class="art ${cover} ds-feed-track__cover" style="width:${width - 48}px;height:${width - 48}px"></i>${overlay}</div>
+    <div class="ds-feed-track__center">
+      <div class="ds-feed-track__stage"><i class="art ${cover} ds-feed-track__cover" style="width:${width - 48}px;height:${width - 48}px"></i>${overlay}</div>
+      <div class="ds-feed-track__actions"><span class="ds-feed-track__act"><i class="ic ic-share"></i></span><span class="ds-feed-track__act"><i class="ic ic-ellipsis"></i></span></div>
+    </div>
     <div class="ds-feed-track__meta">
-      <div>${chip ? PillOnDark({ variant: 'chip', label: chip }) : ''}<p class="ds-feed-track__title">${title}</p><p class="ds-feed-track__artist">${artist}</p></div>
-      <div class="ds-feed-track__actions">
+      <div class="ds-feed-track__info">
+        <div>${chip ? PillOnDark({ variant: 'chip', label: chip }) : ''}<p class="ds-feed-track__title">${title}</p><p class="ds-feed-track__artist">${artist}</p></div>
         <span class="ds-feed-track__hype${hyped ? ' is-on' : ''}${burst ? ' is-burst' : ''}" style="--k:${1 / speed}"><i class="ic ic-hype"></i>${burst ? BURST : ''}</span>
-        <span class="ds-feed-track__act"><i class="ic ic-disc"></i></span><span class="ds-feed-track__act"><i class="ic ic-share"></i></span>
       </div>
     </div>
   </div>
