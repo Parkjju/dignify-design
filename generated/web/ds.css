@@ -279,15 +279,6 @@ body.embed { padding: 0; background: transparent; }
   .is-swipe-up { opacity: 1; }
   .ds-feed-track { animation: none !important; }
 }
-/* components/coach-mark/coach-mark.md */
-.ds-coach { width: 345px; padding: var(--spacing-x6); border-radius: 28px; background: var(--color-pick-elevated); text-align: center; color: #fff; }
-.ds-coach h2 { font-size: 20px; font-weight: 700; }
-.ds-coach p { font-size: 15px; color: rgba(255,255,255,.7); line-height: 1.5; margin-top: var(--spacing-x2-5); }
-.ds-coach__dots { display: flex; justify-content: center; gap: var(--spacing-x2); margin-top: var(--spacing-x5); }
-.ds-coach__dots i { width: 8px; height: 8px; border-radius: 4px; background: rgba(255,255,255,.25); }
-.ds-coach__dots i.is-on { width: 20px; background: #fff; }
-.ds-coach b { display: grid; place-items: center; height: 52px; border-radius: var(--radius-full); background: var(--color-brand); font-size: 16px; font-weight: 600; margin-top: var(--spacing-x5); }
-.ds-spotlight { position: absolute; border-radius: 50%; box-shadow: 0 0 0 2000px rgba(0,0,0,.72); border: 1px solid rgba(255,255,255,.5); }
 /* components/crate-cell/crate-cell.md */
 .ds-crate-cell { position: relative; width: 72px; flex: none; display: flex; flex-direction: column; gap: var(--spacing-x1-5); }
 .ds-crate-cell > .art { width: 72px; height: 72px; border-radius: var(--radius-medium); }
@@ -402,12 +393,6 @@ body.embed { padding: 0; background: transparent; }
 .ds-nav__side { display: flex; gap: var(--spacing-x2); } .ds-nav__side.is-right { justify-content: flex-end; }
 .ds-nav__action { color: var(--color-brand); }
 .ds-nav__secondary { color: var(--color-text-secondary); }
-/* components/page-dots/page-dots.md */
-.ds-dots { display: flex; justify-content: center; gap: var(--spacing-x2); }
-.ds-dots i { width: 8px; height: 8px; border-radius: 4px; background: var(--color-border-light); transition: width 200ms cubic-bezier(.77,0,.175,1); }
-.ds-dots i.is-on { width: 20px; background: var(--color-brand); }
-.ds-dots.is-dark i { background: rgba(255,255,255,.25); }
-.ds-dots.is-dark i.is-on { background: #fff; }
 /* components/pick-card/pick-card.md */
 .ds-pick-card { padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface); color: var(--color-text-on-dark); display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
 .ds-pick-card__who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }

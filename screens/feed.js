@@ -1,4 +1,4 @@
-// 1. 피드 흐름 화면 — 기준: Features/Feed/FeedView.swift · TrackDetailView · PushOptInPopup · WhatsNewView · CoachMarks
+// 1. 피드 흐름 화면 — 기준: Features/Feed/FeedView.swift · TrackDetailView · PushOptInPopup · WhatsNewView · FeedCoachGesture
 import { Device, Sheet } from './device.js'
 import { FeedTrack } from '../components/feed-track/feed-track.js'
 import { FeedHeader } from '../components/feed-header/feed-header.js'
