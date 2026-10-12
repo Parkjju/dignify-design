@@ -289,6 +289,9 @@ body.embed { padding: 0; background: transparent; }
 .ds-crate-cell__pick.is-on { background: var(--color-brand); border: 0; color: #fff; display: grid; place-items: center; font-size: 11px; }
 .ds-crate-day h4 { font: var(--typography-label); color: var(--color-text-tertiary); padding: 0 var(--spacing-x5); margin-bottom: 2px; }
 .ds-crate-day__cells { display: flex; gap: var(--spacing-x3); padding: var(--spacing-x1-5) var(--spacing-x5) 0; overflow: hidden; }
+/* select에서 3곡 다 고른 뒤 안 고른 곡 — SeedTile 비활성과 같은 연한 회색, 고르기 원 숨김 */
+.ds-crate-cell.is-disabled > .art { filter: grayscale(1); opacity: .4; }
+.ds-crate-cell.is-disabled b, .ds-crate-cell.is-disabled span { color: var(--color-text-tertiary); opacity: .6; }
 /* components/feed-building/feed-building.md */
 .ds-building { display: flex; flex-direction: column; align-items: center; text-align: center; color: var(--color-text-primary); }
 .ds-building__covers { display: flex; margin-bottom: var(--spacing-x8); }
