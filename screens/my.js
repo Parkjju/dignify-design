@@ -9,6 +9,7 @@ import { LensColumns } from '../components/lens-columns/lens-columns.js'
 import { MyPickRow } from '../components/my-pick-row/my-pick-row.js'
 import { SectionHeader } from '../components/section-header/section-header.js'
 import { CrateDayRow } from '../components/crate-cell/crate-cell.js'
+import { SeedTray } from '../components/seed-tray/seed-tray.js'
 import { LinkRow } from '../components/link-row/link-row.js'
 import { Button } from '../components/button/button.js'
 import { PickCard } from '../components/pick-card/pick-card.js'
@@ -57,7 +58,9 @@ export function SeedPickerScreen({ crateDays = [], selected = [] } = {}) {
   return Device({ time: '4:32', battery: 88, tab: 'my', children: NavLayer(NavBar({ title: '추천 기준 곡', right: '저장' })) + Scroll({ top: 106, children: `
     <div style="padding:16px 20px;display:flex;flex-direction:column;gap:6px"><p style="font:var(--typography-body);color:var(--color-text-secondary);line-height:1.45">최대 3곡까지 고를 수 있어요. 고른 곡만 기준으로 피드가 만들어져요.</p>
     <small style="font:var(--typography-caption);color:var(--color-text-tertiary);line-height:1.45">아무것도 고르지 않으면 지금까지처럼 최근에 좋아요한 3곡을 기준으로 삼아요.</small></div>
-    <div style="padding-top:8px">${crate(crateDays, 'select', selected)}</div>` }) })
+    <div style="padding:8px 0 104px">${crate(crateDays, 'select', selected)}</div>` }),
+    // 고른 곡 트레이: 탭바 위에 떠 있는 카드. 곡이 어느 날짜 줄에 있든 여기서 보고 빼고, 누르면 그 줄로 스크롤
+    overlay: `<div style="position:absolute;left:16px;right:16px;bottom:95px;z-index:80;padding:12px 16px;border-radius:var(--radius-medium);background:var(--color-surface);box-shadow:0 8px 28px rgba(0,0,0,.12)">${SeedTray({ items: selected.map((cover, i) => ({ cover, number: i + 1 })), numbered: false })}</div>` })
 }
 
 export function ArtistRequestsScreen({ requests = [], sheet = false, sent = false, value = '검정치마' } = {}) {
