@@ -42,9 +42,9 @@ export function GuestPromptScreen({ tab = 'my' } = {}) {
     <div style="align-self:stretch;margin-top:8px">${Button({ label: '내 취향 찾으러 가기' })}</div></div>` })
 }
 
-// titleFont: 제목 타이포 토큰(1.1 검토 중 — title1은 두 줄로 넘어간다) · titleBreak: "노래를" 뒤에서 일부러 줄바꿈
+// titleFont: 제목 타이포 토큰 · titleBreak: "노래를" 뒤에서 일부러 줄바꿈 — 1.1 확정: title1 + 줄바꿈
 // 제목 줄 수가 바뀌어도 검색창·그리드가 따라 내려오게 세로로 쌓는다(앱 VStack과 같음)
-export function SeedOnboardingScreen({ tiles = [], search = '', titleFont = 'title1', titleBreak = false } = {}) {
+export function SeedOnboardingScreen({ tiles = [], search = '', titleFont = 'title1', titleBreak = true } = {}) {
   return Device({ time: '1:06', battery: 36, children: `${skip}
     <div style="position:absolute;top:98px;left:24px;right:24px;bottom:120px;display:flex;flex-direction:column">
       <div style="display:flex;flex-direction:column;gap:6px">
