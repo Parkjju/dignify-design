@@ -15,7 +15,7 @@ export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold
   const draw = (burst = false) => {
     const track = TRACKS[i % TRACKS.length]
     el.innerHTML = step === 'feed'
-      ? FeedScreen({ track, chip: '', hyped, burst, speed })
+      ? FeedScreen({ track, chip: '', hyped, burst, speed, hold })
       : FeedCoachScreen({ track, gesture: step, hyped, handOffset, captionBelow, speed, hold, peek, once: true })
     since = performance.now()
   }

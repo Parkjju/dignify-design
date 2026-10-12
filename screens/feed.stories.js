@@ -5,6 +5,7 @@ export default { title: 'Screens/1. 피드', parameters: { layout: 'centered' } 
 const mode = { mode: { control: 'inline-radio', options: ['following', 'random'] }, lift: { control: { type: 'range', min: 0, max: 80, step: 2 }, description: '제목·아티스트·좋아요 줄을 더 올리는 양 (0 = 지금 앱, 탭바와 간격 23)' } }
 export const Feed = story('feed', {}, mode)
 export const Hyped = story('feed', { hyped: true, track: 'loveya', chip: '록' }, mode, '피드 — 좋아요함')
+export const Liking = story('feed', { hyped: true, burst: true, track: 'loveya', chip: '록', speed: 1 }, { ...mode, speed: { control: { type: 'range', min: 0.5, max: 3, step: 0.1 }, description: '모션 빠르기' } }, '피드 — 좋아요 누르는 순간')
 export const WeeklySet = story('feed', { context: '이번 주 특집 3/5', track: 'seasons', chip: '인디' }, mode, '피드 — 이번 주 특집')
 export const SearchResult = story('feed', { query: '실리카겔', track: 'bigvoid', chip: '록' }, mode, '피드 — 검색 결과')
 export const Search = story('feed-search')
