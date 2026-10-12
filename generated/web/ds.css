@@ -354,6 +354,9 @@ body.embed { padding: 0; background: transparent; }
   100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .ds-feed-track__bit { display: none; } .ds-feed-track__hype > .ic-hype { animation: none !important; } }
 .ds-feed-track__act { width: 32px; height: 32px; display: grid; place-items: center; font-size: 24px; color: var(--color-icon-on-dark); }
+/* 앱 SF Symbol 22pt regular가 실제로 그리는 크기에 맞춤: 공유 19×24, 더보기 21×5 */
+.ds-feed-track__act > .ic-share { font-size: 30px; }
+.ds-feed-track__act > .ic-ellipsis { font-size: 28px; }
 /* components/keyboard/keyboard.md */
 /* 바탕·키 모양은 screens/_shared.css 의 .keyboard */
 .ds-keyboard { position: relative; inset: auto; width: 393px; }
