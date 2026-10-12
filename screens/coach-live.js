@@ -7,7 +7,7 @@ import { T } from './data.js'
 
 const TRACKS = [T.billann, T.seasons, T.loveya, T.bigvoid, T.wss]
 
-export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold = 1 } = {}) {
+export function CoachLive({ speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3 } = {}) {
   const el = document.createElement('div')
   el.className = 'sb-live'
   let step = 'double-tap', i = 0, hyped = false, since = 0, lastUp = 0, busy = false, drag = null

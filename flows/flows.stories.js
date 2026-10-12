@@ -15,7 +15,7 @@ export default {
 
 // 첫 실행 3갈래 (feed_coachmark 1.0). 코치마크는 피드에서만, 따라 해야 넘어간다. 바로 로그인은 곡 선택 → 피드 구성 → 코치마크
 const coach = [
-  { screen: 'feed-coach', note: '손 모션: 1초 안에 두 번 탭 → 2초 쉼 반복. 유저가 더블탭해야 넘어감' },
+  { screen: 'feed-coach', note: '손 모션: 1초 안에 두 번 탭 → 1초 쉼 반복. 유저가 더블탭해야 넘어감' },
   { screen: 'feed-coach-hyped', note: '하입 아이콘 팝 → 페이드아웃. 캡션은 화면 아무 곳 터치 → 사라짐' },
   { screen: 'feed-coach-swipe', note: '손 모션: 위로 쓸어 올림. 유저가 다음 곡으로 넘기면 끝' },
 ]
