@@ -28,7 +28,7 @@ export function MyPageScreen({ nickname = 'digger_lover', type = '🔁 충성파
     <div style="display:flex;justify-content:center;align-items:center;gap:6px;padding:32px 0 24px;font:var(--typography-headline)">${nickname} <i class="ic ic-pencil" style="font-size:13px;color:var(--color-text-tertiary)"></i></div>
     <div style="margin-bottom:12px">${SettingsRow({ variant: 'card', label: '디깅 프로필', caption: type })}</div>${hr}
     ${SettingsRow({ variant: 'toggle', label: '좋아요한 곡 따라가기', caption: '켜면 좋아요한 곡과 소리가 비슷한 곡이 나오고, 끄면 조건 없이 아무 곡이나 나와요.', on: following })}
-    ${rows(['추천 기준 곡', '아티스트 요청', '차단한 유저'])}${hr}${rows(['사용법', '새로운 기능', 'dignify 인스타그램'])}${hr}${rows(['이용약관', '개인정보처리방침'])}${hr}
+    ${rows(['추천 기준 곡', '아티스트 요청', '차단한 유저'])}${hr}${rows(['새로운 기능', 'dignify 인스타그램'])}${hr}${rows(['이용약관', '개인정보처리방침'])}${hr}
     ${SettingsRow({ label: '로그아웃' })}${SettingsRow({ variant: 'destructive', label: '계정 삭제' })}
     <p style="text-align:center;padding:24px 0 120px;font:var(--typography-caption);color:var(--color-border)">v1.2.1</p>` }) })
 }
