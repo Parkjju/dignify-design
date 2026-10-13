@@ -38,7 +38,7 @@
 | | 이름 | 위치 |
 |---|---|---|
 | iOS | (신규) | `Features/Onboarding/SeedPoolPickerView.swift` 아래 영역 |
-| Android | (신규) | |
+| Android | `SeedTray` | `core/designsystem/SeedTray.kt` (온보딩·추천 기준 곡 공용) |
 
 ## 하지 말 것
 - 트레이를 숨겼다가 고를 때만 띄우지 않는다. 비어 있어도 빈 칸 3개로 "3곡까지"를 보여 준다.
