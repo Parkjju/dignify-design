@@ -33,6 +33,10 @@ import { Meta } from '@storybook/addon-docs/blocks'
    - 고른 곡 트레이: 탭바 위 12에 떠 있는 카드(좌우 16, `surface`, `radius.medium`, 안쪽 12·16, 그림자). 순서 번호는 없다(이 화면은 체크 표시라 순서가 없음). 커버 탭 → 그 곡이 있는 날짜 줄로 세로 스크롤 + 가로 스크롤로 셀을 보이게, ✕ → 빼기
    - 목록 맨 아래에 트레이 높이만큼 여백을 둬서 마지막 줄이 가려지지 않게
    - 앱: `SeedPickerView.swift`(Android `SeedPickerScreen.kt`)
+4. **마이 「사용법」 메뉴 삭제** (`my-page`)
+   - AS-IS: 마이 → 사용법을 누르면 예전 튜토리얼 카드(`TutorialView`)가 열린다. 첫 실행 온보딩에서는 1.0에서 이미 없앤 화면
+   - TO-BE: 메뉴 줄 삭제. 그 묶음은 「새로운 기능 · dignify 인스타그램」만 남는다
+   - 앱(iOS만 — Android엔 이 메뉴가 없다): `MyPageView.swift`의 「How to Use」 버튼·`showTutorial`·`fullScreenCover`, 쓰는 곳이 없어지면 `TutorialView.swift`와 그 문자열 키도 삭제
 
 ---
 
