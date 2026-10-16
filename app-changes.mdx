@@ -19,7 +19,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
 마이 → 「추천 기준 곡」을 날짜별 가로 줄(CrateCell)에서 **좋아요한 곡 세로 목록 + 장르 필터**로 바꾼다. 화면 명세 seed_picker_opened 1.0(2026-10-14) 기준. 1.3의 3번(마이 추천 기준 곡 비활성·트레이)을 이 버전이 덮는다.
 
 **기획 확인 대기**
-- 트레이 3곡 안내: 명세 「곡은 3개까지 선택할 수 있어요」는 커버 세 칸 옆에서 「있어/요」로 두 줄이 된다. 두 안을 다 둠 — `seed-picker-full` Controls `fullHint`로 바꿔 보고, 깨진 모습은 「3곡 · 명세 문구(깨짐)」 스토리
+- 트레이 3곡 안내: 명세 「곡은 3개까지 선택할 수 있어요」는 커버 세 칸 옆에서 「있어/요」로 두 줄이 된다. 두 안을 다 둠 — Screens › 3. 마이 프로토타입에서 추천 기준 곡에 들어가 3곡을 고른 뒤 Controls `fullHint`로 바꿔 본다(명세 문구를 고르면 깨진 모습)
 - 명세와 다르게 그린 곳(디자인 시스템에 맞춤): 팝업 확인 버튼은 시스템 파랑 대신 `brand`, 가운데 정렬(Popup) · 트레이 빼기 표시는 ─ 대신 기존 ✕(온보딩 트레이와 같게)
 
 1. **목록을 세로 한 줄씩** (`seed-picker`, Components › TrackRow `check`·`genre`·`play: false`)
@@ -154,7 +154,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
 9. **더블탭 손 모션 주기** (`feed-coach`)
    - 1.0 시안: 1초 안에 두 번 탭 → 2초 쉼 (주기 3초)
    - TO-BE: 1초 안에 두 번 탭 → 1초 쉼 (주기 2초)
-10. **코치마크 기본값 확정** (`feed-coach*`, 「코치마크 — 직접 해 보기」)
+10. **코치마크 기본값 확정** (`feed-coach*`, Screens › 1. 피드 프로토타입 Controls `coach`)
     - speed 1.0 · hold 0.3초 · handOffset −18 · captionBelow 25
     - hold = 하입 아이콘이 다 커진 뒤 사라지기 전까지 머무는 시간. 1.0 시안은 1초였다.
     - handOffset·captionBelow는 1.0과 같다.

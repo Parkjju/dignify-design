@@ -13,7 +13,7 @@ Dignify iOS·Android가 같이 쓰는 디자인 시스템이다. **Storybook**�
 | **가이드** | 시안 수정하기 — Controls · 흐름 설계 · Claude에게 요청 · 직접 고치기 | `guide.mdx` |
 | **Foundations** | 색·타이포그래피·라운드·여백·아이콘·커버 | `tokens/*.json` |
 | **Components** | 35개 — Inputs · Navigation · Content · Overlays. Docs 탭 = 명세, Controls = 상태 바꿔 보기 | `components/<이름>/` |
-| **Screens** | 앱(iOS 1.2.1) 화면 34개. 전부 컴포넌트로 조립돼 있고, 화면마다 Controls로 내용·상태를 바꾼다 | `screens/<흐름>.js` |
+| **Screens** | 흐름별 프로토타입 4개(피드·Picks·마이·온보딩) + 공유 카드. 앱처럼 눌러서 상태를 바꾸고, Controls는 시작 상태 | `screens/<흐름>.js` 화면 함수 · `<흐름>.stories.js` 프로토타입 · `live.js` 공용 틀 |
 | **Flows** | 사용자 흐름 8개 + 전체 화면. Controls의 `steps`로 순서·화면·값을 바꾼다 | `flows/flows.stories.js` |
 
 ## 구조

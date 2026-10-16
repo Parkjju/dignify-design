@@ -10,7 +10,12 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Story
    - 화면 함수: `screens/<흐름>.js` (feed · picks · my · onboarding). `Device({ surface, tab, children, overlay })`로 감싸고, 스크롤은 `Scroll`, 내비는 `NavLayer`, 시트는 `Sheet`(전부 `screens/device.js`).
    - 화면이 받는 값(곡, 상태, 목록, `scroll`)은 **전부 인자로** 둔다 → 그대로 Controls가 된다.
    - 새 화면은 `screens/registry.js`의 `SCREENS`에 `[이름, 함수, 기본 args]` 한 줄 → 스토리(`story('<id>')`)와 플로우(`{ screen: '<id>' }`)에서 바로 쓴다.
-   - 스토리: `screens/<흐름>.stories.js`에 `export const X = story('<id>', { 덮어쓸 args }, { argTypes }, '이름')`.
+   - **스토리 = 흐름당 인터랙티브 프로토타입 하나(2026-10-16 사용자 요청).** 상태마다 스토리를 쪼개지 않는다(「0곡」「3곡」「팝업」 같은 정적 스토리 금지). 한 흐름에서 이어지는 장면은 전부 한 프로토타입에 넣고, 누르고 넘겨서 상태가 바뀌게 한다.
+     - 틀: `screens/live.js`의 `live({ init, view, taps })` — 화면 함수에 상태를 넣어 그리고, 탭은 CSS 선택자 → 상태 변경. 컴포넌트에 프로토타입용 코드를 넣지 않는다(필요하면 화면 함수 마크업에 클래스만).
+     - 피드처럼 끌기·더블탭이 필요한 흐름은 `screens/feed-live.js`처럼 따로(포인터 이벤트).
+     - Controls = 시작 상태와 비교할 안(문구 A/B 등)만. 화면 하나만 따로 보여 줘야 할 때(공유 카드처럼 이어지는 장면이 없는 것)만 `story('<id>')`.
+     - 새 시안은 해당 흐름 프로토타입에 장면·탭을 더한다. 새 흐름이면 `<흐름>.stories.js`에 프로토타입 하나.
+     - 확인도 눌러 가며 한다: `scripts/proto-check.mjs`(Chrome 원격 디버깅)로 클릭·끌기를 보내고 단계마다 캡처한다. 정적 렌더 한 장으로 끝내지 않는다.
    - 흐름: `flows/flows.stories.js`에 `steps` 배열 하나. 사용자가 Controls에서 만든 `steps` JSON을 주면 그대로 붙여 저장한다.
    - 사용자가 `steps`에 없는 화면 id(빨간 점선 칸)를 넣었다면 그게 새로 만들 화면 목록이다.
 4. **컴포넌트 함수가 있으면 반드시 그걸 쓴다.** 없으면 `components/<이름>/`에 한 벌을 먼저 만든다: `<이름>.md`(`components/_template.md` 형식) · `<이름>.js`(마크업 함수) · `<이름>.css`(`.ds-<이름>` 접두) · `<이름>.stories.js`(`title: 'Components/<Inputs|Navigation|Content|Overlays>/<이름>'`, 상태별 스토리 + Controls).
