@@ -50,6 +50,10 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Story
 - `tokens/*.json`만 고친다. `generated/`와 `screens/*.html`의 `ds` 블록은 `npm run tokens`로만 바뀐다.
 - 커밋 전에 `npm run check`가 통과해야 한다(CI도 같은 검사로 막는다).
 - 색 값은 `"#RRGGBB"` 또는 `{ "hex": "#RRGGBB", "alpha": 0.45 }`.
+- **색·타이포는 2단 구조다(2026-10-16).** 원시 = Tailwind식 단위 이름(`color.gray.900`, `color.brand.600`, `color.white.75`, `typography.text.base.medium`) — 값은 여기에만. 쓰임 이름 = 원시를 가리키는 별칭(`textPrimary → {color.gray.900}`, `body → {typography.text.base.regular}`). 화면·컴포넌트는 **쓰임 이름을 먼저** 쓰고, 맞는 쓰임 이름이 없을 때만 원시를 쓴다.
+  - 중첩 이름은 펴서 생성된다: Swift·Kotlin `DSColor.gray900`·`DSTypography.textBaseMedium`, CSS `--color-gray-900`·`--typography-text-base-medium` (`scripts/flatten.js`).
+  - 글자 크기는 티셔츠 사이즈 `2xs 10.5 · xs 12 · sm 13 · md 14 · base 15 · lg 17 · xl 18 · 2xl 24 · 5xl 40`. **값은 앱 값이라 Tailwind 기본 크기(sm 14, base 16)와 다르다.** 원시 조합은 쓰는 것만 둔다.
+  - 별칭은 자기보다 앞에 선언된 토큰만 가리킬 수 있다(Kotlin 초기화 순서). 빌드가 막는다.
 - 토큰 이름을 바꾸거나 지우면 두 앱 코드가 깨진다. 이름 변경은 별칭(`"$value": "{group.old}"`)으로 한 릴리스 동안 남겨 둔다.
 - 새 토큰은 `$description`에 용도를 적는다.
 

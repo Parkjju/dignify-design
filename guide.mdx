@@ -67,6 +67,7 @@ Claude는 이렇게 처리한다.
 - **흐름** — `flows/flows.stories.js`. 흐름 하나가 `steps` 배열 하나다.
 - **부품 모양** — `components/<이름>/<이름>.css`. 모든 화면에 반영된다.
 - **색·크기** — `tokens/*.json`. 그다음 `npm run tokens`를 실행한다. iOS·Android 코드도 같이 생성된다.
+  - 색·글자는 2단이다. 위쪽 **원시**(`gray.900`, `brand.600`, `text.base.medium`)에 값이 있고, 아래쪽 **쓰임 이름**(`textPrimary`, `body`)은 원시를 가리킨다. 값을 바꾸려면 원시를, 어떤 자리에 무슨 색을 쓸지 바꾸려면 쓰임 이름이 가리키는 곳을 고친다.
 
 로컬에서 보려면 `npm run dev`를 실행하고 http://localhost:6006 을 연다. 저장하면 바로 반영된다.
 
