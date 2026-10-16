@@ -326,6 +326,12 @@ body.embed { padding: 0; background: transparent; }
 /* select에서 3곡 다 고른 뒤 안 고른 곡 — SeedTile 비활성과 같은 연한 회색, 고르기 원 숨김 */
 .ds-crate-cell.is-disabled > .art { filter: grayscale(1); opacity: .4; }
 .ds-crate-cell.is-disabled b, .ds-crate-cell.is-disabled span { color: var(--color-text-tertiary); opacity: .6; }
+/* components/empty-state/empty-state.md */
+.ds-empty { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 var(--spacing-x8); }
+.ds-empty__icon { width: 56px; height: 56px; border-radius: 50%; background: var(--color-brand-light); color: var(--color-brand); display: grid; place-items: center;
+  font: var(--typography-title1); margin-bottom: var(--spacing-x4); }
+.ds-empty h3 { font: var(--typography-title2); color: var(--color-text-primary); }
+.ds-empty p { font: var(--typography-body); color: var(--color-text-secondary); margin: var(--spacing-x1-5) 0 var(--spacing-x6); }
 /* components/feed-building/feed-building.md */
 .ds-building { display: flex; flex-direction: column; align-items: center; text-align: center; color: var(--color-text-primary); }
 .ds-building__covers { display: flex; margin-bottom: var(--spacing-x8); }
@@ -397,6 +403,11 @@ body.embed { padding: 0; background: transparent; }
 /* 앱 SF Symbol 22pt regular가 실제로 그리는 크기에 맞춤: 공유 19×24, 더보기 21×5 */
 .ds-feed-track__act > .ic-share { font-size: 30px; }
 .ds-feed-track__act > .ic-ellipsis { font-size: 28px; }
+/* components/filter-chip/filter-chip.md */
+.ds-filter-chips { display: flex; gap: var(--spacing-x2); padding: 0 var(--spacing-x5); overflow: hidden; }
+.ds-filter-chip { flex: none; height: 34px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); display: inline-flex; align-items: center;
+  background: var(--color-surface); color: var(--color-text-primary); font: var(--typography-callout); white-space: nowrap; }
+.ds-filter-chip.is-on { background: var(--color-text-primary); color: var(--color-text-on-dark); }
 /* components/keyboard/keyboard.md */
 /* 바탕·키 모양은 screens/_shared.css 의 .keyboard */
 .ds-keyboard { position: relative; inset: auto; width: 393px; }
@@ -437,6 +448,7 @@ body.embed { padding: 0; background: transparent; }
 .ds-nav__side { display: flex; gap: var(--spacing-x2); } .ds-nav__side.is-right { justify-content: flex-end; }
 .ds-nav__action { color: var(--color-brand); }
 .ds-nav__secondary { color: var(--color-text-secondary); }
+.ds-nav__action.is-disabled { color: var(--color-text-tertiary); }
 /* components/pick-card/pick-card.md */
 .ds-pick-card { padding: var(--spacing-x3-5); border-radius: var(--radius-large); background: var(--color-pick-surface); color: var(--color-text-on-dark); display: flex; flex-direction: column; gap: var(--spacing-x2-5); }
 .ds-pick-card__who { display: flex; align-items: center; gap: var(--spacing-x1-5); font-size: 13px; color: var(--color-text-on-dark-tertiary); }
@@ -631,6 +643,11 @@ body.embed { padding: 0; background: transparent; }
 .ds-field.is-compact .ds-field__box { height: 46px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-small); font: var(--typography-body); }
 .ds-field__box .is-placeholder { color: var(--color-text-tertiary); }
 .ds-field__caret { display: inline-block; width: 2px; height: 19px; background: var(--color-brand); margin-left: 1px; }
+/* components/tooltip/tooltip.md */
+.ds-tooltip { display: inline-block; padding: var(--spacing-x2-5) var(--spacing-x3-5); border-radius: var(--radius-small); background: var(--color-text-primary); color: var(--color-text-on-dark);
+  font: var(--typography-caption); line-height: 1.5; box-shadow: 0 6px 16px rgba(0,0,0,.18); animation: ds-tooltip 2.2s ease-out both; }
+@keyframes ds-tooltip { 0% { opacity: 0; transform: translateY(-4px); } 8%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ds-tooltip { animation: none; } }
 /* components/track-detail/track-detail.md */
 .ds-detail { padding: var(--spacing-x6) var(--spacing-x5) var(--spacing-x5); background: var(--color-background); color: var(--color-text-primary); }
 .ds-detail__head { display: flex; gap: var(--spacing-x4); align-items: center; }
@@ -659,6 +676,11 @@ body.embed { padding: 0; background: transparent; }
 .ds-track-row__select { width: 44px; height: 44px; display: grid; place-items: center; }
 .ds-track-row__select i { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--color-text-tertiary); font-style: normal; }
 .ds-track-row__select i.is-on { border: 0; background: var(--color-brand); color: #fff; display: grid; place-items: center; font-size: 12px; font-weight: 700; }
+.ds-track-row__select i.is-on .ic { font-size: 12px; }
+/* 꽉 차서 못 고르는 행(마이 추천 기준 곡) — CrateCell 비활성과 같은 연한 회색. 원은 남긴다: 누르면 팝업으로 이유를 알려 준다 */
+.ds-track-row.is-disabled .ds-track-row__thumb .art { filter: grayscale(1); opacity: .4; }
+.ds-track-row.is-disabled .ds-track-row__text b, .ds-track-row.is-disabled .ds-track-row__text span { color: var(--color-text-tertiary); opacity: .6; }
+.ds-track-row.is-disabled .ds-track-row__select i { opacity: .6; }
 /* components/type-hero/type-hero.md */
 .ds-type-hero { padding: var(--spacing-x8) var(--spacing-x6); border-radius: var(--radius-large); text-align: center; color: #fff;
   background: linear-gradient(var(--color-brand), var(--color-brand-deep)); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x2); }

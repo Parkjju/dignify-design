@@ -4,3 +4,4 @@
 .ds-nav__side { display: flex; gap: var(--spacing-x2); } .ds-nav__side.is-right { justify-content: flex-end; }
 .ds-nav__action { color: var(--color-brand); }
 .ds-nav__secondary { color: var(--color-text-secondary); }
+.ds-nav__action.is-disabled { color: var(--color-text-tertiary); }

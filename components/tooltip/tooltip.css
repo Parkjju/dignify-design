@@ -1,0 +1,5 @@
+/* components/tooltip/tooltip.md */
+.ds-tooltip { display: inline-block; padding: var(--spacing-x2-5) var(--spacing-x3-5); border-radius: var(--radius-small); background: var(--color-text-primary); color: var(--color-text-on-dark);
+  font: var(--typography-caption); line-height: 1.5; box-shadow: 0 6px 16px rgba(0,0,0,.18); animation: ds-tooltip 2.2s ease-out both; }
+@keyframes ds-tooltip { 0% { opacity: 0; transform: translateY(-4px); } 8%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ds-tooltip { animation: none; } }
