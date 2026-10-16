@@ -1,4 +1,5 @@
 import { story } from './_story.js'
+import { SEED_FULL_HINTS } from './my.js'
 export default { title: 'Screens/3. 마이', parameters: { layout: 'centered' } }
 
 export const MyPage = story('my-page')
@@ -8,9 +9,12 @@ export const DiggingProfileLocked = story('digging-profile', { locked: true, sta
 export const MyPicks = story('my-picks')
 export const HypeHistory = story('hype-history')
 export const HypeHistoryEdit = story('hype-history', { editing: true }, {}, '좋아요 기록 — 편집')
+const fullHint = { fullHint: { control: 'inline-radio', options: SEED_FULL_HINTS } }
 export const SeedPicker = story('seed-picker', {}, {}, '추천 기준 곡 — 0곡')
+export const SeedPickerCleared = story('seed-picker', { saved: ['a-ohio', 'a-blame'] }, {}, '추천 기준 곡 — 고정 다 뺌(저장 활성)')
 export const SeedPickerTwo = story('seed-picker', { selected: ['a-ohio', 'a-blame'] }, {}, '추천 기준 곡 — 2곡')
-export const SeedPickerFull = story('seed-picker-full', {}, {}, '추천 기준 곡 — 3곡 다 고름')
+export const SeedPickerFull = story('seed-picker-full', {}, fullHint, '추천 기준 곡 — 3곡 다 고름')
+export const SeedPickerFullSpecHint = story('seed-picker-full', { fullHint: SEED_FULL_HINTS[0] }, fullHint, '추천 기준 곡 — 3곡 · 명세 문구(깨짐)')
 export const SeedPickerLimit = story('seed-picker-full', { popup: true }, {}, '추천 기준 곡 — 4번째 누름')
 export const SeedPickerInfo = story('seed-picker', { selected: ['a-ohio', 'a-blame'], tooltip: true }, {}, '추천 기준 곡 — ⓘ 설명')
 export const SeedPickerGenre = story('seed-picker', { genre: '록', selected: ['a-ohio'] }, {}, '추천 기준 곡 — 장르 록')
