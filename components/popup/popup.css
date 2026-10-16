@@ -12,3 +12,20 @@
 .ds-popup--notice h2 { font: var(--typography-headline); }
 .ds-popup--notice p { margin: var(--spacing-x1-5) 0 var(--spacing-x5); line-height: 1.45; }
 .ds-popup--notice .ds-button--primary { height: 48px; font-size: 15px; }
+/* 딤 + 카드 층(PopupLayer) — 모션은 OS 시스템 대화상자 느낌을 따른다. 딤과 카드는 따로 움직인다
+   iOS(UIAlertController): 딤 0.25s 페이드, 카드 1.2 → 1 축소 + 페이드 0.3s(감속, 튕김 없음). 닫힘: 층 전체 0.2s 페이드, 카드 크기는 그대로
+   Android(기본 대화상자 창): 딤 0.2s 페이드, 카드 0.9 → 1 확대 + 페이드 0.2s 감속. 닫힘: 카드 1 → 0.9 + 페이드 0.15s 가속, 딤 같이 */
+.ds-popup-layer { display: grid; place-items: center; background: var(--color-scrim-strong); animation: ds-layer-in .25s ease-out both; }
+.ds-popup-layer.is-ios > .ds-popup { animation: ds-pop-ios .3s cubic-bezier(.2,.9,.3,1) both; }
+.ds-popup-layer.is-ios.is-leaving { animation: ds-layer-out .2s ease-in forwards; }
+.ds-popup-layer.is-ios.is-leaving > .ds-popup { animation: none; }   /* 닫히는 중엔 등장 모션을 다시 돌리지 않는다 */
+.ds-popup-layer.is-android { animation-duration: .2s; }
+.ds-popup-layer.is-android > .ds-popup { animation: ds-pop-android .2s cubic-bezier(0,0,.2,1) both; }   /* = Compose LinearOutSlowInEasing */
+.ds-popup-layer.is-android.is-leaving { animation: ds-layer-out .15s cubic-bezier(.4,0,1,1) forwards; }   /* = FastOutLinearInEasing */
+.ds-popup-layer.is-android.is-leaving > .ds-popup { animation: ds-pop-android-out .15s cubic-bezier(.4,0,1,1) forwards; }
+@keyframes ds-layer-in { from { opacity: 0; } }
+@keyframes ds-layer-out { to { opacity: 0; } }
+@keyframes ds-pop-ios { from { opacity: 0; transform: scale(1.2); } }
+@keyframes ds-pop-android { from { opacity: 0; transform: scale(.9); } }
+@keyframes ds-pop-android-out { to { opacity: 0; transform: scale(.9); } }
+@media (prefers-reduced-motion: reduce) { .ds-popup-layer > .ds-popup { animation-name: ds-layer-in !important; } .ds-popup-layer.is-leaving > .ds-popup { animation: none !important; } }

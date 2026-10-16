@@ -9,3 +9,7 @@ export function Popup({ title = '이번 주 특집, 여기까지예요', message
   ${decline ? `<span class="ds-popup__decline">${decline}</span>` : ''}
 </div>`
 }
+
+// 딤 + 가운데 카드 한 층. os: ios | android — 등장·퇴장 모션이 OS 시스템 대화상자를 따른다. leaving: 닫히는 중(퇴장 모션)
+export const PopupLayer = ({ os = 'ios', leaving = false, z = 92, ...popup } = {}) =>
+  `<div class="dim ds-popup-layer is-${os}${leaving ? ' is-leaving' : ''}" style="z-index:${z}">${Popup(popup)}</div>`

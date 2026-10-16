@@ -12,7 +12,7 @@ const WEEKLY = [T.seasons, T.billann, T.wss, T.loveya, T.truth]
 const FOUND = { '잔나비': T.farewell, 'wave to earth': T.seasons, '혁오': T.ohio, '실리카겔': T.bigvoid }
 const CHIP = { '잔나비': '록', 'wave to earth': '인디', '혁오': '록', '실리카겔': '록' }
 
-export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
+export function FeedLive({ coach = true, weekly = false, whatsNew = false, os = 'ios', speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
   const el = document.createElement('div')
   el.className = 'sb-live is-feed'
   let step = coach ? 'double-tap' : 'feed', i = 0, hyped = false, since = 0, lastUp = 0, busy = false, drag = null
@@ -27,7 +27,7 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
     const track = cur()
     el.innerHTML = overlay === 'search' ? FeedSearchScreen({ track, text: '실리카겔', terms })
       : overlay === 'detail' ? TrackDetailScreen({ track, detail: { genre: chip() || '인디', released: '2024.05.10' } })
-      : overlay === 'popup' ? FeedPopupScreen({ track, title: '이번 주 특집, 여기까지예요', message: '방금 보신 곡들은 저희가 직접 판 거예요. 매주 새로 파고 있는데, 다음 편 올라오면 알려드릴까요?' })
+      : overlay === 'popup' || overlay === 'popup-leaving' ? FeedPopupScreen({ track, os, leaving: overlay === 'popup-leaving', title: '이번 주 특집, 여기까지예요', message: '방금 보신 곡들은 저희가 직접 판 거예요. 매주 새로 파고 있는데, 다음 편 올라오면 알려드릴까요?' })
       : overlay === 'whats-new' ? WhatsNewScreen({ track })
       : step === 'feed'
       ? FeedScreen({ track, chip: chip(), hyped, burst, speed, hold, mode, query, context: week ? `이번 주 특집 ${week}/5` : '' })
@@ -46,7 +46,11 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
       return true
     }
     if (overlay === 'detail') { if (!hit('.sheet')) { overlay = ''; draw() } return true }
-    if (overlay === 'popup' || overlay === 'whats-new') { if (hit('.ds-button') || hit('.ds-popup__decline') || hit('.ic-xmark')) { overlay = ''; week = 0; i++; draw() } return true }
+    if (overlay === 'popup-leaving') return true
+    if (overlay === 'popup' && (hit('.ds-button') || hit('.ds-popup__decline') || !hit('.ds-popup'))) {   // 바깥(딤) 탭 = 나중에
+      overlay = 'popup-leaving'; draw(); setTimeout(() => { overlay = ''; week = 0; i++; draw() }, os === 'android' ? 150 : 200); return true }
+    if (overlay === 'popup') return true
+    if (overlay === 'whats-new') { if (hit('.ds-button') || hit('.ic-xmark')) { overlay = ''; week = 0; i++; draw() } return true }
     if (step !== 'feed') return false
     if (hit('.ds-feed-header__search')) { overlay = 'search'; draw(); return true }
     if (hit('.ds-pill--query')) { query = ''; hyped = false; draw(); return true }

@@ -18,7 +18,7 @@ const view = (s, a) => ({
   profile: () => DiggingProfileScreen({ ...D('digging-profile'), range: s.range }),
   picks: () => MyPicksScreen(D('my-picks')),
   history: () => HypeHistoryScreen({ ...D('hype-history'), editing: s.editing }),
-  seed: () => SeedPickerScreen({ tracks: s.tracks, genre: s.genre, selected: s.selected, saved: s.saved, fullHint: a.fullHint, tooltip: !!s.tip, popup: s.popup }),
+  seed: () => SeedPickerScreen({ tracks: s.tracks, genre: s.genre, selected: s.selected, saved: s.saved, fullHint: a.fullHint, tooltip: !!s.tip, popup: s.popup, os: a.os }),
   requests: () => ArtistRequestsScreen({ ...D('artist-requests'), requests: s.requests, sheet: s.sheet, sent: s.sent }),
   blocked: () => BlockedUsersScreen({ users: s.users, swiped: s.swiped }),
   feed: () => FeedScreen({ track: T.cannons }),
@@ -26,12 +26,13 @@ const view = (s, a) => ({
 })[s.screen]()
 
 export const My = { name: '마이',
-  args: { start: 'my', liked: true, saved: [], fullHint: SEED_FULL_HINTS[1] },
+  args: { start: 'my', liked: true, saved: [], fullHint: SEED_FULL_HINTS[1], os: 'ios' },
   argTypes: {
     start: { control: 'inline-radio', options: ['my', 'seed', 'profile', 'requests'], description: '시작 화면(‹ 누르면 마이페이지로)' },
     liked: { description: '좋아요한 곡이 있는지 — 끄면 추천 기준 곡이 빈 화면' },
     saved: { control: 'check', options: LIKED.map(t => t.cover), description: '추천 기준 곡에 들어올 때 이미 고정된 곡' },
     fullHint: { control: 'inline-radio', options: SEED_FULL_HINTS, description: '3곡 다 골랐을 때 트레이 안내 — 명세 문구는 두 줄로 깨진다' },
+    os: { control: 'inline-radio', options: ['ios', 'android'], description: '팝업 띄우기·닫기 모션 — 각 OS 시스템 대화상자 느낌' },
   },
   render: live({
     init: a => ({ screen: a.start, stack: a.start === 'my' ? [] : ['my'], following: true, range: 1, editing: false,
@@ -44,7 +45,7 @@ export const My = { name: '마이',
       ['.ds-nav__side:first-child .glass-btn', s => back(s)],
       // 추천 기준 곡
       ['.device', onSeed((s, { target }) => s.tip && !target.closest('.ic-info-circle') ? { tip: 0 } : undefined)],   // 말풍선은 바깥을 누르면 닫힌다. ⓘ를 다시 누르면 2초를 다시 센다
-      ['.ds-popup .ds-button, .dim', onSeed(() => ({ popup: false }))],
+      ['.ds-popup .ds-button, .dim', onSeed((s, { later, args }) => s.popup === true ? (later(args.os === 'android' ? 150 : 200, { popup: false }), { popup: 'leaving' }) : {})],
       ['.ic-info-circle', onSeed((s, { later }) => { const tip = Date.now(); later(2200, x => x.tip === tip ? { ...x, tip: 0 } : x); return { tip } })],
       ['.ds-filter-chip', onSeed((s, { el }) => ({ genre: el.textContent }))],
       ['.ds-track-row', onSeed((s, { i }) => {

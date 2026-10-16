@@ -6,7 +6,7 @@ import { SearchBar } from '../components/search-bar/search-bar.js'
 import { RecentSearches } from '../components/recent-searches/recent-searches.js'
 import { Keyboard } from '../components/keyboard/keyboard.js'
 import { TrackDetail } from '../components/track-detail/track-detail.js'
-import { Popup } from '../components/popup/popup.js'
+import { PopupLayer } from '../components/popup/popup.js'
 import { CoachGesture } from '../components/coach-gesture/coach-gesture.js'
 import { ReleaseNotes } from '../components/release-notes/release-notes.js'
 import { Button } from '../components/button/button.js'
@@ -34,9 +34,9 @@ export function TrackDetailScreen({ track, detail = {} } = {}) {
     overlay: Sheet({ children: TrackDetail({ ...track, album: track.title, ...detail }) }) })
 }
 
-export function FeedPopupScreen({ track, title, message } = {}) {
+export function FeedPopupScreen({ track, title, message, os = 'ios', leaving = false } = {}) {
   return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: '인디', mode: 'following', context: '이번 주 특집 5/5' }),
-    overlay: `<div class="dim" style="background:var(--color-scrim-strong);display:grid;place-items:center">${Popup({ title, message })}</div>` })
+    overlay: PopupLayer({ os, leaving, title, message }) })
 }
 
 // 첫 진입 온보딩(feed_coachmark 1.0): 따라 해야 넘어간다. double-tap → (더블탭) → hyped → (터치) → swipe-up → (스와이프) → 피드
