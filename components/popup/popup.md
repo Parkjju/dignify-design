@@ -24,7 +24,7 @@
 | 픽 올림 | 픽을 올렸어요 | 올린 픽에 🔥가 달리면 바로 알려드릴게요. |
 
 ## 확인 팝업 (seed_picker_opened 1.0)
-`mark: false, decline: ''` — 브랜드마크·「나중에」 없이 제목·설명·확인 버튼 하나. 막힌 동작의 이유를 알릴 때(추천 기준 곡 4번째 선택 → 「선택한 곡 중 1개를 해제해 주세요 / 3개까지 선택할 수 있어요」). 바깥 탭도 닫힘.
+`mark: false, decline: ''` — 브랜드마크·「나중에」 없이 제목·설명·확인 버튼 하나. 비율을 따로 둔다(`.ds-popup--notice`): 폭 300, 안쪽 위 `spacing.x6`·좌우·아래 `spacing.x5`, 제목 `typography.headline`, 설명 `typography.body` `textSecondary`(제목 아래 `spacing.x1_5`), 설명–버튼 `spacing.x5`, 버튼 높이 48·15 semibold. 막힌 동작의 이유를 알릴 때(추천 기준 곡 4번째 선택 → 「선택한 곡 중 1개를 해제해 주세요 / 3개까지 선택할 수 있어요」). 바깥 탭도 닫힘.
 
 ## 플랫폼
 | iOS | `PushOptInPopup` (`Features/Feed/PushOptInPopup.swift`) |

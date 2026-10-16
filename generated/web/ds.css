@@ -486,6 +486,12 @@ body.embed { padding: 0; background: transparent; }
 .ds-popup h2 { font: var(--typography-title2); }
 .ds-popup p { font: var(--typography-body); line-height: 1.55; color: var(--color-text-secondary); margin-bottom: var(--spacing-x1); }
 .ds-popup__decline { font: var(--typography-body); color: var(--color-text-tertiary); margin-top: 2px; }
+/* 확인형(버튼 하나) — 안내 두 줄에 하단 확정 버튼(56)·title2를 그대로 쓰면 버튼이 카드 절반을 먹는다.
+   폭 300, 제목 headline, 제목–설명은 붙이고(6) 설명–버튼은 띄운다(20), 버튼 48 */
+.ds-popup--notice { width: 300px; padding: var(--spacing-x6) var(--spacing-x5) var(--spacing-x5); gap: 0; }
+.ds-popup--notice h2 { font: var(--typography-headline); }
+.ds-popup--notice p { margin: var(--spacing-x1-5) 0 var(--spacing-x5); line-height: 1.45; }
+.ds-popup--notice .ds-button--primary { height: 48px; font-size: 15px; }
 /* components/recent-searches/recent-searches.md */
 .ds-recent { padding: var(--spacing-x4) var(--spacing-x5) 0; background: var(--color-background); color: var(--color-text-primary); }
 .ds-recent h4 { font-size: 11px; font-weight: 600; color: var(--color-text-tertiary); margin-bottom: var(--spacing-x1); }
