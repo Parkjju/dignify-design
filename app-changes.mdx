@@ -53,6 +53,13 @@ import { Meta } from '@storybook/addon-docs/blocks'
    - TO-BE: 아이콘 원(56 `brandLight`, 「!」 `brand`) + 「아직 좋아요한 곡이 없어요」(`title2`) + 「피드에서 마음에 드는 곡을 골라주세요」(`body` `textSecondary`) + 버튼 「곡 찾으러 가기」(Button `small`) → **피드 탭으로 이동**. 저장 버튼·제목 영역·필터·트레이 없음
    - 명세의 「온보딩 곡이 따로 저장돼 있다면 그걸 보여 줄 것」: 온보딩에서 고른 곡은 이미 좋아요로 저장된다(`SeedPoolPickerView.finish()` → `hype`). 그래서 온보딩 곡이 있는 유저는 목록에 이미 나오고, 이 빈 화면은 온보딩을 건너뛰고 좋아요도 없는 유저에게만 뜬다 — 따로 할 일 없음
    - 불러오기 실패는 이 화면이 아니라 지금처럼 「불러오지 못했어요」
+8. **팝업 띄우기·닫기 모션 — 앱의 팝업 전부** (Screens › 3. 마이 4번째 선택 · 1. 피드 이번 주 특집 끝, Controls `os`, Popup 명세 「띄우기·닫기 모션」)
+   - AS-IS: iOS `PushOptInPopup`은 딤과 카드가 통째로 `.transition(.opacity)`. Android `PushOptInPopup`은 모션 없이 바로 뜬다(깜빡임). 새 확인 팝업도 같은 문제
+   - TO-BE: 딤과 카드를 **따로** 움직이고, OS 시스템 대화상자의 느낌을 따른다
+     - iOS: 딤 0.25s 페이드 · 카드 scale 1.2 → 1 + 페이드 0.3s(`.spring(duration: 0.3, bounce: 0)`). 닫힘은 딤·카드 같이 0.2s 페이드, 카드 크기 그대로
+     - Android: 딤 0.2s 페이드 · 카드 `scaleIn(0.9f) + fadeIn(tween(200, LinearOutSlowInEasing))`. 닫힘 `scaleOut(0.9f) + fadeOut(tween(150, FastOutLinearInEasing))`
+     - 동작 줄이기면 페이드만
+   - 앱: iOS `Features/Feed/PushOptInPopup.swift`(`.transition`을 딤·카드로 나눔) + 새 확인 팝업 · Android `feature/push/PushOptInPopup.kt`(`AnimatedVisibility` 두 겹) + `SeedPickerScreen.kt`
 
 ---
 
