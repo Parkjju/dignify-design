@@ -1,6 +1,6 @@
 // 프로토타입을 눌러 가며 확인한다(CLAUDE.md 5번). storybook-static을 6007에 띄운 뒤:
 //   ARGS='coach:!true' node scripts/proto-check.mjs <스토리 id> /tmp/out '<steps JSON>'  → /tmp/out-<이름>.png
-// step: ["click", 선택자, i?] | ["tap", 선택자, i?](pointerdown·up — 피드 프로토타입용) | ["dbl", 선택자] | ["swipe"](위로 끌기) | ["wait", ms] | ["shot", 이름]
+// step: ["click", 선택자, i?] | ["tap", 선택자, i?](pointerdown·up — 피드 프로토타입용) | ["dbl", 선택자] | ["swipe", "down"?](위로 끌기, down이면 아래로) | ["wait", ms] | ["shot", 이름]
 // 빌드를 새로 하면 6007 서버도 다시 띄울 것(지워진 폴더를 계속 본다). 프로필은 매번 지운다 — 예전 빌드 캐시가 남으면 모듈을 못 받는다
 import { spawn } from 'node:child_process'
 import { rmSync } from 'node:fs'
@@ -31,7 +31,8 @@ for (const [op, a, b = 0] of steps) {
   if (op === 'click' || op === 'tap') r = await fire(a, b, op)
   if (op === 'dbl') { r = await fire(a, 0, 'tap'); await sleep(80); r = await fire(a, 0, 'tap') }
   if (op === 'swipe') r = await js(`(() => { const e = document.querySelector('.sb-live'); const p = (t, y) => e.dispatchEvent(new PointerEvent(t, { bubbles: true, clientX: 200, clientY: y, pointerId: 1 }));
-    p('pointerdown', 600); p('pointermove', 450); p('pointermove', 200); p('pointerup', 150); return 'ok' })()`)
+    const ys = ${a === 'down' ? '[150, 300, 550, 600]' : '[600, 450, 200, 150]'};
+    p('pointerdown', ys[0]); p('pointermove', ys[1]); p('pointermove', ys[2]); p('pointerup', ys[3]); return 'ok' })()`)
   if (op === 'wait') await sleep(a)
   if (op === 'shot') { const s = await cmd('Page.captureScreenshot', { format: 'png' }); (await import('node:fs')).writeFileSync(`${out}-${a}.png`, Buffer.from(s.result.data, 'base64')) }
   if (r !== 'ok') console.log(op, a, b, '→', r)

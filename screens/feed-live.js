@@ -1,6 +1,6 @@
 // 피드 프로토타입(Storybook 전용) — 피드 흐름을 한 화면에서 직접 해 본다.
 // - 코치마크(coach): 더블탭 → 좋아요 → 아무 곳 탭 → 위로 끌기 → 다음 곡. 끝나면 그냥 피드
-// - 피드: 위로 끌기·휠 = 다음 곡, 더블탭·하트 = 좋아요, 모드 알약 = 따라가기/무작위, 검색 → 최근 검색어 탭 → 검색 결과(알약 ✕ = 해제),
+// - 피드: 위로 끌기 = 다음 곡, 아래로 끌기 = 이전 곡(휠도 같음), 더블탭·하트 = 좋아요, 모드 알약 = 따라가기/무작위, 검색 → 최근 검색어 탭 → 검색 결과(알약 ✕ = 해제),
 //   ••• = 트랙 상세(바깥 탭 = 닫기), 이번 주 특집(weekly) 5곡 넘기면 알림 권유 팝업, 새로운 기능(whatsNew) 시트
 // 끌 때 화면이 손가락을 따라오고(다음 곡이 아래에서 같이 올라옴) 코치마크는 끈 만큼 흐려진다. 20% 넘게 끌거나 빠르게 튕기면 넘어가고, 아니면 제자리로.
 // 처음부터 다시: Controls 값을 바꾸거나 스토리를 다시 연다. onTab: 탭바를 누르면 부른다(온보딩 프로토타입이 게스트 분기에 쓴다)
@@ -20,6 +20,8 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
   const k = 1 / speed
   const cur = () => week ? WEEKLY[week - 1] : query ? FOUND[query] : TRACKS[i % TRACKS.length]
   const nextTrack = () => week ? WEEKLY[week % WEEKLY.length] : TRACKS[(i + 1) % TRACKS.length]
+  const hasPrev = () => step === 'feed' && (week ? week > 1 : i > 0)   // 첫 곡·코치마크 중엔 위에 곡이 없다
+  const prevTrack = () => week ? WEEKLY[week - 2] : TRACKS[(i - 1) % TRACKS.length]
   const chip = () => week ? '인디' : query ? CHIP[query] : mode === 'following' ? '비슷한 곡: Blame' : ''
   const draw = (burst = false) => {
     const track = cur()
@@ -57,13 +59,14 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
   const LAYER = '.device > div:has(> .ds-feed-track)'
   const leave = (next) => { busy = true; el.querySelector('.ds-coach-gesture')?.classList.add('is-leaving'); setTimeout(() => { busy = false; next() }, 200 * k) }
 
-  // 끌기: 지금 곡 레이어와 다음 곡 레이어를 손가락 위치에 맞춰 같이 옮긴다
+  // 끌기: 지금 곡 레이어와 위·아래 곡 레이어를 손가락 위치에 맞춰 같이 옮긴다. 위로 = 다음 곡, 아래로 = 이전 곡
   const canDrag = () => !overlay && !query && (step === 'swipe-up' || step === 'feed')
   const startDrag = y => {
     const cur = el.querySelector(LAYER), tmp = document.createElement('div')
-    tmp.innerHTML = FeedScreen({ track: nextTrack(), chip: '' })
-    const next = tmp.querySelector(LAYER)
+    const layer = track => { tmp.innerHTML = FeedScreen({ track, chip: '' }); return tmp.querySelector(LAYER) }
+    const next = layer(nextTrack()), prev = hasPrev() ? layer(prevTrack()) : null
     cur.after(next)
+    if (prev) cur.after(prev)
     const coach = cur.querySelector('.ds-coach-gesture')
     if (coach) coach.style.transition = 'none'
     // 화면 살짝 올라가는 힌트(dsg-peek) 중간에 잡으면 그 위치에서 이어 끈다 — 툭 튀지 않게
@@ -71,13 +74,14 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
     card.style.animation = 'none'
     const hand = cur.querySelector('.ds-coach-gesture__hand')
     if (hand) hand.style.animationPlayState = 'paused'   // 손도 그 자리에 멈춘다
-    return { y0: y - base, t0: performance.now(), dy: base, moved: false, cur, next, coach, card, hand, H: cur.offsetHeight }
+    return { y0: y - base, t0: performance.now(), dy: base, moved: false, cur, next, prev, coach, card, hand, H: cur.offsetHeight }
   }
   const place = (d, dy, ms = 0) => {
     const t = ms ? `transform ${ms}ms cubic-bezier(.2,.8,.2,1), opacity ${ms}ms` : 'none'
     d.cur.style.transition = d.next.style.transition = t
     d.cur.style.transform = `translateY(${dy}px)`
     d.next.style.transform = `translateY(calc(100% + ${dy}px))`
+    if (d.prev) { d.prev.style.transition = t; d.prev.style.transform = `translateY(calc(-100% + ${dy}px))` }
     if (d.coach) { d.coach.style.transition = t; d.coach.style.opacity = Math.max(0, 1 + dy / (d.H * 0.25)) }   // 화면 1/4 끌면 다 사라짐
   }
   // 놓고 제자리로 돌아오면 손과 화면 힌트를 같은 순간에 처음부터 다시 — 박자가 안 어긋나게
@@ -87,20 +91,26 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
     void d.card.offsetWidth
     els.forEach(e => { e.style.animation = e.style.animationPlayState = '' })
   }
-  const back = d => { d.next.remove(); d.cur.style.transform = d.cur.style.transition = ''; if (d.coach) d.coach.style.transition = ''; restart(d) }
-  const settle = (d, go) => {
+  const back = d => { d.next.remove(); d.prev?.remove(); d.cur.style.transform = d.cur.style.transition = ''; if (d.coach) d.coach.style.transition = ''; restart(d) }
+  // dir: 1 = 다음 곡, -1 = 이전 곡, 0 = 제자리
+  const settle = (d, dir) => {
     const ms = 320 * k
     busy = true
-    place(d, go ? -d.H : 0, ms)
+    place(d, -dir * d.H, ms)
     setTimeout(() => {
       busy = false
-      if (go) {
+      if (dir > 0) {
         step = 'feed'; hyped = false
         if (week) { if (week === 5) { overlay = 'popup'; week = 5 } else week++ } else i++
         draw()
-      }
+      } else if (dir < 0) { hyped = false; if (week) week--; else i--; draw() }
       else back(d)
     }, ms)
+  }
+  // 놓았을 때 방향: 20% 넘게 끌었거나 빠르게 튕겼으면 넘어간다
+  const release = (d, now) => {
+    const v = d.dy / (now - d.t0)
+    return d.dy < -d.H * 0.2 || v < -0.6 ? 1 : d.prev && (d.dy > d.H * 0.2 || v > 0.6) ? -1 : 0
   }
 
   el.addEventListener('pointerdown', e => {
@@ -113,18 +123,18 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
     if (!drag) return
     let dy = e.clientY - drag.y0
     if (Math.abs(dy) > 8) drag.moved = true
-    if (dy > 0) dy *= 0.25   // 아래로는 고무줄처럼 조금만
+    if (dy > 0 && !drag.prev) dy *= 0.25   // 위에 곡이 없으면(첫 곡) 아래로는 고무줄처럼 조금만
     drag.dy = dy
     place(drag, dy)
   })
-  el.addEventListener('pointercancel', () => { if (drag) { settle(drag, false); drag = null } })
+  el.addEventListener('pointercancel', () => { if (drag) { settle(drag, 0); drag = null } })
   el.addEventListener('pointerup', e => {
     if (busy) return
     const now = performance.now()
     if (!drag && tap(e.target)) return
     if (drag) {
       const d = drag; drag = null
-      if (d.moved) return settle(d, d.dy < -d.H * 0.2 || d.dy / (now - d.t0) < -0.6)
+      if (d.moved) return settle(d, release(d, now))
       // 끌지 않고 뗐으면(힌트 중간에 눌렀다 뗌) 짧게 제자리로. busy를 안 걸어야 피드 더블탭이 막히지 않는다
       place(d, 0, 160 * k); setTimeout(() => back(d), 160 * k)
     }
@@ -134,10 +144,11 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, speed
     if (step === 'hyped' && !dbl && now - since > 400) return leave(() => { step = 'swipe-up'; draw() })
     if (step === 'feed' && dbl) { hyped = !hyped; draw(hyped) }
   })
-  // 트랙패드·마우스 휠: 끝까지 끈 것처럼 넘긴다
+  // 트랙패드·마우스 휠: 끝까지 끈 것처럼 넘긴다. 아래로 굴리면 다음 곡, 위로 굴리면 이전 곡
   el.addEventListener('wheel', e => {
-    if (e.deltaY < 30 || busy || drag || !canDrag()) return
-    const d = startDrag(0); place(d, 0); requestAnimationFrame(() => settle(d, true))
+    const dir = e.deltaY > 30 ? 1 : e.deltaY < -30 && hasPrev() ? -1 : 0
+    if (!dir || busy || drag || !canDrag()) return
+    const d = startDrag(0); place(d, 0); requestAnimationFrame(() => settle(d, dir))
   }, { passive: true })
   draw()
   return el
