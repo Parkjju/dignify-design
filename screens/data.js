@@ -36,3 +36,10 @@ export const CRATE = [
   { date: '2026년 9월 28일', items: [T.comedown, T.truth, T.billann] },
   { date: '2026년 9월 24일', items: [T.cannons, T.tomboy] },
 ]
+
+// 좋아요한 곡(최근 순) + 장르 — 마이 「추천 기준 곡」
+export const LIKED = [
+  { ...T.farewell, genre: '록' }, { ...T.ohio, genre: '록' }, { ...T.blame, genre: 'R&B/소울' }, { ...T.friends, genre: '힙합/랩' },
+  { ...T.intro, genre: '팝' }, { ...T.seasons, genre: '인디' }, { ...T.bulssi, genre: '록' }, { ...T.shanty, genre: 'R&B/소울' },
+  { ...T.loveya, genre: '록' }, { ...T.wss, genre: '인디' }, { ...T.lonely, genre: 'R&B/소울' }, { ...T.billann, genre: '인디' },
+]

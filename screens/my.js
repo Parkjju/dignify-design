@@ -10,6 +10,11 @@ import { MyPickRow } from '../components/my-pick-row/my-pick-row.js'
 import { SectionHeader } from '../components/section-header/section-header.js'
 import { CrateDayRow } from '../components/crate-cell/crate-cell.js'
 import { SeedTray } from '../components/seed-tray/seed-tray.js'
+import { TrackRow } from '../components/track-row/track-row.js'
+import { FilterChips } from '../components/filter-chip/filter-chip.js'
+import { Tooltip } from '../components/tooltip/tooltip.js'
+import { EmptyState } from '../components/empty-state/empty-state.js'
+import { Popup } from '../components/popup/popup.js'
 import { LinkRow } from '../components/link-row/link-row.js'
 import { Button } from '../components/button/button.js'
 import { PickCard } from '../components/pick-card/pick-card.js'
@@ -54,13 +59,26 @@ export function HypeHistoryScreen({ editing = false, crateDays = [], scroll = 0 
   return Device({ time: '4:32', battery: 88, tab: 'my', children: NavLayer(NavBar({ title: '좋아요 기록', right: editing ? '완료' : '편집' })) + Scroll({ top: 122, scroll, children: crate(crateDays, editing ? 'edit' : 'default') }) })
 }
 
-export function SeedPickerScreen({ crateDays = [], selected = [] } = {}) {
-  return Device({ time: '4:32', battery: 88, tab: 'my', children: NavLayer(NavBar({ title: '추천 기준 곡', right: '저장' })) + Scroll({ top: 106, children: `
-    <div style="padding:16px 20px;display:flex;flex-direction:column;gap:6px"><p style="font:var(--typography-body);color:var(--color-text-secondary);line-height:1.45">최대 3곡까지 고를 수 있어요. 고른 곡만 기준으로 피드가 만들어져요.</p>
-    <small style="font:var(--typography-caption);color:var(--color-text-tertiary);line-height:1.45">아무것도 고르지 않으면 지금까지처럼 최근에 좋아요한 3곡을 기준으로 삼아요.</small></div>
-    <div style="padding:8px 0 104px">${crate(crateDays, 'select', selected)}</div>` }),
-    // 고른 곡 트레이: 탭바 위에 떠 있는 카드. 곡이 어느 날짜 줄에 있든 여기서 보고 빼고, 누르면 그 줄로 스크롤
-    overlay: `<div style="position:absolute;left:16px;right:16px;bottom:95px;z-index:80;padding:12px 16px;border-radius:var(--radius-medium);background:var(--color-surface);box-shadow:0 8px 28px rgba(0,0,0,.12)">${SeedTray({ items: selected.map((cover, i) => ({ cover, number: i + 1 })), numbered: false })}</div>` })
+// seed_picker_opened 1.0 — 좋아요한 곡 세로 목록 + 장르 필터 + 체크 3곡. 장르 칩은 곡 목록에서 뽑아 곡 많은 순(같으면 먼저 나온 순)
+const SEED_HINT = ['최대 3곡까지 담을 수 있어요', '2개 더 선택할 수 있어요', '1개 더 선택할 수 있어요', '3곡을 다 골랐어요'] // 3곡: 명세 「곡은 3개까지 선택할 수 있어요」는 커버 세 칸 옆에서 두 줄로 깨져 줄임(기획 확인 대기)
+export function SeedPickerScreen({ tracks = [], genre = '전체', selected = [], tooltip = false, popup = false, scroll = 0 } = {}) {
+  const limit = 3, full = selected.length >= limit
+  if (!tracks.length) return Device({ time: '4:32', battery: 88, tab: 'my', children: NavLayer(NavBar({ title: '추천 기준 곡' })) +
+    `<div style="position:absolute;inset:106px 0 95px;display:grid;place-items:center">${EmptyState({})}</div>` })
+  const counts = new Map()
+  tracks.forEach(t => counts.set(t.genre, (counts.get(t.genre) || 0) + 1))
+  const genres = ['전체', ...[...counts.keys()].sort((a, b) => counts.get(b) - counts.get(a))]
+  const shown = genre === '전체' ? tracks : tracks.filter(t => t.genre === genre)
+  return Device({ time: '4:32', battery: 88, tab: 'my', children: NavLayer(NavBar({ title: '추천 기준 곡', right: '저장', rightDisabled: !selected.length })) + Scroll({ top: 106, scroll, children: `
+    <h2 style="padding:12px 20px 20px;font:var(--typography-title2);color:var(--color-text-primary)">3곡까지 고를 수 있어요.<br>고른 곡을 기준으로 노래를 찾을게요. <i class="ic ic-info-circle" style="font-size:18px;color:var(--color-text-tertiary);vertical-align:-2px"></i></h2>
+    ${FilterChips({ items: genres, selected: genre })}
+    <p style="padding:24px 20px 4px;font:var(--typography-label);color:var(--color-text-tertiary)">좋아요한 곡 ${shown.length}</p>
+    <div style="display:flex;flex-direction:column;gap:var(--spacing-x1-5);padding:0 8px 112px 20px">${shown.map(t =>
+      TrackRow({ ...t, number: selected.includes(t.cover) ? 1 : 0, check: true, play: false, disabled: full })).join('')}</div>` }),
+    // 고른 곡 트레이: 탭바 위에 떠 있는 카드. 커버·✕ 탭 = 빼기
+    overlay: `<div style="position:absolute;left:16px;right:16px;bottom:95px;z-index:80;padding:12px 16px;border-radius:var(--radius-medium);background:var(--color-background);box-shadow:0 8px 28px rgba(0,0,0,.12)">${SeedTray({ items: selected.map((cover, i) => ({ cover, number: i + 1 })), numbered: false, hint: SEED_HINT[selected.length] })}</div>` +
+      (tooltip ? `<div style="position:absolute;right:16px;top:186px;z-index:60">${Tooltip({})}</div>` : '') +
+      (popup ? `<div class="dim" style="background:var(--color-scrim-strong);display:grid;place-items:center;z-index:90">${Popup({ mark: false, decline: '', accept: '확인', title: '선택한 곡 중 1개를 해제해 주세요', message: '3개까지 선택할 수 있어요' })}</div>` : '') })
 }
 
 export function ArtistRequestsScreen({ requests = [], sheet = false, sent = false, value = '검정치마' } = {}) {

@@ -1,6 +1,6 @@
 // 화면 목록 — 스토리와 플로우 보드가 같이 쓴다. 기본값(args)을 여기서 한 번만 정한다.
 // 새 화면: 함수를 만들고 여기에 [id, 이름, 함수, 기본 args] 한 줄 추가 → 스토리·플로우에서 바로 쓸 수 있다.
-import { T, PICKS, CRATE } from './data.js'
+import { T, PICKS, CRATE, LIKED } from './data.js'
 import * as Feed from './feed.js'
 import * as Picks from './picks.js'
 import * as My from './my.js'
@@ -37,8 +37,9 @@ export const SCREENS = {
     myPick: { cover: 'a-loveya', title: '모두가 사랑하는 밴드', count: 3 } }],
   'my-picks': ['내가 만든 픽', My.MyPicksScreen, { picks: [{ ...PICKS[0], verified: false, plays: 27 }, { ...PICKS[1], nickname: 'digger_lover', time: '3일 전', title: '새벽 드라이브' }] }],
   'hype-history': ['좋아요 기록', My.HypeHistoryScreen, { editing: false, crateDays: CRATE, scroll: 0 }],
-  'seed-picker': ['추천 기준 곡', My.SeedPickerScreen, { crateDays: CRATE, selected: ['a-seasons', 'a-ohio'] }],
-  'seed-picker-full': ['추천 기준 곡 · 3곡 다 고름', My.SeedPickerScreen, { crateDays: CRATE, selected: ['a-seasons', 'a-ohio', 'a-blame'] }],
+  'seed-picker': ['추천 기준 곡', My.SeedPickerScreen, { tracks: LIKED, genre: '전체', selected: [], tooltip: false, popup: false, scroll: 0 }],
+  'seed-picker-full': ['추천 기준 곡 · 3곡 다 고름', My.SeedPickerScreen, { tracks: LIKED, genre: '전체', selected: ['a-ohio', 'a-blame', 'a-friends'], tooltip: false, popup: false, scroll: 0 }],
+  'seed-picker-empty': ['추천 기준 곡 · 좋아요 없음', My.SeedPickerScreen, { tracks: [] }],
   'artist-requests': ['아티스트 요청', My.ArtistRequestsScreen, { sheet: false, sent: false, value: '검정치마', requests: [
     { artist: '실리카겔', status: 'added', date: '2026년 10월 3일' }, { artist: '쏜애플', status: 'pending', date: '2026년 10월 6일' },
     { artist: 'Big Thief', status: 'pending', date: '2026년 10월 7일' }, { artist: '임영웅', status: 'canceled', reason: 'Apple Music에 미리듣기가 없는 아티스트예요.', date: '2026년 9월 28일' }] }],
