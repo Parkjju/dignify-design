@@ -1,6 +1,6 @@
 // 프로토타입을 눌러 가며 확인한다(CLAUDE.md 5번). storybook-static을 6007에 띄운 뒤:
 //   ARGS='coach:!true' node scripts/proto-check.mjs <스토리 id> /tmp/out '<steps JSON>'  → /tmp/out-<이름>.png
-// step: ["click", 선택자, i?] | ["tap", 선택자, i?](pointerdown·up — 피드 프로토타입용) | ["dbl", 선택자] | ["swipe", "down"?](위로 끌기, down이면 아래로) | ["wait", ms] | ["shot", 이름]
+// step: ["click", 선택자, i?] | ["tap", 선택자, i?](pointerdown·up — 피드 프로토타입용) | ["dbl", 선택자] | ["swipe", "down"?](위로 끌기, down이면 아래로) | ["wheel", 선택자, deltaY] | ["drag", 선택자, 가로 px](마우스 끌기) | ["wait", ms] | ["shot", 이름]
 // 빌드를 새로 하면 6007 서버도 다시 띄울 것(지워진 폴더를 계속 본다). 프로필은 매번 지운다 — 예전 빌드 캐시가 남으면 모듈을 못 받는다
 import { spawn } from 'node:child_process'
 import { rmSync } from 'node:fs'
@@ -17,10 +17,14 @@ for (let n = 0; n < 50 && !ws; n++) {
 }
 await new Promise(r => ws.addEventListener('open', r))
 let seq = 0; const pend = new Map()
-ws.addEventListener('message', m => { const d = JSON.parse(m.data); pend.get(d.id)?.(d); pend.delete(d.id) })
+ws.addEventListener('message', m => { const d = JSON.parse(m.data); pend.get(d.id)?.(d); pend.delete(d.id)
+  // 받지 못한 요청은 찍는다 — 「모듈을 가져오지 못함」의 진짜 원인
+  if (d.method === 'Network.loadingFailed' && !d.params.canceled) console.log('요청 실패:', reqs.get(d.params.requestId), d.params.errorText)
+  if (d.method === 'Network.requestWillBeSent') reqs.set(d.params.requestId, d.params.request.url) })
+const reqs = new Map()
 const cmd = (method, params = {}) => new Promise(r => { const i = ++seq; pend.set(i, r); ws.send(JSON.stringify({ id: i, method, params })) })
 const js = async expr => { const r = await cmd('Runtime.evaluate', { expression: expr, awaitPromise: true, returnByValue: true }); return r.result?.result?.value ?? r.result?.exceptionDetails?.exception?.description }
-await cmd('Page.enable')
+await cmd('Page.enable'); await cmd('Network.enable')
 await cmd('Page.navigate', { url: `http://localhost:6007/iframe.html?id=${encodeURIComponent(id)}&viewMode=story${process.env.ARGS ? "&args=" + process.env.ARGS : ""}` })
 await sleep(4000)   // 빈 프로필이라 첫 로드가 느리다
 const fire = (sel, i, type) => js(`(() => { const e = document.querySelectorAll(${JSON.stringify(sel)})[${i}]; if (!e) return 'NOT FOUND ${sel.replace(/'/g, '')}[${i}]';
@@ -33,6 +37,11 @@ for (const [op, a, b = 0] of steps) {
   if (op === 'swipe') r = await js(`(() => { const e = document.querySelector('.sb-live'); const p = (t, y) => e.dispatchEvent(new PointerEvent(t, { bubbles: true, clientX: 200, clientY: y, pointerId: 1 }));
     const ys = ${a === 'down' ? '[150, 300, 550, 600]' : '[600, 450, 200, 150]'};
     p('pointerdown', ys[0]); p('pointermove', ys[1]); p('pointermove', ys[2]); p('pointerup', ys[3]); return 'ok' })()`)
+  if (op === 'hscroll') r = await js(`(() => { const e = document.querySelector(${JSON.stringify(a)}); if (!e) return 'NOT FOUND'; e.scrollLeft = ${b}; return 'ok' })()`)
+  if (op === 'wheel') r = await js(`(() => { const e = document.querySelector(${JSON.stringify(a)}); e.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true, deltaY: ${b} })); return 'ok' })()`)
+  if (op === 'drag') r = await js(`(() => { const e = document.querySelector(${JSON.stringify(a)}), r = e.getBoundingClientRect(), y = r.y + r.height / 2, x0 = r.x + r.width - 40;
+    const p = (t, x) => e.dispatchEvent(new PointerEvent(t, { bubbles: true, clientX: x, clientY: y, pointerId: 2 })); p('pointerdown', x0); p('pointermove', x0 - 60); p('pointermove', x0 - ${b}); p('pointerup', x0 - ${b});
+    e.dispatchEvent(new MouseEvent('click', { bubbles: true, clientX: x0 - ${b}, clientY: y })); return 'ok' })()`)
   if (op === 'wait') await sleep(a)
   if (op === 'shot') { const s = await cmd('Page.captureScreenshot', { format: 'png' }); (await import('node:fs')).writeFileSync(`${out}-${a}.png`, Buffer.from(s.result.data, 'base64')) }
   if (r !== 'ok') console.log(op, a, b, '→', r)

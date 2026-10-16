@@ -404,7 +404,8 @@ body.embed { padding: 0; background: transparent; }
 .ds-feed-track__act > .ic-share { font-size: 30px; }
 .ds-feed-track__act > .ic-ellipsis { font-size: 28px; }
 /* components/filter-chip/filter-chip.md */
-.ds-filter-chips { display: flex; gap: var(--spacing-x2); padding: 0 var(--spacing-x5); overflow: hidden; }
+.ds-filter-chips { display: flex; gap: var(--spacing-x2); padding: 0 var(--spacing-x5); overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; }
+.ds-filter-chips::-webkit-scrollbar { display: none; }
 .ds-filter-chip { flex: none; height: 34px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-full); display: inline-flex; align-items: center;
   background: var(--color-surface); color: var(--color-text-primary); font: var(--typography-callout); white-space: nowrap; }
 .ds-filter-chip.is-on { background: var(--color-text-primary); color: var(--color-text-on-dark); }
