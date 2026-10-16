@@ -7,18 +7,19 @@ import { SeedGrid } from '../components/seed-tile/seed-tile.js'
 import { SeedTray } from '../components/seed-tray/seed-tray.js'
 import { FeedBuilding } from '../components/feed-building/feed-building.js'
 
-const skip = '<span style="position:absolute;top:54px;right:20px;height:44px;display:flex;align-items:center;font:var(--typography-body-medium);color:var(--color-text-tertiary)">건너뛰기</span>'
+// ob-skip·ob-cancel·ob-guest 클래스는 온보딩 프로토타입이 탭을 받는 자리(screens/onboarding.stories.js)
+const skip = '<span class="ob-skip" style="position:absolute;top:54px;right:20px;height:44px;display:flex;align-items:center;font:var(--typography-body-medium);color:var(--color-text-tertiary)">건너뛰기</span>'
 
 // gate: 게스트가 Picks·마이를 눌러 뜬 로그인 시트 — 둘러보기 버튼 없이 취소로 닫힌다
 export function SignInScreen({ error = '', gate = false } = {}) {
-  return Device({ time: '1:06', battery: 36, children: `${gate ? '<span style="position:absolute;top:54px;left:20px;height:44px;display:flex;align-items:center;font:var(--typography-body);color:var(--color-text-secondary)">취소</span>' : ''}<div style="position:absolute;inset:118px 24px 40px;display:flex;flex-direction:column">
+  return Device({ time: '1:06', battery: 36, children: `${gate ? '<span class="ob-cancel" style="position:absolute;top:54px;left:20px;height:44px;display:flex;align-items:center;font:var(--typography-body);color:var(--color-text-secondary)">취소</span>' : ''}<div style="position:absolute;inset:118px 24px 40px;display:flex;flex-direction:column">
     <div style="margin:auto 0;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
       <span style="width:64px;height:64px;border-radius:16px;background:var(--color-brand-light);display:grid;place-items:center"><i class="brand-mark" style="width:41px;height:41px"></i></span>
       <h1 style="font-size:32px;font-weight:700;letter-spacing:-.96px;color:var(--color-brand)">Dignify</h1>
       <p style="font-size:14px;color:var(--color-text-tertiary)">인디 음악을 발굴하고, 취향을 쌓아가요.</p></div>
     <div style="display:flex;flex-direction:column;gap:12px">${Button({ variant: 'apple', label: 'Apple로 계속하기' })}
       ${error ? `<p style="font:var(--typography-caption);color:var(--color-destructive);text-align:center">${error}</p>` : ''}
-      ${gate ? '' : '<div style="min-height:44px;display:grid;place-items:center;font:var(--typography-body-medium);color:var(--color-text-secondary)">로그인 없이 둘러보기</div>'}
+      ${gate ? '' : '<div class="ob-guest" style="min-height:44px;display:grid;place-items:center;font:var(--typography-body-medium);color:var(--color-text-secondary)">로그인 없이 둘러보기</div>'}
       <p style="font:var(--typography-caption);color:var(--color-text-tertiary);text-align:center;line-height:1.5">계속 진행하면 <span style="color:var(--color-brand)">이용약관</span> 및 <span style="color:var(--color-brand)">개인정보처리방침</span>에 동의하는 것으로 간주됩니다.</p></div></div>` })
 }
 

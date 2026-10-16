@@ -1,8 +1,10 @@
 /* screens/_shared.css 의 body 규칙(시안 페이지용 가운데 정렬·회색 배경)을 Storybook 캔버스에선 끈다 */
 body { display: block; min-height: 0; padding: 0; background: #fff; }
 
-/* 직접 해 보기(screens/coach-live.js) — 제스처를 브라우저가 가로채지 않게, 애니메이션은 1회 */
-.sb-live { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: pointer; }
+/* 프로토타입(screens/live.js·feed-live.js) — 애니메이션은 1회, 스크롤 화면은 실제로 스크롤된다. 피드는 끌기를 브라우저가 가로채지 않게 */
+.sb-live { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; cursor: pointer; }
+.sb-live.is-feed { touch-action: none; }
+.sb-live .scroll { overflow-y: auto; scrollbar-width: none; } .sb-live .scroll::-webkit-scrollbar { display: none; }
 /* 좋아요 순간 1회: 0~0.3s 팝·솟음 → hold 머묾(조각은 떨어지는 중) → 0.4s 페이드. 큰 하트와 조각이 같은 순간에 끝난다 */
 .sb-live .is-burst > .ic:first-child { animation: dsf-pop-once calc(.3s * var(--k, 1)) ease-out; }
 .sb-live .ds-feed-track__big { animation: dsf-big-in calc(.3s * var(--k, 1)) cubic-bezier(.2,1.4,.4,1) both,
