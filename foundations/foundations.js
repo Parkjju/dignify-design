@@ -1,4 +1,5 @@
 // Foundations 스토리용 렌더러 — tokens/*.json 을 그대로 읽어 그린다(토큰을 고치면 자동 반영).
+import { flatten } from '../scripts/flatten.js'
 const kebab = s => s.replace(/[A-Z]/g, c => '-' + c.toLowerCase()).replace('_', '-')
 const entries = g => Object.entries(g).filter(([k]) => !k.startsWith('$'))
 const row = (sample, name, value, code, desc = '') => `<div class="fd-row">${sample}<div class="fd-name">${name}<small>${value}</small><code>${code}</code></div><div class="fd-desc">${desc}</div></div>`
@@ -12,13 +13,16 @@ const table = rows => `<style>
   .fd-swatch.dark { background: #141420; } .fd-swatch i { position: absolute; inset: 0; }
 </style><div class="fd">${rows.join('')}</div>`
 
-export const colors = g => table(entries(g).map(([n, t]) => {
-  const v = typeof t.$value === 'string' ? t.$value : `${t.$value.hex} · ${Math.round(t.$value.alpha * 100)}%`
-  return row(`<div class="fd-swatch${/OnDark/.test(n) ? ' dark' : ''}"><i style="background:var(--color-${kebab(n)})"></i></div>`, n, v, `DSColor.${n} · var(--color-${kebab(n)})`, t.$description)
-}))
-export const typography = g => table(entries(g).map(([n, t]) => row(
-  `<div style="font:var(--typography-${kebab(n)});white-space:nowrap;overflow:hidden">가나다 Abc 123</div>`, n,
-  typeof t.$value === 'string' ? t.$value : `${t.$value.fontSize}pt · ${t.$value.fontWeight}`, `DSTypography.${n} · font: var(--typography-${kebab(n)})`, t.$description)))
+// 원시(gray900)와 쓰임 이름(textPrimary → gray900)을 나눠 두 표로 그린다.
+const sub = t => `<h3 style="font:600 15px -apple-system,sans-serif;margin:28px 0 4px">${t}</h3>`
+const layers = (g, name, draw) => { const all = flatten(g, name); return sub('원시 (단위)') + table(all.filter(e => !e.alias).map(draw)) + sub('쓰임 이름 (별칭)') + table(all.filter(e => e.alias).map(draw)) }
+const colorValue = v => typeof v === 'string' ? v : `${v.hex} · ${Math.round(v.alpha * 100)}%`
+export const colors = g => layers(g, 'color', e => row(
+  `<div class="fd-swatch${/OnDark|^white/.test(e.name) ? ' dark' : ''}"><i style="background:var(--color-${e.css})"></i></div>`, e.name,
+  (e.alias ? `→ ${e.alias.name} · ` : '') + colorValue(e.value), `DSColor.${e.name} · var(--color-${e.css})`, e.desc))
+export const typography = g => layers(g, 'typography', e => row(
+  `<div style="font:var(--typography-${e.css});white-space:nowrap;overflow:hidden">가나다 Abc 123</div>`, e.name,
+  (e.alias ? `→ ${e.alias.name} · ` : '') + `${e.value.fontSize}pt · ${e.value.fontWeight}`, `DSTypography.${e.name} · font: var(--typography-${e.css})`, e.desc))
 export const radius = g => table(entries(g).map(([n, t]) => row(
   `<div style="width:60px;height:40px;background:var(--color-brand-light);border:1.5px solid var(--color-brand);border-radius:var(--radius-${kebab(n)})"></div>`, n, `${t.$value}pt`, `DSRadius.${n} · var(--radius-${kebab(n)})`, t.$description)))
 export const spacing = g => table(entries(g).map(([n, t]) => row(

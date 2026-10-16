@@ -10,14 +10,10 @@ const tokens = Object.assign({}, ...readdirSync(join(root, 'tokens'))
   .filter(f => f.endsWith('.json')).sort()
   .map(f => JSON.parse(readFileSync(join(root, 'tokens', f), 'utf8'))))
 
-// 그룹의 토큰만 순서대로. "{group.name}" 별칭은 alias로 남겨 플랫폼 코드에서도 별칭으로 쓴다.
-const entries = group => Object.entries(tokens[group])
-  .filter(([k]) => !k.startsWith('$'))
-  .map(([name, t]) => {
-    const alias = typeof t.$value === 'string' && t.$value.match(/^\{(\w+)\.(\w+)\}$/)
-    if (alias && !tokens[alias[1]]?.[alias[2]]) throw new Error(`깨진 별칭: ${group}.${name} → ${t.$value}`)
-    return { name, value: t.$value, alias: alias ? alias[2] : null, desc: t.$description }
-  })
+import { flatten } from './flatten.js'
+
+// 그룹의 토큰을 편 목록. 별칭은 alias(가리키는 토큰 이름)로 남겨 플랫폼 코드에서도 별칭으로 쓴다.
+const entries = group => flatten(tokens[group], group).map(e => ({ ...e, alias: e.alias?.name ?? null, aliasCss: e.alias?.css }))
 
 const HEADER = '자동 생성 파일 — 직접 고치지 말 것. 정본: dignify-design/tokens'
 const doc = (d, pad) => d ? `${pad}/// ${d}\n` : ''
@@ -77,8 +73,7 @@ import androidx.compose.ui.unit.sp
 
 // HTML 시안용. 이름은 --{group}-{name}, 타이포는 font 축약형 하나로.
 function css() {
-  const kebab = s => s.replace(/[A-Z]/g, c => '-' + c.toLowerCase()).replace('_', '-')
-  const line = (g, e, v) => `  --${g}-${kebab(e.name)}: ${e.alias ? `var(--${g}-${kebab(e.alias)})` : v};\n`
+  const line = (g, e, v) => `  --${g}-${e.css}: ${e.alias ? `var(--${g}-${e.aliasCss})` : v};\n`
   return `/* ${HEADER} */\n:root {\n` +
     entries('color').map(e => line('color', e, alpha(e.value) === 1 ? `#${rgb(e.value)}` : `#${rgb(e.value)}${a255(e.value)}`)).join('') +
     entries('typography').map(e => line('typography', e, `${e.value.fontWeight} ${e.value.fontSize}px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif`)).join('') +

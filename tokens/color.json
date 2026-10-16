@@ -1,122 +1,70 @@
 {
   "color": {
     "$type": "color",
+    "$description": "2단 구조. 위쪽은 원시 팔레트(Tailwind식 hue.단계 — gray.900, brand.600), 아래쪽은 쓰임 이름(textPrimary 등)이고 원시를 가리키는 별칭이다. 화면 코드는 쓰임 이름을 먼저 쓴다. 쓰임 이름이 없는 자리에만 원시를 쓴다",
+    "white": {
+      "100": { "$value": "#FFFFFF" },
+      "82": { "$value": { "hex": "#FFFFFF", "alpha": 0.82 } },
+      "75": { "$value": { "hex": "#FFFFFF", "alpha": 0.75 } },
+      "45": { "$value": { "hex": "#FFFFFF", "alpha": 0.45 } },
+      "20": { "$value": { "hex": "#FFFFFF", "alpha": 0.2 } },
+      "15": { "$value": { "hex": "#FFFFFF", "alpha": 0.15 } },
+      "7": { "$value": { "hex": "#FFFFFF", "alpha": 0.07 } }
+    },
+    "black": {
+      "55": { "$value": { "hex": "#000000", "alpha": 0.55 } },
+      "45": { "$value": { "hex": "#000000", "alpha": 0.45 } }
+    },
+    "gray": {
+      "$description": "Tailwind gray와 같은 값",
+      "100": { "$value": "#F3F4F6" },
+      "200": { "$value": "#E5E7EB" },
+      "300": { "$value": "#D1D5DB" },
+      "400": { "$value": "#9CA3AF" },
+      "500": { "$value": "#6B7280" },
+      "900": { "$value": "#111827" }
+    },
+    "red": {
+      "500": { "$value": "#EF4444" }
+    },
     "brand": {
-      "$value": "#4B3FD8",
-      "$description": "주 액션·선택 상태·하입"
+      "50": { "$value": "#EEF0FF" },
+      "400": { "$value": "#8F86FF", "$description": "다크 지면 위 brand. 600은 다크에 묻혀서 밝기만 올림" },
+      "600": { "$value": "#4B3FD8" },
+      "900": { "$value": "#2A2350" },
+      "$value": "{color.brand.600}",
+      "$description": "주 액션·선택 상태·좋아요(하입). Tailwind의 DEFAULT처럼 color.brand = brand.600"
     },
-    "brandLight": {
-      "$value": "#EEF0FF",
-      "$description": "brand 위 옅은 지면(브랜드마크 배경 등)"
+    "night": {
+      "$description": "Picks 다크 지면 단계",
+      "800": { "$value": "#282836" },
+      "900": { "$value": "#1E1E2A" },
+      "950": { "$value": "#141420" }
     },
-    "brandDeep": {
-      "$value": "#2A2350",
-      "$description": "브랜드 그라데이션 끝색(디깅 프로필 유형 카드·공유 카드)"
-    },
-    "background": {
-      "$value": "#FFFFFF"
-    },
-    "surface": {
-      "$value": "#F3F4F6",
-      "$description": "카드·입력창 지면"
-    },
-    "textPrimary": {
-      "$value": "#111827"
-    },
-    "textSecondary": {
-      "$value": "#6B7280"
-    },
-    "textTertiary": {
-      "$value": "#9CA3AF",
-      "$description": "placeholder·비활성 텍스트"
-    },
-    "border": {
-      "$value": "#D1D5DB"
-    },
-    "borderLight": {
-      "$value": "#E5E7EB"
-    },
-    "divider": {
-      "$value": "#F3F4F6"
-    },
-    "destructive": {
-      "$value": "#EF4444"
-    },
-    "pickBackground": {
-      "$value": "#141420",
-      "$description": "Picks 다크 지면. 앱은 라이트 고정, Picks만 예외"
-    },
-    "pickSurface": {
-      "$value": "#1E1E2A",
-      "$description": "Picks 카드"
-    },
-    "pickElevated": {
-      "$value": "#282836",
-      "$description": "Picks 카드 위에 뜨는 시트. 카드와 같으면 지면에 눌어붙어 보인다"
-    },
-    "pickAccent": {
-      "$value": "#8F86FF",
-      "$description": "다크 위 brand. #4B3FD8은 다크에 묻혀서 밝기만 올림"
-    },
-    "textOnDark": {
-      "$value": "#FFFFFF",
-      "$description": "피드·Picks 같은 어두운 지면 위 주 텍스트"
-    },
-    "textOnDarkSecondary": {
-      "$value": {
-        "hex": "#FFFFFF",
-        "alpha": 0.75
-      },
-      "$description": "어두운 지면 위 보조 텍스트(피드 아티스트명)"
-    },
-    "textOnDarkTertiary": {
-      "$value": {
-        "hex": "#FFFFFF",
-        "alpha": 0.45
-      },
-      "$description": "어두운 지면 위 메타(Picks 시간·곡 수)"
-    },
-    "iconOnDark": {
-      "$value": {
-        "hex": "#FFFFFF",
-        "alpha": 0.82
-      },
-      "$description": "어두운 지면 위 액션 아이콘(피드 상세·공유)"
-    },
-    "fillOnDark": {
-      "$value": {
-        "hex": "#FFFFFF",
-        "alpha": 0.15
-      },
-      "$description": "어두운 지면 위 칩 지면"
-    },
-    "fillOnDarkSubtle": {
-      "$value": {
-        "hex": "#FFFFFF",
-        "alpha": 0.07
-      },
-      "$description": "Picks 반응·공유 버튼 지면"
-    },
-    "strokeOnDark": {
-      "$value": {
-        "hex": "#FFFFFF",
-        "alpha": 0.2
-      },
-      "$description": "어두운 지면 위 칩 테두리"
-    },
-    "scrim": {
-      "$value": {
-        "hex": "#000000",
-        "alpha": 0.45
-      },
-      "$description": "아트워크 위 어둡게 까는 막(Picks 미디어)"
-    },
-    "scrimStrong": {
-      "$value": {
-        "hex": "#000000",
-        "alpha": 0.55
-      },
-      "$description": "아트워크 위 배지·남은 곡 수"
-    }
+
+    "brandLight": { "$value": "{color.brand.50}", "$description": "brand 위 옅은 지면(브랜드마크 배경 등)" },
+    "brandDeep": { "$value": "{color.brand.900}", "$description": "브랜드 그라데이션 끝색(디깅 프로필 유형 카드·공유 카드)" },
+    "background": { "$value": "{color.white.100}" },
+    "surface": { "$value": "{color.gray.100}", "$description": "카드·입력창 지면" },
+    "textPrimary": { "$value": "{color.gray.900}" },
+    "textSecondary": { "$value": "{color.gray.500}" },
+    "textTertiary": { "$value": "{color.gray.400}", "$description": "placeholder·비활성 텍스트" },
+    "border": { "$value": "{color.gray.300}" },
+    "borderLight": { "$value": "{color.gray.200}" },
+    "divider": { "$value": "{color.gray.100}" },
+    "destructive": { "$value": "{color.red.500}" },
+    "pickBackground": { "$value": "{color.night.950}", "$description": "Picks 다크 지면. 앱은 라이트 고정, Picks만 예외" },
+    "pickSurface": { "$value": "{color.night.900}", "$description": "Picks 카드" },
+    "pickElevated": { "$value": "{color.night.800}", "$description": "Picks 카드 위에 뜨는 시트. 카드와 같으면 지면에 눌어붙어 보인다" },
+    "pickAccent": { "$value": "{color.brand.400}", "$description": "다크 위 brand" },
+    "textOnDark": { "$value": "{color.white.100}", "$description": "피드·Picks 같은 어두운 지면 위 주 텍스트" },
+    "textOnDarkSecondary": { "$value": "{color.white.75}", "$description": "어두운 지면 위 보조 텍스트(피드 아티스트명)" },
+    "textOnDarkTertiary": { "$value": "{color.white.45}", "$description": "어두운 지면 위 메타(Picks 시간·곡 수)" },
+    "iconOnDark": { "$value": "{color.white.82}", "$description": "어두운 지면 위 액션 아이콘(피드 상세·공유)" },
+    "fillOnDark": { "$value": "{color.white.15}", "$description": "어두운 지면 위 칩 지면" },
+    "fillOnDarkSubtle": { "$value": "{color.white.7}", "$description": "Picks 반응·공유 버튼 지면" },
+    "strokeOnDark": { "$value": "{color.white.20}", "$description": "어두운 지면 위 칩 테두리" },
+    "scrim": { "$value": "{color.black.45}", "$description": "아트워크 위 어둡게 까는 막(Picks 미디어)" },
+    "scrimStrong": { "$value": "{color.black.55}", "$description": "아트워크 위 배지·남은 곡 수" }
   }
 }

@@ -1,17 +1,36 @@
 {
   "typography": {
     "$type": "typography",
-    "display": { "$value": { "fontSize": 40, "fontWeight": 700 } },
-    "title1": { "$value": { "fontSize": 24, "fontWeight": 700 } },
-    "title2": { "$value": { "fontSize": 18, "fontWeight": 700 } },
-    "headline": { "$value": { "fontSize": 17, "fontWeight": 600 } },
-    "body": { "$value": { "fontSize": 15, "fontWeight": 400 } },
-    "bodyMedium": { "$value": { "fontSize": 15, "fontWeight": 500 } },
-    "callout": { "$value": { "fontSize": 14, "fontWeight": 500 }, "$description": "보조 버튼·칩·\"전체 보기\" 링크" },
-    "label": { "$value": { "fontSize": 13, "fontWeight": 600 }, "$description": "날짜 헤더·섹션 라벨·배지" },
-    "caption": { "$value": { "fontSize": 12, "fontWeight": 400 } },
-    "captionStrong": { "$value": { "fontSize": 12, "fontWeight": 600 }, "$description": "배지·메타 정보 강조" },
-    "micro": { "$value": { "fontSize": 10.5, "fontWeight": 400 } },
+    "$description": "2단 구조. text.크기.굵기가 원시(Tailwind식 티셔츠 사이즈 — 값은 우리 앱 값이라 Tailwind 기본 크기와는 다르다), 아래 body·label 등은 그걸 가리키는 쓰임 이름. 원시는 앱에서 쓰는 조합만 둔다 — 새 조합이 필요하면 추가한다",
+    "text": {
+      "2xs": { "regular": { "$value": { "fontSize": 10.5, "fontWeight": 400 } } },
+      "xs": {
+        "regular": { "$value": { "fontSize": 12, "fontWeight": 400 } },
+        "semibold": { "$value": { "fontSize": 12, "fontWeight": 600 } }
+      },
+      "sm": { "semibold": { "$value": { "fontSize": 13, "fontWeight": 600 } } },
+      "md": { "medium": { "$value": { "fontSize": 14, "fontWeight": 500 } } },
+      "base": {
+        "regular": { "$value": { "fontSize": 15, "fontWeight": 400 } },
+        "medium": { "$value": { "fontSize": 15, "fontWeight": 500 } }
+      },
+      "lg": { "semibold": { "$value": { "fontSize": 17, "fontWeight": 600 } } },
+      "xl": { "bold": { "$value": { "fontSize": 18, "fontWeight": 700 } } },
+      "2xl": { "bold": { "$value": { "fontSize": 24, "fontWeight": 700 } } },
+      "5xl": { "bold": { "$value": { "fontSize": 40, "fontWeight": 700 } } }
+    },
+
+    "display": { "$value": "{typography.text.5xl.bold}" },
+    "title1": { "$value": "{typography.text.2xl.bold}" },
+    "title2": { "$value": "{typography.text.xl.bold}" },
+    "headline": { "$value": "{typography.text.lg.semibold}" },
+    "body": { "$value": "{typography.text.base.regular}" },
+    "bodyMedium": { "$value": "{typography.text.base.medium}" },
+    "callout": { "$value": "{typography.text.md.medium}", "$description": "보조 버튼·칩·\"전체 보기\" 링크" },
+    "label": { "$value": "{typography.text.sm.semibold}", "$description": "날짜 헤더·섹션 라벨·배지" },
+    "caption": { "$value": "{typography.text.xs.regular}" },
+    "captionStrong": { "$value": "{typography.text.xs.semibold}", "$description": "배지·메타 정보 강조" },
+    "micro": { "$value": "{typography.text.2xs.regular}" },
     "title": { "$value": "{typography.title1}", "$description": "title1 별칭(기존 코드 호환)" }
   }
 }
