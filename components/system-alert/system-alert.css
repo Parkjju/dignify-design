@@ -1,0 +1,11 @@
+/* components/system-alert/system-alert.md — iOS 26 시스템 알럿 모양 흉내(OS가 그린다, 값은 디자인 시스템 밖) */
+.ds-system-alert-layer { position: absolute; inset: 0; z-index: 98; display: grid; place-items: center; background: rgba(0,0,0,.2); animation: ds-layer-in .2s ease-out both; }
+.ds-system-alert { width: 300px; padding: 22px 16px 16px; border-radius: 34px; background: rgba(245,245,247,.92); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0 10px 40px rgba(0,0,0,.18); color: #000; animation: ds-pop-ios .3s cubic-bezier(.2,.9,.3,1) both; }
+.ds-system-alert__text { padding: 0 8px; text-align: center; word-break: keep-all; }
+.ds-system-alert__text b { display: block; font-size: 17px; font-weight: 600; line-height: 1.3; }
+.ds-system-alert__text p { margin-top: 6px; font-size: 13px; line-height: 1.38; color: rgba(60,60,67,.85); }
+.ds-system-alert__row { display: flex; gap: 10px; margin-top: 20px; }
+.ds-system-alert__row span { flex: 1; height: 48px; border-radius: 24px; display: grid; place-items: center; font-size: 17px; background: rgba(120,120,128,.16); }
+.ds-system-alert__allow { font-weight: 600; color: #007AFF; }
+.ds-system-alert__deny { color: #007AFF; }
