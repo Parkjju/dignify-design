@@ -4,7 +4,7 @@
 //   first-run  첫 실행: 동의 팝업 → 알림 받기 → (권한 설정 전이면 OS 권한 팝업) → 토스트. 나중에 = 닫기만(7일 뒤 다시)
 //   like       좋아요 시점: 곡을 좋아요(더블탭·♡)하고 위로 넘기면 신곡 알림 시트(기기 권한 설정 전일 때만)
 //   night      이번 주 특집 1/5부터 5곡 넘기면 야간 동의 팝업(동의 + 권한 켜짐 + 야간 미응답일 때만)
-//   settings   마이 › 알림부터: 토글 = 결과 토스트, 광고성 끄면 야간도 꺼짐, 기기 알림 권한(설정 전 → OS 권한 팝업)
+//   settings   마이 › 알림부터: 토글 = 결과 토스트, 광고성 끄면 야간도 꺼짐, 기기 알림 권한 셀(설정 전이면 눌러도 무반응)
 //   push-pick · push-release  알림 탭으로 들어온 피드 앞 구간(이번 주 추천 / 좋아요한 아티스트의 신곡)
 // 탭바 Feed·My로 오가며 상태가 이어지는지 본다. 처음부터 다시: Controls 값을 바꾼다.
 import { live, go, back } from './live.js'
@@ -71,7 +71,7 @@ export const Consent = { name: '광고성 알림',
         }
         return { ads: { ...s.ads, night: !s.ads.night }, ...toast(s.ads.night ? 'night-off' : 'night-on', later) }
       })],
-      // 기기 알림 권한: 설정 전 = OS 권한 팝업, 그 밖 = 설정 앱 Dignify 알림 화면(시안에선 그대로)
-      ['.ds-settings-row--value', onAlerts(s => s.ads.permission === 'unset' ? { system: true, pending: '' } : {})],
+      // 기기 알림 권한: 설정 전 = 무반응(2026-11-17), 그 밖 = 설정 앱 Dignify 알림 화면(시안에선 그대로)
+      ['.ds-settings-row--value', onAlerts(() => ({}))],
     ],
   }) }

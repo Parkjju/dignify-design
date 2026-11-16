@@ -77,7 +77,7 @@ export const ConsentOnLike = { name: '광고성 동의 — 좋아요 시점', ar
 
 export const ConsentSettings = { name: '광고성 동의 — 마이 › 알림', args: { steps: [
   { screen: 'my-page', note: '「알림」' },
-  { screen: 'notification-settings', note: '토글 = 서버 저장 후 바뀜. 기기 알림 권한: 켜짐·꺼짐 → 설정 앱 Dignify 알림 화면, 설정 전 → 시스템 권한 팝업' },
+  { screen: 'notification-settings', note: '토글 = 서버 저장 후 바뀜. 기기 알림 권한: 켜짐·꺼짐 → 설정 앱 Dignify 알림 화면, 설정 전 → 눌러도 아무 동작 없음' },
   { screen: 'notification-settings-off', label: '광고성 끔', args: { toast: 'off' }, note: '야간도 같이 꺼짐 → 수신거부 토스트' },
   { screen: 'notification-settings-off', label: '야간 탭', args: { toast: 'need-consent' }, note: '광고성이 꺼져 있으면 야간은 못 켠다' },
   { screen: 'notification-settings', label: '저장 실패', args: { toast: 'fail' }, note: '토글은 그대로' },

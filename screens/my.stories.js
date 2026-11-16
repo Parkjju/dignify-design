@@ -1,5 +1,5 @@
 // 마이 — 프로토타입 하나로 직접 해 본다(screens/live.js). 마이페이지 줄을 눌러 들어가고 ‹ 로 돌아온다.
-// 알림(푸시알림 기획 2026-11-12): 광고성 토글 = 저장 → 결과 토스트(끄면 야간도 꺼짐), 광고성 꺼진 채 야간 탭 = 「먼저 동의」 토스트, 기기 알림 권한(설정 전 → 시스템 팝업)
+// 알림(푸시알림 기획 2026-11-12): 광고성 토글 = 저장 → 결과 토스트(끄면 야간도 꺼짐), 광고성 꺼진 채 야간 탭 = 「먼저 동의」 토스트, 기기 알림 권한(설정 전이면 무반응)
 // 추천 기준 곡(seed_picker_opened 1.0): 행 = 고르기/풀기(3곡이면 팝업), 장르 칩, ⓘ = 말풍선(2초·바깥 탭 닫힘), 트레이 커버·✕ = 빼기, 저장 = 바뀌면 활성
 import { live, go, back } from './live.js'
 import { SCREENS } from './registry.js'
@@ -71,7 +71,7 @@ export const My = { name: '마이',
         if (i === 0) return { ad: !s.ad, night: !s.ad && s.night, ...toast(s.ad ? 'off' : 'on', later) }   // 광고성을 끄면 야간도 꺼진다
         return { night: !s.night, ...toast(s.night ? 'night-off' : 'night-on', later) }
       })],
-      ['.ds-settings-row--value', onAlerts(s => s.permission === 'unset' ? { permission: 'on' } : {})],   // 설정 전 = 시스템 권한 팝업(허용 가정), 그 밖 = 설정 앱 Dignify 알림 화면
+      ['.ds-settings-row--value', onAlerts(() => ({}))],   // 설정 전 = 무반응(2026-11-17), 그 밖 = 설정 앱 Dignify 알림 화면
       // 마이페이지
       ['.ds-settings-card', s => go(s, 'profile')],
       ['.ds-settings-toggle', s => ({ following: !s.following })],
