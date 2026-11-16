@@ -1,6 +1,7 @@
 /* components/settings-row/settings-row.md */
-.ds-settings-row { height: 48px; padding: 0 var(--spacing-x5); display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }
+.ds-settings-row { height: 50px; padding: 0 var(--spacing-x5); display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }
 .ds-settings-row .ic { font-size: 13px; color: var(--color-border); }
+.ds-settings-row--value span { display: flex; align-items: center; gap: var(--spacing-x1-5); color: var(--color-text-tertiary); }
 .ds-settings-row.is-destructive { color: var(--color-destructive); }
 .ds-settings-toggle { padding: var(--spacing-x3) var(--spacing-x5); }
 .ds-settings-toggle > div { display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }

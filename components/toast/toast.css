@@ -1,0 +1,12 @@
+/* components/toast/toast.md — 푸시알림 기획 Snackbar 실측(390 폭: 좌우 18, 안쪽 12·16) */
+.ds-toast { width: calc(100% - 36px); max-width: 357px; padding: var(--spacing-x3) var(--spacing-x4); border-radius: var(--radius-medium);
+  background: var(--color-toast-surface); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  display: flex; flex-direction: column; gap: var(--spacing-x1-5); color: var(--color-text-on-dark); animation: ds-toast-in .2s ease-out both; }
+.ds-toast b { font: var(--typography-callout); }
+.ds-toast span { font: var(--typography-caption); color: var(--color-text-on-dark-secondary); }
+.ds-toast.is-leaving { animation: ds-toast-out .3s ease-in forwards; }
+@keyframes ds-toast-in { from { opacity: 0; transform: translateY(6px); } }
+@keyframes ds-toast-out { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ds-toast { animation-name: ds-layer-in; } }
+/* 화면 안 자리: 탭바(아래 21, 높이 62) 위 8 */
+.ds-toast-slot { position: absolute; left: 0; right: 0; bottom: 91px; z-index: 96; display: flex; justify-content: center; pointer-events: none; }

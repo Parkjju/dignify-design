@@ -25,6 +25,9 @@
 
 버스트 길이 ≈ 1.2초(조각이 다 떨어질 때까지). `speed`로 빠르기 조절(1 = 기본, 2 = 두 배 빠르게).
 
+## 지면 (푸시알림 기획 2026-11-12)
+배경 아트워크 블러 28 → 38, 위에 검정 45%(`color.scrim`) 한 겹. 아래로 짙어지던 그라데이션은 없앤다. 앱 iOS는 지금 `blur 28 · brightness -0.3 · saturation 1.4`라 밝기·채도 대신 덮개 한 겹으로 바꾼다.
+
 ## 플랫폼
 | iOS | `TrackCardView` (`Features/Feed/FeedView.swift`) |
 |---|---|

@@ -1,0 +1,23 @@
+/* components/consent-sheet/consent-sheet.md — 푸시알림 기획 ad_btmsheet_like 실측(390 폭 기준) */
+.ds-consent-sheet { padding-top: var(--spacing-x6); text-align: center; color: var(--color-text-primary); }
+.ds-consent-sheet__body { padding: 0 var(--spacing-x4); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x6); }
+.ds-consent-sheet__head { display: flex; flex-direction: column; gap: var(--spacing-x3); }
+.ds-consent-sheet h2 { font: var(--typography-title1); line-height: 1.2; }
+.ds-consent-sheet h2 em { font-style: normal; color: var(--color-brand); }
+.ds-consent-sheet__head p { font: var(--typography-body-small); line-height: 1.5; color: var(--color-text-secondary); }
+.ds-consent-sheet__head p b { font-weight: 600; color: var(--color-text-primary); }
+/* 알림 미리보기 그림(343×120): 기기 윗부분 + 잠금화면 알림 한 장, 아래로 갈수록 흰 지면에 묻힌다 */
+.ds-consent-sheet__preview { position: relative; width: 343px; height: 120px; overflow: hidden; }
+.ds-consent-sheet__preview::after { content: ""; position: absolute; inset: auto 0 0; height: 36px; background: linear-gradient(rgba(255,255,255,0), var(--color-background)); }
+.ds-consent-sheet__phone { position: absolute; left: 12px; right: 12px; top: 8px; height: 140px; border: 5px solid var(--color-border-light); border-bottom: 0; border-radius: 32px 32px 0 0; background: var(--color-surface); }
+.ds-consent-sheet__notch { display: block; width: 40px; height: 5px; border-radius: 3px; background: var(--color-border-light); margin: 7px auto 0; }
+.ds-consent-sheet__noti { margin: 14px var(--spacing-x1-5) 0; padding: var(--spacing-x2-5); border-radius: var(--radius-small); background: var(--color-background); box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  display: flex; align-items: center; gap: var(--spacing-x2-5); text-align: left; }
+.ds-consent-sheet__noti .art { width: 26px; height: 26px; border-radius: 6px; flex: none; }
+.ds-consent-sheet__noti div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ds-consent-sheet__noti b { font-size: 10.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-consent-sheet__noti span { font: var(--typography-micro); color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-consent-sheet__footer { padding: var(--spacing-x2-5) var(--spacing-x3) 0; display: flex; flex-direction: column; align-items: center; }
+.ds-consent-sheet__legal { font: var(--typography-caption); color: var(--color-text-tertiary); margin-bottom: var(--spacing-x2-5); }
+.ds-consent-sheet__accept.ds-button--primary { height: 50px; font-size: 16px; }
+.ds-consent-sheet__later { display: grid; place-items: center; height: 34px; margin: var(--spacing-x3) 0 var(--spacing-x8); font: var(--typography-body-small); color: var(--color-text-secondary); }

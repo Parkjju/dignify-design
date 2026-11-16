@@ -1,7 +1,8 @@
 /* components/feed-track/feed-track.md · patterns/feed-media-surface.md */
 .ds-feed-track { position: relative; overflow: hidden; background: #000; }
-.ds-feed-track__bg { position: absolute; inset: -40px; filter: blur(28px); transform: scale(1.1); }
-.ds-feed-track__scrim { position: absolute; inset: 0; background: linear-gradient(transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.85) 75%); }
+/* 지면: 아트워크 블러 38 + 검정 45% 한 겹(푸시알림 기획 2026-11-12 「기본」 실측. 이전: 블러 28 + 아래로 짙어지는 그라데이션) */
+.ds-feed-track__bg { position: absolute; inset: -40px; filter: blur(38px); transform: scale(1.1); }
+.ds-feed-track__scrim { position: absolute; inset: 0; background: var(--color-scrim); }
 .ds-feed-track__body { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
 .ds-feed-track__center { margin: auto 0; }
 .ds-feed-track__stage { position: relative; z-index: 3; }   /* 아트워크 + 그 위에 붙는 오버레이(코치마크) */

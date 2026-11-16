@@ -169,7 +169,7 @@ body.embed { padding: 0; background: transparent; }
 .hr { height: 1px; background: var(--color-divider); margin: 8px 20px; }
 
 /* ── 시트 (iOS 26 플로팅 시트) ── */
-.dim { position: absolute; inset: 0; background: rgba(0,0,0,.35); z-index: 92; }
+.dim { position: absolute; inset: 0; background: var(--color-dim); z-index: 92; }
 .sheet { position: absolute; inset-inline: 0; bottom: 0; z-index: 93; border-radius: 38px 38px 0 0; background: var(--color-background); color: var(--color-text-primary); overflow: hidden; }
 .sheet.floating { inset-inline: 8px; bottom: 8px; border-radius: 40px; }
 .grabber { width: 36px; height: 5px; border-radius: 3px; background: rgba(60,60,67,.3); margin: 6px auto 0; }
@@ -319,6 +319,29 @@ body.embed { padding: 0; background: transparent; }
   .is-swipe-up { opacity: 1; }
   .ds-feed-track { animation: none !important; }
 }
+/* components/consent-sheet/consent-sheet.md — 푸시알림 기획 ad_btmsheet_like 실측(390 폭 기준) */
+.ds-consent-sheet { padding-top: var(--spacing-x6); text-align: center; color: var(--color-text-primary); }
+.ds-consent-sheet__body { padding: 0 var(--spacing-x4); display: flex; flex-direction: column; align-items: center; gap: var(--spacing-x6); }
+.ds-consent-sheet__head { display: flex; flex-direction: column; gap: var(--spacing-x3); }
+.ds-consent-sheet h2 { font: var(--typography-title1); line-height: 1.2; }
+.ds-consent-sheet h2 em { font-style: normal; color: var(--color-brand); }
+.ds-consent-sheet__head p { font: var(--typography-body-small); line-height: 1.5; color: var(--color-text-secondary); }
+.ds-consent-sheet__head p b { font-weight: 600; color: var(--color-text-primary); }
+/* 알림 미리보기 그림(343×120): 기기 윗부분 + 잠금화면 알림 한 장, 아래로 갈수록 흰 지면에 묻힌다 */
+.ds-consent-sheet__preview { position: relative; width: 343px; height: 120px; overflow: hidden; }
+.ds-consent-sheet__preview::after { content: ""; position: absolute; inset: auto 0 0; height: 36px; background: linear-gradient(rgba(255,255,255,0), var(--color-background)); }
+.ds-consent-sheet__phone { position: absolute; left: 12px; right: 12px; top: 8px; height: 140px; border: 5px solid var(--color-border-light); border-bottom: 0; border-radius: 32px 32px 0 0; background: var(--color-surface); }
+.ds-consent-sheet__notch { display: block; width: 40px; height: 5px; border-radius: 3px; background: var(--color-border-light); margin: 7px auto 0; }
+.ds-consent-sheet__noti { margin: 14px var(--spacing-x1-5) 0; padding: var(--spacing-x2-5); border-radius: var(--radius-small); background: var(--color-background); box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  display: flex; align-items: center; gap: var(--spacing-x2-5); text-align: left; }
+.ds-consent-sheet__noti .art { width: 26px; height: 26px; border-radius: 6px; flex: none; }
+.ds-consent-sheet__noti div { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ds-consent-sheet__noti b { font-size: 10.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-consent-sheet__noti span { font: var(--typography-micro); color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ds-consent-sheet__footer { padding: var(--spacing-x2-5) var(--spacing-x3) 0; display: flex; flex-direction: column; align-items: center; }
+.ds-consent-sheet__legal { font: var(--typography-caption); color: var(--color-text-tertiary); margin-bottom: var(--spacing-x2-5); }
+.ds-consent-sheet__accept.ds-button--primary { height: 50px; font-size: 16px; }
+.ds-consent-sheet__later { display: grid; place-items: center; height: 34px; margin: var(--spacing-x3) 0 var(--spacing-x8); font: var(--typography-body-small); color: var(--color-text-secondary); }
 /* components/crate-cell/crate-cell.md */
 .ds-crate-cell { position: relative; width: 72px; flex: none; display: flex; flex-direction: column; gap: var(--spacing-x1-5); }
 .ds-crate-cell > .art { width: 72px; height: 72px; border-radius: var(--radius-medium); }
@@ -361,8 +384,9 @@ body.embed { padding: 0; background: transparent; }
 .ds-feed-header__close { position: absolute; top: 8px; left: 12px; width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,.35); display: grid; place-items: center; font-size: 17px; color: #fff; }
 /* components/feed-track/feed-track.md · patterns/feed-media-surface.md */
 .ds-feed-track { position: relative; overflow: hidden; background: #000; }
-.ds-feed-track__bg { position: absolute; inset: -40px; filter: blur(28px); transform: scale(1.1); }
-.ds-feed-track__scrim { position: absolute; inset: 0; background: linear-gradient(transparent 0%, rgba(0,0,0,.4) 35%, rgba(0,0,0,.85) 75%); }
+/* 지면: 아트워크 블러 38 + 검정 45% 한 겹(푸시알림 기획 2026-11-12 「기본」 실측. 이전: 블러 28 + 아래로 짙어지는 그라데이션) */
+.ds-feed-track__bg { position: absolute; inset: -40px; filter: blur(38px); transform: scale(1.1); }
+.ds-feed-track__scrim { position: absolute; inset: 0; background: var(--color-scrim); }
 .ds-feed-track__body { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; }
 .ds-feed-track__center { margin: auto 0; }
 .ds-feed-track__stage { position: relative; z-index: 3; }   /* 아트워크 + 그 위에 붙는 오버레이(코치마크) */
@@ -499,10 +523,20 @@ body.embed { padding: 0; background: transparent; }
 .ds-popup--notice h2 { font: var(--typography-headline); }
 .ds-popup--notice p { margin: var(--spacing-x1-5) 0 var(--spacing-x5); line-height: 1.45; }
 .ds-popup--notice .ds-button--primary { height: 48px; font-size: 15px; }
+/* 광고성 동의형(푸시알림 기획 2026-11-12) — 마크 없음, 화면 좌우 20, 버튼 가로 두 칸(나중에 | 알림 받기) */
+.ds-popup--consent { width: calc(100% - 2 * var(--spacing-x5)); max-width: 353px; padding: var(--spacing-x5); gap: var(--spacing-x3-5); }
+.ds-popup__text { display: flex; flex-direction: column; gap: var(--spacing-x1-5); }
+.ds-popup--consent h2 { font: var(--typography-title2); line-height: 1.4; }
+.ds-popup--consent h2 em { font-style: normal; color: var(--color-brand); }
+.ds-popup--consent p { font: var(--typography-body-small); line-height: 1.66; margin: 0; }
+.ds-popup__row { width: 100%; display: flex; gap: var(--spacing-x2-5); }
+.ds-popup__row > * { flex: 1; display: grid; place-items: center; }
+.ds-popup__row .ds-popup__decline { margin: 0; font: var(--typography-body); color: var(--color-text-tertiary); }
+.ds-popup__row .ds-button--primary { height: 48px; font-size: 15px; }
 /* 딤 + 카드 층(PopupLayer) — 모션은 OS 시스템 대화상자 느낌을 따른다. 딤과 카드는 따로 움직인다
    iOS(UIAlertController): 딤 0.25s 페이드, 카드 1.2 → 1 축소 + 페이드 0.3s(감속, 튕김 없음). 닫힘: 층 전체 0.2s 페이드, 카드 크기는 그대로
    Android(기본 대화상자 창): 딤 0.2s 페이드, 카드 0.9 → 1 확대 + 페이드 0.2s 감속. 닫힘: 카드 1 → 0.9 + 페이드 0.15s 가속, 딤 같이 */
-.ds-popup-layer { display: grid; place-items: center; background: var(--color-scrim-strong); animation: ds-layer-in .25s ease-out both; }
+.ds-popup-layer { display: grid; place-items: center; background: var(--color-dim); animation: ds-layer-in .25s ease-out both; }
 .ds-popup-layer.is-ios > .ds-popup { animation: ds-pop-ios .3s cubic-bezier(.2,.9,.3,1) both; }
 .ds-popup-layer.is-ios.is-leaving { animation: ds-layer-out .2s ease-in forwards; }
 .ds-popup-layer.is-ios.is-leaving > .ds-popup { animation: none; }   /* 닫히는 중엔 등장 모션을 다시 돌리지 않는다 */
@@ -598,8 +632,9 @@ body.embed { padding: 0; background: transparent; }
 .ds-seg span { flex: 1; display: grid; place-items: center; border-radius: 7px; }
 .ds-seg .is-on { background: #fff; font-weight: 600; box-shadow: 0 3px 8px rgba(0,0,0,.12); }
 /* components/settings-row/settings-row.md */
-.ds-settings-row { height: 48px; padding: 0 var(--spacing-x5); display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }
+.ds-settings-row { height: 50px; padding: 0 var(--spacing-x5); display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }
 .ds-settings-row .ic { font-size: 13px; color: var(--color-border); }
+.ds-settings-row--value span { display: flex; align-items: center; gap: var(--spacing-x1-5); color: var(--color-text-tertiary); }
 .ds-settings-row.is-destructive { color: var(--color-destructive); }
 .ds-settings-toggle { padding: var(--spacing-x3) var(--spacing-x5); }
 .ds-settings-toggle > div { display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: var(--color-text-primary); }
@@ -673,6 +708,18 @@ body.embed { padding: 0; background: transparent; }
 .ds-field.is-compact .ds-field__box { height: 46px; padding: 0 var(--spacing-x3-5); border-radius: var(--radius-small); font: var(--typography-body); }
 .ds-field__box .is-placeholder { color: var(--color-text-tertiary); }
 .ds-field__caret { display: inline-block; width: 2px; height: 19px; background: var(--color-brand); margin-left: 1px; }
+/* components/toast/toast.md — 푸시알림 기획 Snackbar 실측(390 폭: 좌우 18, 안쪽 12·16) */
+.ds-toast { width: calc(100% - 36px); max-width: 357px; padding: var(--spacing-x3) var(--spacing-x4); border-radius: var(--radius-medium);
+  background: var(--color-toast-surface); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  display: flex; flex-direction: column; gap: var(--spacing-x1-5); color: var(--color-text-on-dark); animation: ds-toast-in .2s ease-out both; }
+.ds-toast b { font: var(--typography-callout); }
+.ds-toast span { font: var(--typography-caption); color: var(--color-text-on-dark-secondary); }
+.ds-toast.is-leaving { animation: ds-toast-out .3s ease-in forwards; }
+@keyframes ds-toast-in { from { opacity: 0; transform: translateY(6px); } }
+@keyframes ds-toast-out { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ds-toast { animation-name: ds-layer-in; } }
+/* 화면 안 자리: 탭바(아래 21, 높이 62) 위 8 */
+.ds-toast-slot { position: absolute; left: 0; right: 0; bottom: 91px; z-index: 96; display: flex; justify-content: center; pointer-events: none; }
 /* components/tooltip/tooltip.md */
 .ds-tooltip { display: inline-block; padding: var(--spacing-x2-5) var(--spacing-x3-5); border-radius: var(--radius-small); background: var(--color-text-primary); color: var(--color-text-on-dark);
   font: var(--typography-caption); line-height: 1.5; box-shadow: 0 6px 16px rgba(0,0,0,.18); animation: ds-tooltip 2.2s ease-out both; }

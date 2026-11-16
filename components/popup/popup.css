@@ -12,10 +12,20 @@
 .ds-popup--notice h2 { font: var(--typography-headline); }
 .ds-popup--notice p { margin: var(--spacing-x1-5) 0 var(--spacing-x5); line-height: 1.45; }
 .ds-popup--notice .ds-button--primary { height: 48px; font-size: 15px; }
+/* 광고성 동의형(푸시알림 기획 2026-11-12) — 마크 없음, 화면 좌우 20, 버튼 가로 두 칸(나중에 | 알림 받기) */
+.ds-popup--consent { width: calc(100% - 2 * var(--spacing-x5)); max-width: 353px; padding: var(--spacing-x5); gap: var(--spacing-x3-5); }
+.ds-popup__text { display: flex; flex-direction: column; gap: var(--spacing-x1-5); }
+.ds-popup--consent h2 { font: var(--typography-title2); line-height: 1.4; }
+.ds-popup--consent h2 em { font-style: normal; color: var(--color-brand); }
+.ds-popup--consent p { font: var(--typography-body-small); line-height: 1.66; margin: 0; }
+.ds-popup__row { width: 100%; display: flex; gap: var(--spacing-x2-5); }
+.ds-popup__row > * { flex: 1; display: grid; place-items: center; }
+.ds-popup__row .ds-popup__decline { margin: 0; font: var(--typography-body); color: var(--color-text-tertiary); }
+.ds-popup__row .ds-button--primary { height: 48px; font-size: 15px; }
 /* 딤 + 카드 층(PopupLayer) — 모션은 OS 시스템 대화상자 느낌을 따른다. 딤과 카드는 따로 움직인다
    iOS(UIAlertController): 딤 0.25s 페이드, 카드 1.2 → 1 축소 + 페이드 0.3s(감속, 튕김 없음). 닫힘: 층 전체 0.2s 페이드, 카드 크기는 그대로
    Android(기본 대화상자 창): 딤 0.2s 페이드, 카드 0.9 → 1 확대 + 페이드 0.2s 감속. 닫힘: 카드 1 → 0.9 + 페이드 0.15s 가속, 딤 같이 */
-.ds-popup-layer { display: grid; place-items: center; background: var(--color-scrim-strong); animation: ds-layer-in .25s ease-out both; }
+.ds-popup-layer { display: grid; place-items: center; background: var(--color-dim); animation: ds-layer-in .25s ease-out both; }
 .ds-popup-layer.is-ios > .ds-popup { animation: ds-pop-ios .3s cubic-bezier(.2,.9,.3,1) both; }
 .ds-popup-layer.is-ios.is-leaving { animation: ds-layer-out .2s ease-in forwards; }
 .ds-popup-layer.is-ios.is-leaving > .ds-popup { animation: none; }   /* 닫히는 중엔 등장 모션을 다시 돌리지 않는다 */
