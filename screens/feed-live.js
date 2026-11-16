@@ -1,36 +1,51 @@
 // 피드 프로토타입(Storybook 전용) — 피드 흐름을 한 화면에서 직접 해 본다.
 // - 코치마크(coach): 더블탭 → 좋아요 → 아무 곳 탭 → 위로 끌기 → 다음 곡. 끝나면 그냥 피드
 // - 피드: 위로 끌기 = 다음 곡, 아래로 끌기 = 이전 곡(휠도 같음), 더블탭·하트 = 좋아요, 모드 알약 = 따라가기/무작위, 검색 → 최근 검색어 탭 → 검색 결과(알약 ✕ = 해제),
-//   ••• = 트랙 상세(바깥 탭 = 닫기), 이번 주 특집(weekly) 5곡 넘기면 알림 권유 팝업, 새로운 기능(whatsNew) 시트
+//   ••• = 트랙 상세(바깥 탭 = 닫기), 새로운 기능(whatsNew) 시트
+// - 앞 구간(lead): curation 이번 주 특집 n/5 → 다 보면 야간 동의 팝업 · pick 이번 주 추천 n/5 · release 좋아요한 아티스트의 신곡 n/3 → 다 보면 평소 피드
+// - 광고성 동의(푸시알림 기획): consent = 첫 실행 팝업부터(알림 받기 → 수신동의 토스트, 나중에 → 닫기만), likeSheet = 좋아요하고 다음 곡으로 넘기면 신곡 알림 시트(한 번)
+//   동의 팝업은 바깥(딤) 탭으로 닫히지 않는다. 결과 토스트는 3초 뒤 페이드 아웃
 // 끌 때 화면이 손가락을 따라오고(다음 곡이 아래에서 같이 올라옴) 코치마크는 끈 만큼 흐려진다. 20% 넘게 끌거나 빠르게 튕기면 넘어가고, 아니면 제자리로.
 // 처음부터 다시: Controls 값을 바꾸거나 스토리를 다시 연다. onTab: 탭바를 누르면 부른다(온보딩 프로토타입이 게스트 분기에 쓴다)
-import { FeedCoachScreen, FeedScreen, FeedSearchScreen, TrackDetailScreen, FeedPopupScreen, WhatsNewScreen } from './feed.js'
+import { FeedCoachScreen, FeedScreen, FeedSearchScreen, TrackDetailScreen, FeedConsentScreen, FeedLikeSheetScreen, WhatsNewScreen } from './feed.js'
 import { T } from './data.js'
 
 const TRACKS = [T.billann, T.seasons, T.loveya, T.bigvoid, T.wss]
-const WEEKLY = [T.seasons, T.billann, T.wss, T.loveya, T.truth]
+const LEAD = {
+  curation: { label: '이번 주 특집', chip: '인디', tracks: [T.seasons, T.billann, T.wss, T.loveya, T.truth] },
+  pick: { label: '이번 주 추천', chip: '록', tracks: [T.ohio, T.farewell, T.bigvoid, T.shanty, T.comedown] },
+  release: { label: '좋아요한 아티스트의 신곡', chip: '록', tracks: [T.ohio, T.tomboy, T.loveya] },
+}
 const FOUND = { '잔나비': T.farewell, 'wave to earth': T.seasons, '혁오': T.ohio, '실리카겔': T.bigvoid }
 const CHIP = { '잔나비': '록', 'wave to earth': '인디', '혁오': '록', '실리카겔': '록' }
 
-export function FeedLive({ coach = true, weekly = false, whatsNew = false, os = 'ios', speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
+export function FeedLive({ coach = true, lead = 'none', consent = false, likeSheet = false, legal = true, whatsNew = false, os = 'ios', speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
   const el = document.createElement('div')
   el.className = 'sb-live is-feed'
   let step = coach ? 'double-tap' : 'feed', i = 0, hyped = false, since = 0, lastUp = 0, busy = false, drag = null
-  let overlay = whatsNew ? 'whats-new' : '', mode = 'following', query = '', terms = ['잔나비', 'wave to earth', '혁오'], week = weekly ? 1 : 0
+  const L = LEAD[lead]
+  let overlay = consent ? 'consent' : whatsNew ? 'whats-new' : '', mode = 'following', query = '', terms = ['잔나비', 'wave to earth', '혁오'], week = L ? 1 : 0
+  let toast = '', toastLeaving = false, liked = null, sheetDone = !likeSheet
+  const showToast = kind => {
+    toast = kind; toastLeaving = false; const mine = kind + performance.now()
+    showToast.id = mine
+    setTimeout(() => { if (showToast.id !== mine) return; toastLeaving = true; draw(); setTimeout(() => { if (showToast.id !== mine) return; toast = ''; draw() }, 300) }, 3000)
+  }
   const k = 1 / speed
-  const cur = () => week ? WEEKLY[week - 1] : query ? FOUND[query] : TRACKS[i % TRACKS.length]
-  const nextTrack = () => week ? WEEKLY[week % WEEKLY.length] : TRACKS[(i + 1) % TRACKS.length]
+  const cur = () => week ? L.tracks[week - 1] : query ? FOUND[query] : TRACKS[i % TRACKS.length]
+  const nextTrack = () => week ? L.tracks[week % L.tracks.length] : TRACKS[(i + 1) % TRACKS.length]
   const hasPrev = () => step === 'feed' && (week ? week > 1 : i > 0)   // 첫 곡·코치마크 중엔 위에 곡이 없다
-  const prevTrack = () => week ? WEEKLY[week - 2] : TRACKS[(i - 1) % TRACKS.length]
-  const chip = () => week ? '인디' : query ? CHIP[query] : mode === 'following' ? '비슷한 곡: Blame' : ''
+  const prevTrack = () => week ? L.tracks[week - 2] : TRACKS[(i - 1) % TRACKS.length]
+  const chip = () => week ? L.chip : query ? CHIP[query] : mode === 'following' ? '비슷한 곡: Blame' : ''
   const draw = (burst = false) => {
     const track = cur()
     el.innerHTML = overlay === 'search' ? FeedSearchScreen({ track, text: '실리카겔', terms })
       : overlay === 'detail' ? TrackDetailScreen({ track, detail: { genre: chip() || '인디', released: '2024.05.10' } })
-      : overlay === 'popup' || overlay === 'popup-leaving' ? FeedPopupScreen({ track, os, leaving: overlay === 'popup-leaving', title: '이번 주 특집, 여기까지예요', message: '방금 보신 곡들은 저희가 직접 판 거예요. 매주 새로 파고 있는데, 다음 편 올라오면 알려드릴까요?' })
+      : /^(consent|night)/.test(overlay) ? FeedConsentScreen({ track, os, kind: overlay.startsWith('night') ? 'night' : 'first', artist: '혁오', leaving: overlay.endsWith('-leaving') })
+      : overlay === 'sheet' ? FeedLikeSheetScreen({ track, artist: liked.artist, cover: liked.cover, legal })
       : overlay === 'whats-new' ? WhatsNewScreen({ track })
       : step === 'feed'
-      ? FeedScreen({ track, chip: chip(), hyped, burst, speed, hold, mode, query, context: week ? `이번 주 특집 ${week}/5` : '' })
+      ? FeedScreen({ track, chip: chip(), hyped, burst, speed, hold, mode, query, context: week ? `${L.label} ${week}/${L.tracks.length}` : '', toast, toastLeaving })
       : FeedCoachScreen({ track, gesture: step, hyped, handOffset, captionBelow, speed, hold, peek, once: true })
     since = performance.now()
   }
@@ -46,10 +61,21 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, os = 
       return true
     }
     if (overlay === 'detail') { if (!hit('.sheet')) { overlay = ''; draw() } return true }
-    if (overlay === 'popup-leaving') return true
-    if (overlay === 'popup' && (hit('.ds-button') || hit('.ds-popup__decline') || !hit('.ds-popup'))) {   // 바깥(딤) 탭 = 나중에
-      overlay = 'popup-leaving'; draw(); setTimeout(() => { overlay = ''; week = 0; i++; draw() }, os === 'android' ? 150 : 200); return true }
-    if (overlay === 'popup') return true
+    if (/-leaving$/.test(overlay)) return true
+    // 광고성 동의 팝업: 버튼만 받는다(딤 탭 무시). 첫 실행 「나중에」 = 닫기만(7일 뒤 다시), 야간 「아니요」 = 야간 수신거부 토스트
+    if (/^(consent|night)$/.test(overlay)) {
+      const yes = hit('.ds-button'), no = hit('.ds-popup__decline')
+      if (!yes && !no) return true
+      const night = overlay === 'night'
+      overlay += '-leaving'; draw()
+      setTimeout(() => { overlay = ''; if (night) { week = 0; i++ }; if (yes || night) showToast((night ? 'night-' : '') + (yes ? 'on' : 'off')); draw() }, os === 'android' ? 150 : 200)
+      return true
+    }
+    if (overlay === 'sheet') {
+      if (hit('.ds-consent-sheet__accept')) { overlay = ''; showToast('on'); draw() }
+      else if (hit('.ds-consent-sheet__later') || !hit('.sheet')) { overlay = ''; draw() }
+      return true
+    }
     if (overlay === 'whats-new') { if (hit('.ds-button') || hit('.ic-xmark')) { overlay = ''; week = 0; i++; draw() } return true }
     if (step !== 'feed') return false
     if (hit('.ds-feed-header__search')) { overlay = 'search'; draw(); return true }
@@ -57,6 +83,7 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, os = 
     if (hit('.ds-pill--mode') || hit('.ds-feed-header__btn')) { mode = mode === 'following' ? 'random' : 'following'; draw(); return true }
     if (hit('.ds-feed-track__act:last-child')) { overlay = 'detail'; draw(); return true }
     if (hit('.ds-feed-track__hype')) { hyped = !hyped; draw(hyped); return true }
+    if (hit('.ds-toast')) return true
     return false
   }
 
@@ -104,8 +131,11 @@ export function FeedLive({ coach = true, weekly = false, whatsNew = false, os = 
     setTimeout(() => {
       busy = false
       if (dir > 0) {
+        // 좋아요한 곡을 넘긴 직후 = 신곡 알림 시트(한 번). 앞 구간 끝: 특집이면 야간 동의, 나머지는 평소 피드
+        const was = cur(), hypedWas = hyped && step === 'feed'   // 코치마크 좋아요는 세지 않는다
         step = 'feed'; hyped = false
-        if (week) { if (week === 5) { overlay = 'popup'; week = 5 } else week++ } else i++
+        if (week) { if (week === L.tracks.length) { if (lead === 'curation') overlay = 'night'; else { week = 0; i++ } } else week++ } else i++
+        if (!overlay && hypedWas && !sheetDone) { sheetDone = true; liked = was; overlay = 'sheet' }
         draw()
       } else if (dir < 0) { hyped = false; if (week) week--; else i--; draw() }
       else back(d)

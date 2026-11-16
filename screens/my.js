@@ -22,20 +22,35 @@ import { RequestRow } from '../components/request-row/request-row.js'
 import { ArtistRequestForm } from '../components/artist-request-form/artist-request-form.js'
 import { Keyboard } from '../components/keyboard/keyboard.js'
 import { UserRow } from '../components/user-row/user-row.js'
+import { toastLayer } from './feed.js'
 
 const hr = '<div class="hr" style="margin:8px 20px"></div>'
 const crate = (days, mode = 'default', selected = []) => days.map(d => `<div style="margin-bottom:20px">${CrateDayRow({ ...d, mode, selected })}</div>`).join('')
 
+// 푸시알림 기획(2026-11-12) 배치: 제목 title1(이전 34 large title)·위 64, 닉네임 줄 위아래 20, 카드 바로 아래 구분선(위아래 12), 행 50, 「알림」 추가
 export function MyPageScreen({ nickname = 'digger_lover', type = '🔁 충성파', following = true, scroll = 0 } = {}) {
   const rows = labels => labels.map(l => SettingsRow({ label: l })).join('')
-  return Device({ time: '10:21', tab: 'my', children: Scroll({ top: 100, scroll, children: `
-    <h1 class="large-title" style="padding:0 20px">마이페이지</h1>
-    <div style="display:flex;justify-content:center;align-items:center;gap:6px;padding:32px 0 24px;font:var(--typography-headline)">${nickname} <i class="ic ic-pencil" style="font-size:13px;color:var(--color-text-tertiary)"></i></div>
-    <div style="margin-bottom:12px">${SettingsRow({ variant: 'card', label: '디깅 프로필', caption: type })}</div>${hr}
-    ${SettingsRow({ variant: 'toggle', label: '좋아요한 곡 따라가기', caption: '켜면 좋아요한 곡과 소리가 비슷한 곡이 나오고, 끄면 조건 없이 아무 곡이나 나와요.', on: following })}
-    ${rows(['추천 기준 곡', '아티스트 요청', '차단한 유저'])}${hr}${rows(['새로운 기능', 'dignify 인스타그램'])}${hr}${rows(['이용약관', '개인정보처리방침'])}${hr}
+  const line = '<div class="hr" style="margin:12px 20px"></div>'
+  return Device({ time: '10:21', tab: 'my', children: Scroll({ top: 64, scroll, children: `
+    <h1 style="padding:20px;font:var(--typography-title1);color:var(--color-text-primary)">마이페이지</h1>
+    <div style="display:flex;justify-content:center;align-items:center;gap:6px;padding:20px 0;font:var(--typography-headline)">${nickname} <i class="ic ic-pencil" style="font-size:13px;color:var(--color-text-tertiary)"></i></div>
+    ${SettingsRow({ variant: 'card', label: '디깅 프로필', caption: type })}${line}
+    ${SettingsRow({ variant: 'toggle', label: '좋아요한 곡 따라가기', caption: '좋아요한 곡과 비슷한 곡이 나와요.', on: following })}
+    ${rows(['추천 기준 곡', '아티스트 요청', '알림', '차단한 유저'])}${line}${rows(['새로운 기능', 'dignify 인스타그램'])}${line}${rows(['이용약관', '개인정보처리방침'])}${line}
     ${SettingsRow({ label: '로그아웃' })}${SettingsRow({ variant: 'destructive', label: '계정 삭제' })}
     <p style="text-align:center;padding:24px 0 120px;font:var(--typography-caption);color:var(--color-border)">v1.2.1</p>` }) })
+}
+
+// 마이 › 알림(푸시알림 기획 MyPage_alert_ad_on·off). 광고성 수신 동의(서버 값)·야간 동의·기기 알림 권한을 따로 보여 준다
+// permission: on | off | unset(설정 전 — 앞 흐름에서 OS 권한 팝업이 안 떴을 때). toast: Toast kind
+export const PERMISSION = { on: '켜짐', off: '꺼짐', unset: '설정 전' }
+export function NotificationSettingsScreen({ ad = true, night = true, permission = 'on', toast = '', toastLeaving = false } = {}) {
+  return Device({ time: '4:40', battery: 86, tab: 'my', children: NavLayer(NavBar({ title: '알림' })) + Scroll({ top: 114, children: `
+    ${SettingsRow({ variant: 'toggle', label: '광고성 정보 알림 수신', caption: '좋아요한 아티스트의 신곡, 주간 추천, 이번 주 특집 알림', on: ad })}
+    ${SettingsRow({ variant: 'toggle', label: '야간 광고성 정보 알림 수신', caption: '아티스트 신곡, 특집 알림을 보내드려요<br>(오전 8:00 ~ 오후 9:00)', on: ad && night })}
+    <div class="hr" style="margin:12px 20px"></div>
+    ${SettingsRow({ variant: 'value', label: '기기 알림 권한', value: PERMISSION[permission] })}` }),
+    overlay: toastLayer(toast, toastLeaving) })
 }
 
 export function DiggingProfileScreen({ range = 1, locked = false, type = {}, stats = {}, genres = {}, artists = {}, myPick = {}, crateDays = [], scroll = 0 } = {}) {

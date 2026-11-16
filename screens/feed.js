@@ -1,4 +1,5 @@
 // 1. 피드 흐름 화면 — 기준: Features/Feed/FeedView.swift · TrackDetailView · PushOptInPopup · WhatsNewView · FeedCoachGesture
+// 광고성 동의(첫 실행·좋아요 시점·야간)와 결과 토스트는 푸시알림 기획(2026-11-12) 시안 — 앱 1.3.2 초안을 대신한다
 import { Device, Sheet } from './device.js'
 import { FeedTrack } from '../components/feed-track/feed-track.js'
 import { FeedHeader } from '../components/feed-header/feed-header.js'
@@ -10,6 +11,11 @@ import { PopupLayer } from '../components/popup/popup.js'
 import { CoachGesture } from '../components/coach-gesture/coach-gesture.js'
 import { ReleaseNotes } from '../components/release-notes/release-notes.js'
 import { Button } from '../components/button/button.js'
+import { ConsentSheet } from '../components/consent-sheet/consent-sheet.js'
+import { Toast } from '../components/toast/toast.js'
+
+// 결과 토스트 자리(탭바 위 8). toast: '' | Toast kind, toastLeaving: 페이드 아웃 중
+export const toastLayer = (toast, leaving = false, date = '2026-11-12') => toast ? `<div class="ds-toast-slot">${Toast({ kind: toast, date, leaving })}</div>` : ''
 
 // 피드 한 장: 아트워크 지면 + 위 오버레이. 다른 피드 화면이 이 위에 무언가를 얹는다.
 // lift: 제목·아티스트·좋아요 줄을 앱(safe+72)보다 더 올리는 양 — 탭바와 간격 (1.1 검토 중)
@@ -18,8 +24,9 @@ const feedLayer = ({ track, chip, hyped, burst, speed, hold, overlay, mode, cont
   `<div style="position:absolute;inset:0;--peek:${peek}px">${FeedTrack({ ...track, chip, hyped, burst, speed, hold, overlay, height: 852, top: 118, bottom: 106 + lift })}</div>
    <div style="position:absolute;top:54px;inset-inline:0;z-index:10">${FeedHeader({ mode, context, query, pick })}</div>`
 
-export function FeedScreen({ track, chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, hold = 0.3, mode = 'following', context = '', query = '', time = '10:28', battery = 97, lift = LIFT } = {}) {
-  return Device({ surface: 'media', tab: 'feed', time, battery, children: feedLayer({ track, chip, hyped, burst, speed, hold, mode, context, query, lift }) })
+// context: 앞 구간 배지 — 「이번 주 특집 n/5」 · 「이번 주 추천 n/m」 · 「좋아요한 아티스트의 신곡 n/m」(m 최대 10)
+export function FeedScreen({ track, chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, hold = 0.3, mode = 'following', context = '', query = '', time = '10:28', battery = 97, lift = LIFT, toast = '', toastLeaving = false } = {}) {
+  return Device({ surface: 'media', tab: 'feed', time, battery, children: feedLayer({ track, chip, hyped, burst, speed, hold, mode, context, query, lift }), overlay: toastLayer(toast, toastLeaving) })
 }
 
 export function FeedSearchScreen({ track, text = '실리카겔', terms = ['잔나비', 'wave to earth', '혁오'], keyboard = true } = {}) {
@@ -34,9 +41,21 @@ export function TrackDetailScreen({ track, detail = {} } = {}) {
     overlay: Sheet({ children: TrackDetail({ ...track, album: track.title, ...detail }) }) })
 }
 
-export function FeedPopupScreen({ track, title, message, os = 'ios', leaving = false } = {}) {
-  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: '인디', mode: 'following', context: '이번 주 특집 5/5' }),
-    overlay: PopupLayer({ os, leaving, title, message }) })
+// 광고성 동의 팝업(Popup row). kind: first(첫 실행 P02 — 좋아요한 곡이 있는 유저만, 가장 최근 좋아요의 아티스트) | night(이번 주 특집 끝 P14)
+export const CONSENT = {
+  first: a => ({ title: `좋아하는 <em>${a}</em>의 신곡,<br>바로 알려드릴까요?`, message: "'알림 받기'를 누르면 광고성 정보 수신에 동의해요.", decline: '나중에' }),
+  night: () => ({ title: '밤에도 아티스트 소식을 알려드릴까요?', message: "'알림 받기'를 누르면 야간(오전 8:00 ~ 오후9:00)<br>광고성 정보 수신에 동의해요.", decline: '아니요' }),
+}
+export function FeedConsentScreen({ track, kind = 'first', artist = '혁오', os = 'ios', leaving = false } = {}) {
+  const context = kind === 'night' ? '이번 주 특집 5/5' : ''
+  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: kind === 'night' ? '인디' : '비슷한 곡: Blame', mode: 'following', context }),
+    overlay: PopupLayer({ os, leaving, row: true, ...CONSENT[kind](artist) }) })
+}
+
+// 좋아요 시점 신곡 알림 제안(P05) — 좋아요하고 다음 곡으로 넘어간 직후. artist·cover = 방금 좋아요한 곡
+export function FeedLikeSheetScreen({ track, artist = '혁오', cover = 'a-ohio', legal = true } = {}) {
+  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: '비슷한 곡: TOMBOY', mode: 'following' }),
+    overlay: Sheet({ kind: 'bottom', bottom: 0, children: ConsentSheet({ artist, cover, legal }) }) })
 }
 
 // 첫 진입 온보딩(feed_coachmark 1.0): 따라 해야 넘어간다. double-tap → (더블탭) → hyped → (터치) → swipe-up → (스와이프) → 피드
