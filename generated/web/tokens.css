@@ -7,8 +7,10 @@
   --color-white-75: #FFFFFFBF;
   --color-white-82: #FFFFFFD1;
   --color-white-100: #FFFFFF;
+  --color-black-35: #00000059;
   --color-black-45: #00000073;
   --color-black-55: #0000008C;
+  --color-carbon-85: #151719D9;
   --color-gray-100: #F3F4F6;
   --color-gray-200: #E5E7EB;
   --color-gray-300: #D1D5DB;
@@ -48,10 +50,13 @@
   --color-stroke-on-dark: var(--color-white-20);
   --color-scrim: var(--color-black-45);
   --color-scrim-strong: var(--color-black-55);
+  --color-dim: var(--color-black-35);
+  --color-toast-surface: var(--color-carbon-85);
   --typography-text-2xs-regular: 400 10.5px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-text-xs-regular: 400 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-text-xs-semibold: 600 12px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-text-sm-semibold: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
+  --typography-text-md-regular: 400 14px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-text-md-medium: 500 14px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-text-base-regular: 400 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
   --typography-text-base-medium: 500 15px/1.4 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", sans-serif;
@@ -65,6 +70,7 @@
   --typography-headline: var(--typography-text-lg-semibold);
   --typography-body: var(--typography-text-base-regular);
   --typography-body-medium: var(--typography-text-base-medium);
+  --typography-body-small: var(--typography-text-md-regular);
   --typography-callout: var(--typography-text-md-medium);
   --typography-label: var(--typography-text-sm-semibold);
   --typography-caption: var(--typography-text-xs-regular);

@@ -9,8 +9,10 @@ enum DSColor {
     static let white75 = Color(hex: 0xFFFFFF, alpha: 0.75)
     static let white82 = Color(hex: 0xFFFFFF, alpha: 0.82)
     static let white100 = Color(hex: 0xFFFFFF)
+    static let black35 = Color(hex: 0x000000, alpha: 0.35)
     static let black45 = Color(hex: 0x000000, alpha: 0.45)
     static let black55 = Color(hex: 0x000000, alpha: 0.55)
+    static let carbon85 = Color(hex: 0x151719, alpha: 0.85)
     static let gray100 = Color(hex: 0xF3F4F6)
     static let gray200 = Color(hex: 0xE5E7EB)
     static let gray300 = Color(hex: 0xD1D5DB)
@@ -69,6 +71,10 @@ enum DSColor {
     static let scrim = black45
     /// 아트워크 위 배지·남은 곡 수
     static let scrimStrong = black55
+    /// 팝업·시트 뒤 딤(푸시알림 기획: 팝업 55% → 35%)
+    static let dim = black35
+    /// 토스트 지면 — 피드·라이트 지면 공통
+    static let toastSurface = carbon85
 }
 
 enum DSTypography {
@@ -76,6 +82,7 @@ enum DSTypography {
     static let textXsRegular = Font.system(size: 12, weight: .regular)
     static let textXsSemibold = Font.system(size: 12, weight: .semibold)
     static let textSmSemibold = Font.system(size: 13, weight: .semibold)
+    static let textMdRegular = Font.system(size: 14, weight: .regular)
     static let textMdMedium = Font.system(size: 14, weight: .medium)
     static let textBaseRegular = Font.system(size: 15, weight: .regular)
     static let textBaseMedium = Font.system(size: 15, weight: .medium)
@@ -89,6 +96,8 @@ enum DSTypography {
     static let headline = textLgSemibold
     static let body = textBaseRegular
     static let bodyMedium = textBaseMedium
+    /// 팝업·시트 설명, 보조 텍스트 버튼(푸시알림 기획)
+    static let bodySmall = textMdRegular
     /// 보조 버튼·칩·"전체 보기" 링크
     static let callout = textMdMedium
     /// 날짜 헤더·섹션 라벨·배지

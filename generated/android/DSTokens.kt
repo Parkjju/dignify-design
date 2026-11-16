@@ -15,8 +15,10 @@ object DSColor {
     val white75 = Color(0xBFFFFFFF)
     val white82 = Color(0xD1FFFFFF)
     val white100 = Color(0xFFFFFFFF)
+    val black35 = Color(0x59000000)
     val black45 = Color(0x73000000)
     val black55 = Color(0x8C000000)
+    val carbon85 = Color(0xD9151719)
     val gray100 = Color(0xFFF3F4F6)
     val gray200 = Color(0xFFE5E7EB)
     val gray300 = Color(0xFFD1D5DB)
@@ -75,6 +77,10 @@ object DSColor {
     val scrim = black45
     /** 아트워크 위 배지·남은 곡 수 */
     val scrimStrong = black55
+    /** 팝업·시트 뒤 딤(푸시알림 기획: 팝업 55% → 35%) */
+    val dim = black35
+    /** 토스트 지면 — 피드·라이트 지면 공통 */
+    val toastSurface = carbon85
 }
 
 object DSTypography {
@@ -82,6 +88,7 @@ object DSTypography {
     val textXsRegular = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.Normal)
     val textXsSemibold = TextStyle(fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
     val textSmSemibold = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
+    val textMdRegular = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Normal)
     val textMdMedium = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium)
     val textBaseRegular = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Normal)
     val textBaseMedium = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Medium)
@@ -95,6 +102,8 @@ object DSTypography {
     val headline = textLgSemibold
     val body = textBaseRegular
     val bodyMedium = textBaseMedium
+    /** 팝업·시트 설명, 보조 텍스트 버튼(푸시알림 기획) */
+    val bodySmall = textMdRegular
     /** 보조 버튼·칩·"전체 보기" 링크 */
     val callout = textMdMedium
     /** 날짜 헤더·섹션 라벨·배지 */

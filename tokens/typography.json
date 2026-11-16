@@ -9,7 +9,10 @@
         "semibold": { "$value": { "fontSize": 12, "fontWeight": 600 } }
       },
       "sm": { "semibold": { "$value": { "fontSize": 13, "fontWeight": 600 } } },
-      "md": { "medium": { "$value": { "fontSize": 14, "fontWeight": 500 } } },
+      "md": {
+        "regular": { "$value": { "fontSize": 14, "fontWeight": 400 } },
+        "medium": { "$value": { "fontSize": 14, "fontWeight": 500 } }
+      },
       "base": {
         "regular": { "$value": { "fontSize": 15, "fontWeight": 400 } },
         "medium": { "$value": { "fontSize": 15, "fontWeight": 500 } }
@@ -26,6 +29,7 @@
     "headline": { "$value": "{typography.text.lg.semibold}" },
     "body": { "$value": "{typography.text.base.regular}" },
     "bodyMedium": { "$value": "{typography.text.base.medium}" },
+    "bodySmall": { "$value": "{typography.text.md.regular}", "$description": "팝업·시트 설명, 보조 텍스트 버튼(푸시알림 기획)" },
     "callout": { "$value": "{typography.text.md.medium}", "$description": "보조 버튼·칩·\"전체 보기\" 링크" },
     "label": { "$value": "{typography.text.sm.semibold}", "$description": "날짜 헤더·섹션 라벨·배지" },
     "caption": { "$value": "{typography.text.xs.regular}" },
