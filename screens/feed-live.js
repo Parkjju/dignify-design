@@ -5,6 +5,8 @@
 // - 앞 구간(lead): curation 이번 주 특집 n/5 → 다 보면 야간 동의 팝업 · pick 이번 주 추천 n/5 · release 좋아요한 아티스트의 신곡 n/3 → 다 보면 평소 피드
 // - 광고성 동의(푸시알림 기획): consent = 첫 실행 팝업부터(알림 받기 → 수신동의 토스트, 나중에 → 닫기만), likeSheet = 좋아요하고 다음 곡으로 넘기면 신곡 알림 시트(한 번)
 //   동의 팝업은 바깥(딤) 탭으로 닫히지 않는다. 결과 토스트는 3초 뒤 페이드 아웃
+// - ads: 광고성 동의 상태 { ad, night(undefined = 미응답), permission: on|off|unset } — 넘기면 이 객체를 직접 고친다(광고성 알림 프로토타입이 마이 › 알림과 나눠 쓴다)
+//   넘기면 조건을 본다: 좋아요 시트 = 기기 권한 설정 전, 야간 팝업 = 동의 + 권한 켜짐 + 야간 미응답. 「알림 받기」 + 권한 설정 전 = OS 권한 팝업 → 토스트
 // 끌 때 화면이 손가락을 따라오고(다음 곡이 아래에서 같이 올라옴) 코치마크는 끈 만큼 흐려진다. 20% 넘게 끌거나 빠르게 튕기면 넘어가고, 아니면 제자리로.
 // 처음부터 다시: Controls 값을 바꾸거나 스토리를 다시 연다. onTab: 탭바를 누르면 부른다(온보딩 프로토타입이 게스트 분기에 쓴다)
 import { FeedCoachScreen, FeedScreen, FeedSearchScreen, TrackDetailScreen, FeedConsentScreen, FeedLikeSheetScreen, WhatsNewScreen } from './feed.js'
@@ -19,13 +21,15 @@ const LEAD = {
 const FOUND = { '잔나비': T.farewell, 'wave to earth': T.seasons, '혁오': T.ohio, '실리카겔': T.bigvoid }
 const CHIP = { '잔나비': '록', 'wave to earth': '인디', '혁오': '록', '실리카겔': '록' }
 
-export function FeedLive({ coach = true, lead = 'none', consent = false, likeSheet = false, legal = true, whatsNew = false, os = 'ios', speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
+export function FeedLive({ coach = true, lead = 'none', consent = false, likeSheet = false, legal = true, ads = null, whatsNew = false, os = 'ios', speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
   const el = document.createElement('div')
   el.className = 'sb-live is-feed'
   let step = coach ? 'double-tap' : 'feed', i = 0, hyped = false, since = 0, lastUp = 0, busy = false, drag = null
   const L = LEAD[lead]
   let overlay = consent ? 'consent' : whatsNew ? 'whats-new' : '', mode = 'following', query = '', terms = ['잔나비', 'wave to earth', '혁오'], week = L ? 1 : 0
-  let toast = '', toastLeaving = false, liked = null, sheetDone = !likeSheet
+  let toast = '', toastLeaving = false, liked = null, sheetDone = !likeSheet, afterSystem = ''
+  // 「알림 받기」 뒤: 기기 권한이 설정 전이면 OS 권한 팝업을 먼저, 아니면 바로 토스트
+  const accepted = kind => { if (ads && kind === 'on' && ads.permission === 'unset') { afterSystem = kind; overlay = 'system' } else showToast(kind) }
   const showToast = kind => {
     toast = kind; toastLeaving = false; const mine = kind + performance.now()
     showToast.id = mine
@@ -43,6 +47,7 @@ export function FeedLive({ coach = true, lead = 'none', consent = false, likeShe
       : overlay === 'detail' ? TrackDetailScreen({ track, detail: { genre: chip() || '인디', released: '2024.05.10' } })
       : /^(consent|night)/.test(overlay) ? FeedConsentScreen({ track, os, kind: overlay.startsWith('night') ? 'night' : 'first', artist: '혁오', leaving: overlay.endsWith('-leaving') })
       : overlay === 'sheet' ? FeedLikeSheetScreen({ track, artist: liked.artist, cover: liked.cover, legal })
+      : overlay === 'system' ? FeedScreen({ track, chip: chip(), mode, context: week ? `${L.label} ${week}/${L.tracks.length}` : '', system: true })
       : overlay === 'whats-new' ? WhatsNewScreen({ track })
       : step === 'feed'
       ? FeedScreen({ track, chip: chip(), hyped, burst, speed, hold, mode, query, context: week ? `${L.label} ${week}/${L.tracks.length}` : '', toast, toastLeaving })
@@ -62,17 +67,23 @@ export function FeedLive({ coach = true, lead = 'none', consent = false, likeShe
     }
     if (overlay === 'detail') { if (!hit('.sheet')) { overlay = ''; draw() } return true }
     if (/-leaving$/.test(overlay)) return true
+    if (overlay === 'system') {   // OS 권한 팝업 — 고르면 결과 토스트
+      const allow = hit('.ds-system-alert__allow'), deny = hit('.ds-system-alert__deny')
+      if (allow || deny) { ads.permission = allow ? 'on' : 'off'; overlay = ''; showToast(afterSystem); draw() }
+      return true
+    }
     // 광고성 동의 팝업: 버튼만 받는다(딤 탭 무시). 첫 실행 「나중에」 = 닫기만(7일 뒤 다시), 야간 「아니요」 = 야간 수신거부 토스트
     if (/^(consent|night)$/.test(overlay)) {
       const yes = hit('.ds-button'), no = hit('.ds-popup__decline')
       if (!yes && !no) return true
       const night = overlay === 'night'
       overlay += '-leaving'; draw()
-      setTimeout(() => { overlay = ''; if (night) { week = 0; i++ }; if (yes || night) showToast((night ? 'night-' : '') + (yes ? 'on' : 'off')); draw() }, os === 'android' ? 150 : 200)
+      if (ads) { if (night) ads.night = !!yes; else if (yes) ads.ad = true }
+      setTimeout(() => { overlay = ''; if (night) { week = 0; i++ }; if (yes || night) accepted((night ? 'night-' : '') + (yes ? 'on' : 'off')); draw() }, os === 'android' ? 150 : 200)
       return true
     }
     if (overlay === 'sheet') {
-      if (hit('.ds-consent-sheet__accept')) { overlay = ''; showToast('on'); draw() }
+      if (hit('.ds-consent-sheet__accept')) { overlay = ''; if (ads) ads.ad = true; accepted('on'); draw() }
       else if (hit('.ds-consent-sheet__later') || !hit('.sheet')) { overlay = ''; draw() }
       return true
     }
@@ -134,8 +145,9 @@ export function FeedLive({ coach = true, lead = 'none', consent = false, likeShe
         // 좋아요한 곡을 넘긴 직후 = 신곡 알림 시트(한 번). 앞 구간 끝: 특집이면 야간 동의, 나머지는 평소 피드
         const was = cur(), hypedWas = hyped && step === 'feed'   // 코치마크 좋아요는 세지 않는다
         step = 'feed'; hyped = false
-        if (week) { if (week === L.tracks.length) { if (lead === 'curation') overlay = 'night'; else { week = 0; i++ } } else week++ } else i++
-        if (!overlay && hypedWas && !sheetDone) { sheetDone = true; liked = was; overlay = 'sheet' }
+        const askNight = !ads || (ads.ad && ads.permission === 'on' && ads.night === undefined)
+        if (week) { if (week === L.tracks.length) { if (lead === 'curation' && askNight) overlay = 'night'; else { week = 0; i++ } } else week++ } else i++
+        if (!overlay && hypedWas && !sheetDone && (!ads || ads.permission === 'unset')) { sheetDone = true; liked = was; overlay = 'sheet' }
         draw()
       } else if (dir < 0) { hyped = false; if (week) week--; else i--; draw() }
       else back(d)

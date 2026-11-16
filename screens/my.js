@@ -23,6 +23,7 @@ import { ArtistRequestForm } from '../components/artist-request-form/artist-requ
 import { Keyboard } from '../components/keyboard/keyboard.js'
 import { UserRow } from '../components/user-row/user-row.js'
 import { toastLayer } from './feed.js'
+import { SystemAlert } from '../components/system-alert/system-alert.js'
 
 const hr = '<div class="hr" style="margin:8px 20px"></div>'
 const crate = (days, mode = 'default', selected = []) => days.map(d => `<div style="margin-bottom:20px">${CrateDayRow({ ...d, mode, selected })}</div>`).join('')
@@ -44,13 +45,13 @@ export function MyPageScreen({ nickname = 'digger_lover', type = '🔁 충성파
 // 마이 › 알림(푸시알림 기획 MyPage_alert_ad_on·off). 광고성 수신 동의(서버 값)·야간 동의·기기 알림 권한을 따로 보여 준다
 // permission: on | off | unset(설정 전 — 앞 흐름에서 OS 권한 팝업이 안 떴을 때). toast: Toast kind
 export const PERMISSION = { on: '켜짐', off: '꺼짐', unset: '설정 전' }
-export function NotificationSettingsScreen({ ad = true, night = true, permission = 'on', toast = '', toastLeaving = false } = {}) {
+export function NotificationSettingsScreen({ ad = true, night = true, permission = 'on', toast = '', toastLeaving = false, system = false } = {}) {
   return Device({ time: '4:40', battery: 86, tab: 'my', children: NavLayer(NavBar({ title: '알림' })) + Scroll({ top: 114, children: `
     ${SettingsRow({ variant: 'toggle', label: '광고성 정보 알림 수신', caption: '좋아요한 아티스트의 신곡, 주간 추천, 이번 주 특집 알림', on: ad })}
     ${SettingsRow({ variant: 'toggle', label: '야간 광고성 정보 알림 수신', caption: '아티스트 신곡, 특집 알림을 보내드려요<br>(오전 8:00 ~ 오후 9:00)', on: ad && night })}
     <div class="hr" style="margin:12px 20px"></div>
     ${SettingsRow({ variant: 'value', label: '기기 알림 권한', value: PERMISSION[permission] })}` }),
-    overlay: toastLayer(toast, toastLeaving) })
+    overlay: toastLayer(toast, toastLeaving) + (system ? SystemAlert({}) : '') })
 }
 
 export function DiggingProfileScreen({ range = 1, locked = false, type = {}, stats = {}, genres = {}, artists = {}, myPick = {}, crateDays = [], scroll = 0 } = {}) {

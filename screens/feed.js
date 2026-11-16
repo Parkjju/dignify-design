@@ -13,6 +13,7 @@ import { ReleaseNotes } from '../components/release-notes/release-notes.js'
 import { Button } from '../components/button/button.js'
 import { ConsentSheet } from '../components/consent-sheet/consent-sheet.js'
 import { Toast } from '../components/toast/toast.js'
+import { SystemAlert } from '../components/system-alert/system-alert.js'
 
 // 결과 토스트 자리(탭바 위 8). toast: '' | Toast kind, toastLeaving: 페이드 아웃 중
 export const toastLayer = (toast, leaving = false, date = '2026-11-12') => toast ? `<div class="ds-toast-slot">${Toast({ kind: toast, date, leaving })}</div>` : ''
@@ -25,8 +26,9 @@ const feedLayer = ({ track, chip, hyped, burst, speed, hold, overlay, mode, cont
    <div style="position:absolute;top:54px;inset-inline:0;z-index:10">${FeedHeader({ mode, context, query, pick })}</div>`
 
 // context: 앞 구간 배지 — 「이번 주 특집 n/5」 · 「이번 주 추천 n/m」 · 「좋아요한 아티스트의 신곡 n/m」(m 최대 10)
-export function FeedScreen({ track, chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, hold = 0.3, mode = 'following', context = '', query = '', time = '10:28', battery = 97, lift = LIFT, toast = '', toastLeaving = false } = {}) {
-  return Device({ surface: 'media', tab: 'feed', time, battery, children: feedLayer({ track, chip, hyped, burst, speed, hold, mode, context, query, lift }), overlay: toastLayer(toast, toastLeaving) })
+export function FeedScreen({ track, chip = '비슷한 곡: Blame', hyped = false, burst = false, speed = 1, hold = 0.3, mode = 'following', context = '', query = '', time = '10:28', battery = 97, lift = LIFT, toast = '', toastLeaving = false, system = false } = {}) {
+  // system: OS 알림 권한 팝업(「알림 받기」 뒤, 기기 권한이 설정 전일 때)
+  return Device({ surface: 'media', tab: 'feed', time, battery, children: feedLayer({ track, chip, hyped, burst, speed, hold, mode, context, query, lift }), overlay: toastLayer(toast, toastLeaving) + (system ? SystemAlert({}) : '') })
 }
 
 export function FeedSearchScreen({ track, text = '실리카겔', terms = ['잔나비', 'wave to earth', '혁오'], keyboard = true } = {}) {
