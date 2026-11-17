@@ -1,0 +1,3 @@
+import{M as r}from"./my-pick-row-743uoX8l.js";import{d as e,w as s}from"./_story-BijmNlD_.js";const t='# MyPickRow\n\n> 상태: 구현됨(iOS)\n\n디깅 프로필 "내가 만든 픽" — 최신 픽 하나 + 개수, 누르면 내가 만든 픽 목록. 커버 56 radius 10, 제목 `bodyMedium`, "픽 N개" `caption` `textSecondary`, `chevron.right` 12. 좌우 20.\n',n={title:"Components/Content/MyPickRow",tags:["autodocs"],parameters:e(t),decorators:s(393),render:r},o={args:{}},d=["Default"];o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:`{
+  args: {}
+}`,...o.parameters?.docs?.source}}};export{o as Default,d as __namedExportsOrder,n as default};

@@ -1,0 +1,1 @@
+function c({variant:i="chip",label:s="비슷한 곡: Blame"}={}){const l={mode:'<i class="ic ic-swap"></i>',query:'<i class="ic ic-xmark"></i>'}[i]||"";return`<span class="ds-pill ds-pill--${i}">${s}${l}</span>`}export{c as P};

@@ -1,0 +1,1 @@
+import{B as p}from"./button-WsS0bk8m.js";const m=({title:a="아직 좋아요한 곡이 없어요",message:t="피드에서 마음에 드는 곡을 골라주세요",action:s="곡 찾으러 가기"}={})=>`<div class="ds-empty"><span class="ds-empty__icon">!</span><h3>${a}</h3><p>${t}</p>${s?p({variant:"small",label:s}):""}</div>`;export{m as E};

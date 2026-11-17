@@ -1,0 +1,32 @@
+import{M as a}from"./menu-sheet-CLnGtBRH.js";import{d as o,o as n}from"./_story-BijmNlD_.js";const t=`# MenuSheet (다크 액션 시트)
+
+> 상태: 구현됨(iOS)
+
+## 언제 쓰나
+Picks 카드의 \`···\`. 시스템 액션 시트 대신 쓴다 — 다크 지면에서 흰 시스템 시트가 튄다.
+
+## 수치
+| 항목 | 값 |
+|---|---|
+| 지면 | \`color.pickElevated\`, 모서리 28, 높이 = 행 수에 맞춘 고정 detent |
+| 행 | 높이 60, 라벨 17 semibold, 들여쓰기 32 (구분선은 16 — 글이 선보다 안쪽이어야 행으로 읽힌다) |
+| 구분선 | white 8% |
+| 취소 | 높이 56, white 8% 지면, \`radius.medium\` |
+| 위험 행 | \`color.destructive\` |
+
+## 메뉴
+| 대상 | 행 |
+|---|---|
+| 남의 픽 | 신고 → (부적절한 닉네임 / 부적절한 콘텐츠 / 기타→직접 입력) · @닉네임 차단 |
+| 내 픽 | 제목 수정 · 삭제 |
+
+입력 단계(기타·제목 수정)는 같은 시트에서 폼으로 바뀐다: 입력 48 white 8% radius 12, 확정 버튼 48 \`pickAccent\` + 글자 \`pickBackground\`.
+`,i={title:"Components/Overlays/MenuSheet",tags:["autodocs"],parameters:o(t),decorators:n(),render:a},e={},s={args:{rows:[["제목 수정",!1],["삭제",!0]]}},r={args:{rows:[["부적절한 닉네임",!1],["부적절한 콘텐츠",!1],["기타",!1]]}},d=["OthersPick","MyPick","ReportReasons"];e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:`{
+  args: {
+    rows: [['제목 수정', false], ['삭제', true]]
+  }
+}`,...s.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  args: {
+    rows: [['부적절한 닉네임', false], ['부적절한 콘텐츠', false], ['기타', false]]
+  }
+}`,...r.parameters?.docs?.source}}};export{s as MyPick,e as OthersPick,r as ReportReasons,d as __namedExportsOrder,i as default};

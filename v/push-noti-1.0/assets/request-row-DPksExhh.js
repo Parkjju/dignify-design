@@ -1,0 +1,1 @@
+const l={pending:"대기 중",added:"추가됨",canceled:"취소됨"};function n({artist:e="실리카겔",status:s="added",date:a="2026년 10월 3일",reason:d=""}={}){return`<div class="ds-request"><div class="ds-request__top"><b>${e}</b><span class="ds-request__badge is-${s}">${l[s]}</span></div>${d?`<p>${d}</p>`:""}<small>${a}</small></div>`}export{n as R};

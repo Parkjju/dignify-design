@@ -1,0 +1,1 @@
+const e=({label:s="록",selected:i=!1}={})=>`<span class="ds-filter-chip${i?" is-on":""}">${s}</span>`,p=({items:s=["전체","록","R&B/소울"],selected:i="전체"}={})=>`<div class="ds-filter-chips">${s.map(a=>e({label:a,selected:a===i})).join("")}</div>`;export{p as F,e as a};
