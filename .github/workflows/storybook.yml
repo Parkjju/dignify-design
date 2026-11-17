@@ -21,15 +21,16 @@ permissions:
   id-token: write
   actions: write
 
+# 배포 실행끼리만 앞 실행을 취소한다. 스냅샷 실행(태그 푸시·snap 입력)은 따로 줄 서서 서로 취소하지 않는다
+# 한 번에 태그를 4개 넘게 푸시하면 GitHub이 태그 이벤트를 안 만든다 → 그땐 snap 입력으로 수동 실행
 concurrency:
-  group: storybook-${{ github.ref }}
-  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+  group: ${{ (startsWith(github.ref, 'refs/tags/') || inputs.snap) && 'storybook-snapshots' || format('storybook-{0}', github.ref) }}
+  cancel-in-progress: ${{ !(startsWith(github.ref, 'refs/tags/') || inputs.snap) }}
 
 jobs:
   snapshot:
     if: startsWith(github.ref, 'refs/tags/snap/') || inputs.snap
     runs-on: ubuntu-latest
-    concurrency: { group: storybook-snapshots, cancel-in-progress: false }
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
