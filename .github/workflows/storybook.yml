@@ -84,8 +84,8 @@ jobs:
           node -e '
             const fs = require("fs"), { execSync } = require("child_process")
             const dirs = fs.readdirSync("storybook-static/v").filter(d => fs.existsSync(`storybook-static/v/${d}/index.json`))
-            const meta = d => { try { return execSync(`git log -1 --format=%cs%x09%h refs/tags/snap/${d}`).toString().trim().split("\t") } catch { return ["", ""] } }
-            const list = dirs.map(name => { const [date, sha] = meta(name); return { name, date, sha } }).sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+            const meta = d => { try { return execSync(`git log -1 --format=%cs%x09%h%x09%ct refs/tags/snap/${d}`).toString().trim().split("\t") } catch { return ["", "", "0"] } }
+            const list = dirs.map(name => { const [date, sha, t] = meta(name); return { name, date, sha, t: +t } }).sort((a, b) => b.t - a.t).map(({ t, ...v }) => v)
             fs.writeFileSync("storybook-static/v/versions.json", JSON.stringify(list))
             console.log(list)'
       - uses: actions/upload-pages-artifact@v3
