@@ -26,7 +26,7 @@ function init(doc) {
   const w = doc.defaultView
   const root = doc.createElement('div')
   root.setAttribute('data-ds-measure', '')
-  root.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:2147483646'
+  root.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:2147483646'
   const cv = doc.createElement('canvas')
   cv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%'
   const panel = doc.createElement('div')
@@ -62,11 +62,12 @@ const parentOf = el => { const r = el.getBoundingClientRect(); for (let p = el.p
 const inside = (a, b) => a.left >= b.left - .5 && a.right <= b.right + .5 && a.top >= b.top - .5 && a.bottom <= b.bottom + .5
 
 function draw(st) {
-  const { cv, w } = st, dpr = w.devicePixelRatio || 1
-  if (cv.width !== w.innerWidth * dpr || cv.height !== w.innerHeight * dpr) { cv.width = w.innerWidth * dpr; cv.height = w.innerHeight * dpr }
+  // 캔버스는 보이는 영역(스크롤바 제외) 크기로 — innerWidth로 잡으면 스크롤바 폭만큼 가로로 눌려 오른쪽으로 갈수록 어긋난다
+  const { cv, w } = st, dpr = w.devicePixelRatio || 1, W = st.root.clientWidth, H = st.root.clientHeight
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr) }
   const g = cv.getContext('2d')
   g.setTransform(dpr, 0, 0, dpr, 0, 0)
-  g.clearRect(0, 0, w.innerWidth, w.innerHeight)
+  g.clearRect(0, 0, W, H)
   if (st.guide) guides(st, g)
   if (!st.on) return
   const h = st.hover?.isConnected ? st.hover : null, p = st.pinned?.isConnected ? st.pinned : null
