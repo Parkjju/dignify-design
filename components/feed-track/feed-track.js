@@ -11,7 +11,7 @@ export function FeedTrack({ cover = 'a-cannons', title = 'Cannons', artist = 'Ph
   <i class="art ${cover} ds-feed-track__bg"></i><div class="ds-feed-track__scrim"></div>
   <div class="ds-feed-track__body" style="top:${top}px;bottom:${bottom}px">
     <div class="ds-feed-track__center">
-      <div class="ds-feed-track__stage"><i class="art ${cover} ds-feed-track__cover" style="width:${width - 48}px;height:${width - 48}px"></i>${burst ? `<i class="ic ic-heart-fill ds-feed-track__big"></i>` : ''}${overlay}</div>
+      <div class="ds-feed-track__stage"><i class="art ${cover} ds-feed-track__cover" style="width:${width - 40}px;height:${width - 40}px"></i>${burst ? `<i class="ic ic-heart-fill ds-feed-track__big"></i>` : ''}${overlay}</div>
       <div class="ds-feed-track__actions"><span class="ds-feed-track__act"><i class="ic ic-share"></i></span><span class="ds-feed-track__act"><i class="ic ic-ellipsis"></i></span></div>
     </div>
     <div class="ds-feed-track__meta">
