@@ -17,7 +17,7 @@ rmSync('/tmp/proto-check-profile', { recursive: true, force: true })
 const [id, out, stepsJson] = process.argv.slice(2)
 const steps = JSON.parse(stepsJson)
 const chrome = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  ['--headless=new', '--remote-debugging-port=9333', '--window-size=460,900', '--hide-scrollbars', '--user-data-dir=/tmp/proto-check-profile', 'about:blank'], { stdio: 'ignore' })
+  ['--headless=new', '--remote-debugging-port=9333', '--window-size=' + (process.env.WIN || '460,900'), '--hide-scrollbars', '--user-data-dir=/tmp/proto-check-profile', 'about:blank'], { stdio: 'ignore' })
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 let ws
 for (let n = 0; n < 50 && !ws; n++) {
