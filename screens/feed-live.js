@@ -84,7 +84,7 @@ export function FeedLive({ coach = true, lead = 'none', leadStart = 1, consent =
     }
     if (overlay === 'sheet') {
       if (hit('.ds-consent-sheet__accept')) { overlay = ''; if (ads) ads.ad = true; accepted('on'); draw() }
-      else if (hit('.ds-consent-sheet__later') || !hit('.sheet')) { overlay = ''; draw() }
+      else if (hit('.ds-consent-sheet__later')) { overlay = ''; draw() }   // 바깥(딤) 탭은 무반응 — 버튼으로만 닫힌다
       return true
     }
     if (overlay === 'whats-new') { if (hit('.ds-button') || hit('.ic-xmark')) { overlay = ''; draw() } return true }
