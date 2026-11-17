@@ -3,7 +3,7 @@
 // 시작점(Controls start) — Figma 「00. 화면 플로우」의 깃발 4개 + 알림 탭 2개:
 //   first-run  첫 실행: 동의 팝업 → 알림 받기 → (권한 설정 전이면 OS 권한 팝업) → 토스트. 나중에 = 닫기만(7일 뒤 다시)
 //   like       좋아요 시점: 곡을 좋아요(더블탭·♡)하고 위로 넘기면 신곡 알림 시트(기기 권한 설정 전일 때만)
-//   night      이번 주 특집 1/5부터 5곡 넘기면 야간 동의 팝업(동의 + 권한 켜짐 + 야간 미응답일 때만)
+//   night      이번 주 특집 5/5에서 시작 — 위로 한 번 넘기면 야간 동의 팝업(동의 + 권한 켜짐 + 야간 미응답일 때만) → 토스트 → My › 알림에서 야간 토글 확인
 //   settings   마이 › 알림부터: 토글 = 결과 토스트, 광고성 끄면 야간도 꺼짐, 기기 알림 권한 셀(설정 전이면 눌러도 무반응)
 //   push-pick · push-release  알림 탭으로 들어온 피드 앞 구간(이번 주 추천 / 좋아요한 아티스트의 신곡)
 // 탭바 Feed·My로 오가며 상태가 이어지는지 본다. 처음부터 다시: Controls 값을 바꾼다.
@@ -18,7 +18,7 @@ export default { title: 'Screens/6. 광고성 알림', parameters: { layout: 'ce
 const START = {
   'first-run': { ads: { ad: false, permission: 'unset' }, feed: { consent: true, likeSheet: true } },
   like: { ads: { ad: false, permission: 'unset' }, feed: { likeSheet: true } },
-  night: { ads: { ad: true, permission: 'on' }, feed: { lead: 'curation' } },
+  night: { ads: { ad: true, permission: 'on' }, feed: { lead: 'curation', leadStart: 5 } },
   settings: { ads: { ad: true, night: true, permission: 'on' }, screen: 'alerts' },
   'push-pick': { ads: { ad: true, permission: 'on' }, feed: { lead: 'pick' } },
   'push-release': { ads: { ad: true, permission: 'on' }, feed: { lead: 'release' } },
@@ -29,7 +29,7 @@ const onAlerts = f => (s, ctx) => s.screen === 'alerts' ? f(s, ctx) : undefined
 export const Consent = { name: '광고성 알림',
   args: { start: 'first-run', permission: 'start', legal: true, fail: false, os: 'ios' },
   argTypes: {
-    start: { control: 'inline-radio', options: Object.keys(START), description: 'first-run 첫 실행 · like 좋아요 시점 · night 이번 주 특집 끝(야간) · settings 마이 › 알림 · push-pick/push-release 알림 탭 → 피드 앞 구간' },
+    start: { control: 'inline-radio', options: Object.keys(START), description: 'first-run 첫 실행 · like 좋아요 시점 · night 야간 동의(특집 5/5에서 한 번 넘기면) · settings 마이 › 알림 · push-pick/push-release 알림 탭 → 피드 앞 구간' },
     permission: { control: 'inline-radio', options: ['start', 'unset', 'on', 'off'], description: '기기 알림 권한 처음 값 — start면 시작점 기본값. 좋아요 시트는 설정 전(unset)일 때만 뜬다' },
     legal: { description: '좋아요 시트에 광고성 동의 문구 — Figma엔 없음(요건이라 추가, 기획 확인 대기)' },
     fail: { description: '마이 › 알림 토글 저장 실패 보기' },

@@ -21,12 +21,12 @@ const LEAD = {
 const FOUND = { '잔나비': T.farewell, 'wave to earth': T.seasons, '혁오': T.ohio, '실리카겔': T.bigvoid }
 const CHIP = { '잔나비': '록', 'wave to earth': '인디', '혁오': '록', '실리카겔': '록' }
 
-export function FeedLive({ coach = true, lead = 'none', consent = false, likeSheet = false, legal = true, ads = null, whatsNew = false, os = 'ios', speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
+export function FeedLive({ coach = true, lead = 'none', leadStart = 1, consent = false, likeSheet = false, legal = true, ads = null, whatsNew = false, os = 'ios', speed = 1, handOffset = -18, captionBelow = 25, hold = 0.3, peek = 32, onTab } = {}) {
   const el = document.createElement('div')
   el.className = 'sb-live is-feed'
   let step = coach ? 'double-tap' : 'feed', i = 0, hyped = false, since = 0, lastUp = 0, busy = false, drag = null
   const L = LEAD[lead]
-  let overlay = consent ? 'consent' : whatsNew ? 'whats-new' : '', mode = 'following', query = '', terms = ['잔나비', 'wave to earth', '혁오'], week = L ? 1 : 0
+  let overlay = consent ? 'consent' : whatsNew ? 'whats-new' : '', mode = 'following', query = '', terms = ['잔나비', 'wave to earth', '혁오'], week = L ? Math.min(leadStart, L.tracks.length) : 0
   let toast = '', toastLeaving = false, liked = null, sheetDone = !likeSheet, afterSystem = ''
   // 「알림 받기」 뒤: 기기 권한이 설정 전이면 OS 권한 팝업을 먼저, 아니면 바로 토스트
   const accepted = kind => { if (ads && kind === 'on' && ads.permission === 'unset') { afterSystem = kind; overlay = 'system' } else showToast(kind) }

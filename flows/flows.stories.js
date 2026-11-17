@@ -83,6 +83,14 @@ export const ConsentSettings = { name: '광고성 동의 — 마이 › 알림',
   { screen: 'notification-settings', label: '저장 실패', args: { toast: 'fail' }, note: '토글은 그대로' },
 ] } }
 
+export const ConsentNight = { name: '광고성 동의 — 야간', args: { steps: [
+  { screen: 'feed', label: '이번 주 특집 5/5', args: { context: '이번 주 특집 5/5', track: { cover: 'a-billann', title: 'Bill Loves Ann', artist: '퍼플웨일' }, chip: '인디' }, note: '마지막 곡을 위로 넘기면' },
+  { screen: 'feed-consent-night', note: '광고성 동의 true + 기기 권한 허용 + 야간 미응답일 때만. 아니면 안 띄우고 평소 피드. 딤 탭으로 안 닫힘' },
+  { screen: 'feed-toast', label: '알림 받기', args: { track: { cover: 'a-cannons', title: 'Cannons', artist: 'Phil Wickham' }, toast: 'night-on' }, note: '야간 동의 true → 21시~다음 날 08시 특집 알림도 그 시각에 받는다' },
+  { screen: 'feed-toast', label: '아니요', args: { track: { cover: 'a-cannons', title: 'Cannons', artist: 'Phil Wickham' }, toast: 'night-off' }, note: '야간 false 저장 + 수신거부 토스트' },
+  { screen: 'notification-settings', label: '마이 › 알림', note: '야간 토글로 언제든 바꿈. 광고성을 끄면 야간도 꺼진다' },
+] } }
+
 export const LeadSections = { name: '알림 탭 → 피드 앞 구간', args: { steps: [
   { screen: 'feed-weekly-pick', note: '주간 추천 알림 탭 — 「이번 주 추천 n/m」, m = 추천곡 수(최대 10)' },
   { screen: 'feed-new-release', note: '신곡 알림 탭·앱 열기 — 「좋아요한 아티스트의 신곡 n/m」, 10곡 넘으면 무작위 10곡' },
