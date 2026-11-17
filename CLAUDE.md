@@ -54,7 +54,7 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Story
 
 - 앱 반영 목록의 한 버전이 확정되면(사용자가 확정이라고 하거나 앱 반영을 시작할 때) 그 커밋에 태그 `snap/<버전>`을 단다. 이름은 앱 반영 목록 제목을 소문자·하이픈으로(`push-noti-1.0`, `seed-picker-opened-1.0`). 태그 푸시 → CI가 빌드해 `snapshots` 브랜치 `v/<버전>/`에 쌓고 배포 → 「가이드 › 버전 비교」에 뜬다(.github/workflows/storybook.yml).
 - 지난 커밋에 단 태그나, 한 번에 4개 넘게 푸시한 태그는 이벤트가 안 생겨 안 돈다 → `gh workflow run storybook.yml --ref main -f snap="snap/a snap/b"`.
-- 재기 모드·가이드·버전 비교는 `tools/`(Storybook 전용). 화면·컴포넌트에 재기용 코드를 넣지 않는다.
+- 치수·가이드·버전 비교는 `tools/`(Storybook 전용). 화면·컴포넌트에 치수용 코드를 넣지 않는다.
 
 ## 토큰을 고칠 때
 

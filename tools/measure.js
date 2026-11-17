@@ -1,4 +1,4 @@
-// 재기 모드 — Figma의 Alt 호버처럼 크기·간격을 pt로 보여 준다(Storybook 미리보기 전용, 앱·컴포넌트와 무관).
+// 치수 — Figma의 Alt 호버처럼 크기·간격을 pt로 보여 준다(Storybook 미리보기 전용, 앱·컴포넌트와 무관).
 //   호버: 요소 테두리 + W×H + 부모 안쪽까지 위·아래·좌·우 거리
 //   클릭: 그 요소를 고정 → 다른 요소에 호버하면 두 요소 사이 거리. 같은 요소 다시 클릭·Esc = 풀기
 //   오른쪽 위 패널: 글자 크기·굵기·줄 높이·색, 지면색·라운드·안쪽 여백 + 맞는 토큰 이름(없으면 「토큰 없음」)
@@ -161,7 +161,7 @@ function tokens(st) {
 }
 
 function info(st, el) {
-  if (!el) return '재기 모드\n호버 = 크기·부모까지 거리\n클릭 = 고정 → 다른 요소까지 거리\nEsc = 고정 풀기'
+  if (!el) return '치수\n호버 = 크기·부모까지 거리\n클릭 = 고정 → 다른 요소까지 거리\nEsc = 고정 풀기'
   const cs = st.w.getComputedStyle(el), k = scaleOf(el), t = tokens(st), r = el.getBoundingClientRect()
   const tok = (m, key) => (m.get(key) || []).slice(0, 2).join(' · ') || '토큰 없음'
   const name = (el.className && typeof el.className === 'string' ? '.' + el.className.trim().split(/\s+/)[0] : el.tagName.toLowerCase())

@@ -1,4 +1,4 @@
-// 가이드 › 버전 비교 — 같은 화면을 두 버전으로 나란히 띄운다. 양쪽 다 프로토타입이라 눌러 볼 수 있고, 재기·가이드를 양쪽에 같이 건다.
+// 가이드 › 버전 비교 — 같은 화면을 두 버전으로 나란히 띄운다. 양쪽 다 프로토타입이라 눌러 볼 수 있고, 치수·가이드를 양쪽에 같이 건다.
 // 버전 = 배포된 스냅샷(v/versions.json, .github/workflows/storybook.yml). 로컬(npm run dev)엔 스냅샷이 없어 「현재」만 있다.
 import { setMeasure } from './measure.js'
 export default { title: '가이드/버전 비교', parameters: { layout: 'fullscreen' } }
@@ -52,7 +52,7 @@ async function start(el) {
   bar.innerHTML = `<label>화면 <select data-k="story">${storySel}</select></label>
     <label>왼쪽 ${verSel('left')}</label><label>오른쪽 ${verSel('right')}</label>
     <label title="스토리 Controls 값 — 예: start:alerts;permission:unset">args <input type="text" data-k="args" placeholder="start:alerts" size="18"></label>
-    <label><input type="checkbox" data-k="measure"> 재기</label><label><input type="checkbox" data-k="guide"> 가이드</label>
+    <label><input type="checkbox" data-k="measure"> 치수</label><label><input type="checkbox" data-k="guide"> 가이드</label>
     <label>배율 <input type="range" data-k="zoom" min="0.5" max="1" step="0.05"></label>
     ${versions.length ? '' : '<span class="vc-miss">배포된 버전 스냅샷이 없다 — 로컬이거나 아직 태그(snap/…)가 없다</span>'}`
   for (const f of bar.querySelectorAll('[data-k]')) {
