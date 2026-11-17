@@ -50,6 +50,12 @@ Dignify(음악 디깅 앱, iOS·Android)의 디자인 시스템 레포다. Story
 - 항목마다 시안 화면 id · AS-IS(출시된 앱 또는 직전 시안) · TO-BE · 앱 파일 위치. 문구는 한국어만 적는다 — 영어 값은 앱 반영할 때 개발 쪽에서 맞춘다.
 - 같은 걸 앞 버전이 정했으면 앞 항목에 「→ 1.x에서 바뀜」을 단다. 앱에 반영되면 상태를 「반영됨 (iOS x.y.z)」로.
 
+## 시안 버전 스냅샷 (2026-11-17)
+
+- 앱 반영 목록의 한 버전이 확정되면(사용자가 확정이라고 하거나 앱 반영을 시작할 때) 그 커밋에 태그 `snap/<버전>`을 단다. 이름은 앱 반영 목록 제목을 소문자·하이픈으로(`push-noti-1.0`, `seed-picker-opened-1.0`). 태그 푸시 → CI가 빌드해 `snapshots` 브랜치 `v/<버전>/`에 쌓고 배포 → 「가이드 › 버전 비교」에 뜬다(.github/workflows/storybook.yml).
+- 지난 커밋에 단 태그는 그 커밋에 워크플로가 없어 안 돈다 → `gh workflow run storybook.yml --ref main -f snap="snap/a snap/b"`.
+- 재기 모드·가이드·버전 비교는 `tools/`(Storybook 전용). 화면·컴포넌트에 재기용 코드를 넣지 않는다.
+
 ## 토큰을 고칠 때
 
 - `tokens/*.json`만 고친다. `generated/`와 `screens/*.html`의 `ds` 블록은 `npm run tokens`로만 바뀐다.

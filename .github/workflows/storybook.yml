@@ -1,26 +1,68 @@
 # main에 머지되면 Storybook을 GitHub Pages로 배포한다. PR에서는 빌드·생성물 검사만.
+# 버전 스냅샷: 시안 버전마다 태그 `snap/<버전>`(앱 반영 목록 버전 이름, 예: snap/push-noti-1.0)을 달면
+#   그 커밋을 빌드해 snapshots 브랜치 v/<버전>/에 쌓고, main 배포 때 같이 올린다 → …/dignify-design/v/<버전>/ (가이드 › 버전 비교)
+#   지난 커밋에 단 태그는 그 커밋에 이 워크플로가 없어서 안 돈다 → Actions에서 수동 실행(snap 입력에 태그 이름, 여러 개면 띄어쓰기)
 name: Storybook
 
 on:
   push:
     branches: [main]
+    tags: ['snap/*']
   pull_request:
   workflow_dispatch:
+    inputs:
+      snap:
+        description: '스냅샷으로 만들 태그(띄어쓰기로 여러 개, 예: snap/feed-coachmark-1.3 snap/seed-picker-opened-1.0). 비우면 배포만'
+        required: false
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: storybook-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
 jobs:
+  snapshot:
+    if: startsWith(github.ref, 'refs/tags/snap/') || inputs.snap
+    runs-on: ubuntu-latest
+    concurrency: { group: storybook-snapshots, cancel-in-progress: false }
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: 태그마다 빌드해서 snapshots 브랜치 v/<버전>/에 넣기
+        env:
+          TAGS: ${{ startsWith(github.ref, 'refs/tags/snap/') && github.ref_name || inputs.snap }}
+        run: |
+          set -e
+          git config user.name "github-actions[bot]"; git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          if git fetch origin snapshots; then git worktree add ../snap origin/snapshots && git -C ../snap checkout -B snapshots
+          else git worktree add --detach ../snap && git -C ../snap checkout --orphan snapshots && git -C ../snap rm -rfq . ; fi
+          for tag in $TAGS; do
+            name=${tag#snap/}
+            echo "::group::$tag"
+            rm -rf ../src && git worktree add --detach ../src "$tag"
+            (cd ../src && npm ci --no-audit --no-fund && npx storybook build -o out --quiet)
+            rm -rf "../snap/v/$name" && mkdir -p ../snap/v && cp -R ../src/out "../snap/v/$name"
+            git worktree remove --force ../src
+            echo "::endgroup::"
+          done
+          cd ../snap && git add -A && git commit -qm "snapshot: $TAGS" && git push origin snapshots
+      - name: 배포 다시 돌리기(main)
+        run: gh workflow run storybook.yml --ref main
+        env: { GH_TOKEN: '${{ github.token }}' }
+
   build:
+    if: ${{ !startsWith(github.ref, 'refs/tags/') && !inputs.snap }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -29,6 +71,22 @@ jobs:
       - name: 토큰·생성물이 최신인지 (tokens 고치고 build 안 돌렸으면 실패)
         run: npm run check
       - run: npx storybook build -o storybook-static --quiet
+      - name: 버전 스냅샷 합치기 + v/versions.json (가이드 › 버전 비교가 읽는다)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          if git fetch origin snapshots; then
+            git worktree add ../snap origin/snapshots
+            cp -R ../snap/v storybook-static/v
+          fi
+          mkdir -p storybook-static/v
+          git fetch --tags --force
+          node -e '
+            const fs = require("fs"), { execSync } = require("child_process")
+            const dirs = fs.readdirSync("storybook-static/v").filter(d => fs.existsSync(`storybook-static/v/${d}/index.json`))
+            const meta = d => { try { return execSync(`git log -1 --format=%cs%x09%h refs/tags/snap/${d}`).toString().trim().split("\t") } catch { return ["", ""] } }
+            const list = dirs.map(name => { const [date, sha] = meta(name); return { name, date, sha } }).sort((a, b) => (b.date || "").localeCompare(a.date || ""))
+            fs.writeFileSync("storybook-static/v/versions.json", JSON.stringify(list))
+            console.log(list)'
       - uses: actions/upload-pages-artifact@v3
         with:
           path: storybook-static
