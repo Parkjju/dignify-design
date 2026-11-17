@@ -1,0 +1,1 @@
+function t({options:e=["이번 주","전체"],selected:s=1}={}){return`<div class="ds-seg" role="tablist">${e.map((n,a)=>`<span role="tab" aria-selected="${a===s}" class="${a===s?"is-on":""}">${n}</span>`).join("")}</div>`}export{t as S};

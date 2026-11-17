@@ -1,0 +1,1 @@
+function d({rows:e=[["신고",!1],["@wavelover 차단",!0]]}={}){return`<div class="ds-menu-sheet"><i class="ds-menu-sheet__grabber"></i>${e.map(([s,i])=>`<div class="ds-menu-sheet__row${i?" is-destructive":""}">${s}</div>`).join('<i class="ds-menu-sheet__div"></i>')}<div class="ds-menu-sheet__cancel">취소</div></div>`}export{d as M};

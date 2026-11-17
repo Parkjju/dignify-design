@@ -1,0 +1,2 @@
+function l({cover:s="a-wss",title:e="work, shit, sleep",artist:a="jisokuryClub",number:i=0,playing:d=!1}={}){return`<div class="ds-seed${i?" is-selected":""}"><div class="ds-seed__thumb"><i class="art ${s}"></i><i class="ic ic-${d?"pause":"play"} ds-seed__play"></i>
+  <span class="ds-seed__pick">${i?`<i class="is-on">${i}</i>`:"<i></i>"}</span></div><b>${e}</b><span>${a}</span></div>`}function c({items:s=[]}={}){return`<div class="ds-seed-grid">${s.map(l).join("")}</div>`}export{l as S,c as a};

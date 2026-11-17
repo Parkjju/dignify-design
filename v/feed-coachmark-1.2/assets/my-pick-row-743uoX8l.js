@@ -1,0 +1,1 @@
+function c({cover:a="a-loveya",title:s="모두가 사랑하는 밴드",count:i=3}={}){return`<a class="ds-my-pick"><i class="art ${a}"></i><span><b>${s}</b><small>픽 ${i}개</small></span><i class="ic ic-chevron-right"></i></a>`}export{c as M};

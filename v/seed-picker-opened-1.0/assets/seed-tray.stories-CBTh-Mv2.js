@@ -1,0 +1,59 @@
+import{S as t}from"./seed-tray-ibQD2q-w.js";import{d}from"./_story-BijmNlD_.js";const c=`# SeedTray (고른 곡 트레이)
+
+> 상태: 제안 (feed_coachmark 1.3, 2026-10-12)
+
+## 언제 쓰나
+추천 기준 곡 고르기 두 곳: 온보딩 \`onboarding-seed\`("디깅 시작" 버튼 바로 위, 순서 번호 있음)와 마이 「추천 기준 곡」 \`seed-picker\`(탭바 위에 떠 있는 카드, 순서 번호 없음 — \`numbered: false\`). 그리드를 스크롤해 고른 곡이 화면 밖으로 나가도 **어떤 곡을 골랐는지 늘 보이고, 여기서 바로 빼거나 그 곡으로 갈 수 있게** 한다.
+
+## Anatomy
+\`\`\`
+ 선택한 곡 2/3              ┌──┐ ┌──┐ ┌┄┄┐
+ 누르면 그 곡으로 가요        │①✕│ │②✕│ ┆  ┆   ← 고른 순서대로, 빈 칸은 점선
+                            └──┘ └──┘ └┄┄┘
+ [            디깅 시작            ]
+\`\`\`
+
+## States
+| 상태 | 왼쪽 안내 | 칸 |
+|---|---|---|
+| 0~2곡 | "선택한 곡 n/3" + "누르면 그 곡으로 가요" | 고른 곡 커버 + 순서 번호 + ✕, 나머지 점선 빈 칸 |
+| 3곡(꽉 참) | "선택한 곡 3/3" + "바꾸려면 빼 주세요" | 세 칸 다 찬다. 그리드의 안 고른 곡은 비활성(SeedTile \`disabled\`) |
+
+마이 「추천 기준 곡」(seed_picker_opened 1.0)은 안내 문구가 남은 칸 수를 말한다(\`hint\`): 0곡 「최대 3곡까지 담을 수 있어요」 · 1곡 「2개 더 선택할 수 있어요」 · 2곡 「1개 더 선택할 수 있어요」 · 3곡 「곡은 3개까지 선택할 수 있어요」(명세, 두 줄로 깨짐) 또는 「3곡을 다 골랐어요」 — 기획 확인 대기. 커버 탭도 ✕처럼 그 곡을 뺀다(온보딩은 그 곡으로 스크롤).
+
+## 동작
+- **커버 탭** → 그리드를 그 곡 타일까지 스크롤하고 타일을 잠깐 강조(0.6s). 검색 결과를 보는 중이면 검색을 닫고 풀로 돌아가서 스크롤한다.
+- **✕ 탭** → 그 곡을 뺀다. 뒤 번호가 앞으로 당겨진다(1·2·3 순서 유지). 3곡에서 하나를 빼면 그리드 비활성이 바로 풀린다.
+- 빈 칸은 누를 수 없다.
+
+## 수치
+| 항목 | 값 |
+|---|---|
+| 칸 | 52 정사각, \`radius.small\`, 간격 \`spacing.x2\` |
+| 빈 칸 | 1.5 점선 \`color.border\` |
+| 순서 번호 | 원 20 \`color.brand\`, 흰 11 bold, 왼쪽 아래 −4, 바탕색 2 테두리 |
+| 빼기 | 원 20 \`color.textPrimary\` + 흰 ✕ 10, 오른쪽 위 −6, 탭 영역 44 |
+| 안내 | \`typography.label\` (n/3은 \`color.brand\`) / \`typography.caption\` \`textTertiary\` |
+| 위치 | 온보딩: 버튼 위 12, 좌우 24 · 마이: 탭바 위 12, 좌우 16, \`surface\` 카드 \`radius.medium\` 안쪽 12·16 + 그림자 |
+
+## 플랫폼
+| | 이름 | 위치 |
+|---|---|---|
+| iOS | (신규) | \`Features/Onboarding/SeedPoolPickerView.swift\` 아래 영역 |
+| Android | \`SeedTray\` | \`core/designsystem/SeedTray.kt\` (온보딩·추천 기준 곡 공용) |
+
+## 하지 말 것
+- 트레이를 숨겼다가 고를 때만 띄우지 않는다. 비어 있어도 빈 칸 3개로 "3곡까지"를 보여 준다.
+`,s={cover:"a-wss",number:1},a={cover:"a-billann",number:2},i={cover:"a-seasons",number:3},l={title:"Components/Inputs/SeedTray",tags:["autodocs"],parameters:d(c),render:t,decorators:[o=>`<div style="width:345px">${o()}</div>`]},e={args:{items:[]}},r={args:{items:[s,a]}},n={args:{items:[s,a,i]}},u=["Empty","Two","Full"];e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:`{
+  args: {
+    items: []
+  }
+}`,...e.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  args: {
+    items: [A, B]
+  }
+}`,...r.parameters?.docs?.source}}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:`{
+  args: {
+    items: [A, B, C]
+  }
+}`,...n.parameters?.docs?.source}}};export{e as Empty,n as Full,r as Two,u as __namedExportsOrder,l as default};

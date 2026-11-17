@@ -1,0 +1,1 @@
+function i({locked:s=!1,name:p="충성파",genre:a="록",blurb:e="자기 취향을 알고, 거기에 충실해요."}={}){return s?'<div class="ds-type-hero"><i class="ic ic-lock"></i><b>더 디깅하면 유형이 열려요</b><p>트랙 10개를 캐고 3개에 좋아요를 누르면 공개돼요.</p></div>':`<div class="ds-type-hero"><small>내 유형</small><h2>${p}</h2><span>${a}에 진심</span><p>${e}</p></div>`}export{i as T};

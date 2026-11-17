@@ -1,0 +1,28 @@
+import{T as o}from"./type-hero-BJMtIFIO.js";import{d as n,w as s}from"./_story-BijmNlD_.js";const a=`# TypeHero (디깅 유형 카드)
+
+> 상태: 구현됨(iOS·Android)
+
+## 언제 쓰나
+디깅 프로필 맨 위. 유형이 열렸는지에 따라 두 가지.
+
+## Variants
+| | 내용 |
+|---|---|
+| 열림 | "내 유형" 11 bold 자간 2 white 75% → 유형명 26 bold → "<장르>에 진심" 14 medium white 85% → 설명 13 white 75% |
+| 잠김 | \`lock.fill\` 22 → "더 디깅하면 유형이 열려요" 16 semibold → "트랙 10개를 캐고 3개에 좋아요를 누르면 공개돼요." 13 |
+
+## 수치
+지면 \`color.brand\` → \`color.brandDeep\`(위→아래), \`radius.large\`, 안쪽 상하 32 · 좌우 24, 좌우 여백 20.
+
+## 유형
+| 유형 | 설명 |
+|---|---|
+| 🧭 쉼 없는 큐레이터 | 여러 장르를 넘나들지만, 진짜 마음에 든 소수만 담아요. |
+| 💎 순수주의자 | 한 장르를 깊게 파고, 기준이 확실해요. |
+| 🍽 잡식가 | 뭐든 열려 있고, 많이 담는 편이에요. |
+| 🔁 충성파 | 자기 취향을 알고, 거기에 충실해요. |
+`,d={title:"Components/Content/TypeHero",tags:["autodocs"],parameters:n(a),decorators:s(353),render:o,argTypes:{name:{control:"select",options:["쉼 없는 큐레이터","순수주의자","잡식가","충성파"]}},args:{locked:!1,name:"충성파",genre:"록",blurb:"자기 취향을 알고, 거기에 충실해요."}},e={},r={args:{locked:!0}},p=["Open","Locked"];e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};r.parameters={...r.parameters,docs:{...r.parameters?.docs,source:{originalSource:`{
+  args: {
+    locked: true
+  }
+}`,...r.parameters?.docs?.source}}};export{r as Locked,e as Open,p as __namedExportsOrder,d as default};

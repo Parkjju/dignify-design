@@ -1,0 +1,66 @@
+import{C as a}from"./coach-gesture-Dq0F-jUF.js";import{d as o}from"./_story-BijmNlD_.js";import{F as t}from"./feed-track-C1s8HvLq.js";import"./pill-on-dark-AFKXiiFh.js";const p=`# CoachGesture (제스처 코치마크)
+
+> 상태: 제안 (feed_coachmark 1.1, 2026-10-11 — 1.0에서 바뀐 것은 Docs › 앱 반영 목록)
+>
+> 기본값(1.1 확정): speed 1.0 · hold 0.3 · handOffset −18 · captionBelow 25
+
+## 언제 쓰나
+피드 첫 진입 온보딩. **읽고 넘기는 카드가 아니라, 손 모션을 보고 실제로 따라 해야 다음 단계로 넘어간다.**
+"다음" 버튼·단계 점이 없다. 앱의 코치마크는 이것 하나다 — Picks·마이·추천 기준 곡의 설명 카드 코치마크는 1.2에서 없앴다.
+
+## Anatomy
+\`\`\`
+        ┌───────── 아트워크 ─────────┐
+        │           ☝︎  ← 손 모션     │   double-tap · swipe-up
+        │                            │   (hyped 단계는 손 없이 캡션만 — 큰 하트는 FeedTrack 좋아요 모션)
+   ┌────┴────────────────────────────┴────┐
+   │       마음에 드는 노래를 찾았어요!      │  ← 제목 headline white
+   │        빠르게 두 번 클릭해 볼까요?       │  ← 본문 callout white 70%
+   └──────────────────────────────────────┘  ← pickElevated, radius.medium
+\`\`\`
+화면을 어둡게 덮지 않는다(스포트라이트 없음) — 아트워크 자체가 대상이라서.
+
+## Variants
+| gesture | 그림 | 끝나는 조건 | 문구 |
+|---|---|---|---|
+| \`double-tap\` | 손이 1초 안에 두 번 누름 → 1초 쉼 → 반복 | 유저가 더블탭(= 실제 하입) | 마음에 드는 노래를 찾았어요! / 빠르게 두 번 클릭해 볼까요? |
+| \`hyped\` | 일반 피드 좋아요와 같은 큰 하트(FeedTrack \`burst\`)가 팝 → 0.3초 머묾 → 페이드아웃(1회). 이 컴포넌트는 캡션만 그린다 | 화면 아무 곳 터치 | 마음에 드는 노래에 좋아요를 눌렀어요! / 관심이 가는 노래를 더 찾으러 가볼까요? |
+| \`swipe-up\` | 손이 아래→위로 쓸어 올림 → 쉼 → 반복. **화면(곡 한 장)도 손을 따라 \`peek\`(기본 32)만큼 올라갔다가 살짝 튕기며 제자리로** | 유저가 다음 곡으로 스와이프. **끄는 동안 코치마크가 화면과 같이 끌려가며 흐려진다**(화면 1/4 끌면 0). 놓았을 때 넘어가지 않으면 다시 나타난다. 잡는 동안 손·화면 힌트는 멈추고, 돌아오면 둘을 함께 처음부터 다시 돈다 | 다음 노래로 넘어가 볼까요? / 화면을 위로 쓸어 올려보세요 |
+
+## 수치
+| 항목 | 값 |
+|---|---|
+| 위치 | **아트워크에 붙는다.** 손 중심 = 아트워크 가운데 −18, 캡션 = 아트워크 폭, 아래 끝이 아트워크 밑으로 25 |
+| 캡션 폭 | 아트워크 폭(화면 − 48) |
+| 캡션 안쪽 | 세로 \`spacing.x4\` · 가로 \`spacing.x5\` |
+| 캡션 라운드 | \`radius.medium\` |
+| 캡션 배경 | \`color.pickElevated\` |
+| 손 | 72, 흰색 + 그림자, \`ic-hand-tap\` (2026-10-09 이 아이콘으로 확정) |
+| 더블탭 주기 | 2초 = 탭 2회(0.15s · 0.48s, 1초 안) + 쉼 1초 |
+| 스와이프 주기 | 2.4초 = 쓸어 올림 1.2s + 쉼. 화면은 0.3s부터 올라가 1.15s에 −32, 1.7s까지 오버슈트하며 복귀 |
+
+## 모션
+- \`speed\`로 모든 모션 빠르기를 함께 조절한다(1 = 기본, 2 = 두 배 빠르게).
+- \`hold\`(초): 큰 하트가 다 커진 뒤 사라지기 전까지 머무는 시간. 기본 0.3. 큰 하트는 FeedTrack이 그리고 hold를 넘겨받는다.
+- 단계가 끝나면 캡션·손(또는 아이콘)이 함께 0.2초 페이드아웃.
+- 누름은 \`scale(.86)\` + 터치 지점 물결(ring). ease-out, 탭 하나 ≈ 150ms.
+- \`prefers-reduced-motion\`이면 손은 멈춘 채 보이고 물결·이동이 없다.
+
+## 플랫폼
+| | 이름 | 위치 |
+|---|---|---|
+| iOS | (신규) | \`Features/Onboarding/CoachMarks.swift\` 옆 |
+| Android | (신규) | |
+
+## 하지 말 것
+- "다음" 버튼을 붙이지 않는다. 동작으로만 넘어간다.
+- 캡션을 아트워크 위쪽에 두지 않는다. 손이 가리키는 곳 아래, 하단 정보(제목·하입 버튼) 위에 둔다.
+`,m={title:"Components/Overlays/CoachGesture",tags:["autodocs"],parameters:o(p),decorators:[r=>`<div style="width:393px;border-radius:12px;overflow:hidden">${t({overlay:r()})}</div>`],render:a,args:{gesture:"double-tap",handOffset:-18,captionBelow:25,speed:1},argTypes:{gesture:{control:"inline-radio",options:["double-tap","hyped","swipe-up"]},speed:{control:{type:"range",min:.5,max:3,step:.1},description:"모션 빠르기 (1 = 기본)"}}},e={},n={args:{gesture:"hyped"}},s={args:{gesture:"swipe-up"}},l=["DoubleTap","Hyped","SwipeUp"];e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};n.parameters={...n.parameters,docs:{...n.parameters?.docs,source:{originalSource:`{
+  args: {
+    gesture: 'hyped'
+  }
+}`,...n.parameters?.docs?.source}}};s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:`{
+  args: {
+    gesture: 'swipe-up'
+  }
+}`,...s.parameters?.docs?.source}}};export{e as DoubleTap,n as Hyped,s as SwipeUp,l as __namedExportsOrder,m as default};

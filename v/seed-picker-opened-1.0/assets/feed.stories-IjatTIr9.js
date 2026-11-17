@@ -1,0 +1,36 @@
+import{F as r}from"./feed-live-qVXp73fS.js";import"./feed-BS8ltCqF.js";import"./data-0w-2XlOy.js";import"./tab-bar-BI7PIY6z.js";import"./feed-track-C1s8HvLq.js";import"./pill-on-dark-AFKXiiFh.js";import"./feed-header-C1iKZhb9.js";import"./search-bar-B9JuTYWr.js";import"./recent-searches-DcMiK4AA.js";import"./keyboard-C8TAjGT_.js";import"./track-detail-BoXY4nYS.js";import"./button-WsS0bk8m.js";import"./popup-CV4Hmnhs.js";import"./coach-gesture-Dq0F-jUF.js";import"./release-notes-CceGxtLd.js";const F={title:"Screens/1. 피드",parameters:{layout:"centered"}},u=(e,n,o,B)=>({control:{type:"range",min:e,max:n,step:o},description:B}),C={name:"피드",render:r,args:{coach:!1,weekly:!1,whatsNew:!1,os:"ios",speed:1,hold:.3,handOffset:-18,captionBelow:25,peek:32},argTypes:{coach:{description:"첫 실행 코치마크부터: 더블탭 → 아무 곳 탭 → 위로 끌기"},weekly:{description:"이번 주 특집 1/5부터. 5곡 넘기면 알림 권유 팝업"},whatsNew:{description:"업데이트 후 첫 실행 — 새로운 기능 시트"},os:{control:"inline-radio",options:["ios","android"],description:"알림 권유 팝업 띄우기·닫기 모션 — 각 OS 시스템 대화상자 느낌"},speed:u(.5,3,.1,"모션 빠르기 (1 = 기본)"),hold:u(0,3,.1,"좋아요 큰 하트가 다 커진 뒤 머무는 시간(초)"),handOffset:u(-160,160,2,"코치마크 손 중심 ↕ 아트워크 가운데 기준"),captionBelow:u(-120,120,1,"코치마크 캡션이 아트워크 아래로 나오는 길이"),peek:u(0,120,2,"코치마크 손이 쓸어 올릴 때 화면이 따라 올라가는 거리")}},g=["Feed"];C.parameters={...C.parameters,docs:{...C.parameters?.docs,source:{originalSource:`{
+  name: '피드',
+  render: FeedLive,
+  args: {
+    coach: false,
+    weekly: false,
+    whatsNew: false,
+    os: 'ios',
+    speed: 1,
+    hold: 0.3,
+    handOffset: -18,
+    captionBelow: 25,
+    peek: 32
+  },
+  argTypes: {
+    coach: {
+      description: '첫 실행 코치마크부터: 더블탭 → 아무 곳 탭 → 위로 끌기'
+    },
+    weekly: {
+      description: '이번 주 특집 1/5부터. 5곡 넘기면 알림 권유 팝업'
+    },
+    whatsNew: {
+      description: '업데이트 후 첫 실행 — 새로운 기능 시트'
+    },
+    os: {
+      control: 'inline-radio',
+      options: ['ios', 'android'],
+      description: '알림 권유 팝업 띄우기·닫기 모션 — 각 OS 시스템 대화상자 느낌'
+    },
+    speed: range(0.5, 3, 0.1, '모션 빠르기 (1 = 기본)'),
+    hold: range(0, 3, 0.1, '좋아요 큰 하트가 다 커진 뒤 머무는 시간(초)'),
+    handOffset: range(-160, 160, 2, '코치마크 손 중심 ↕ 아트워크 가운데 기준'),
+    captionBelow: range(-120, 120, 1, '코치마크 캡션이 아트워크 아래로 나오는 길이'),
+    peek: range(0, 120, 2, '코치마크 손이 쓸어 올릴 때 화면이 따라 올라가는 거리')
+  }
+}`,...C.parameters?.docs?.source}}};export{C as Feed,g as __namedExportsOrder,F as default};
