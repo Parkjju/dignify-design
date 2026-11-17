@@ -34,7 +34,9 @@ Figma 「푸시알림 기획」(작성 2026-11-12)의 화면 설계서 13장 + �
    - 앱: iOS `FeedView.swift` `backgroundArtwork(for:size:)` · Android 피드 배경
 3. **피드 상단 줄 — 문구·좌우 여백** (`feed` 전부, Components › FeedHeader)
    - 모드 알약 문구 AS-IS: 「좋아요한 곡 따라가는 중」 → TO-BE: 「좋아요 따라가는 중」
-   - 상단 줄(성향 버튼 · 모드 알약 · 검색) 좌우 AS-IS: 16 → TO-BE: **20**(설계서 「좌우 padding 변경: 20px」, 「기본」 프레임 실측 — 2026-11-17 바로잡음. 처음엔 팝업 카드 여백으로 읽었다). 아트워크 345·제목 묶음 좌우 20은 그대로
+   - 상단 줄(성향 버튼 · 모드 알약 · 검색) 좌우 AS-IS: 16 → TO-BE: **20**(설계서 「좌우 padding 변경: 20px」 — 2026-11-17 바로잡음. 처음엔 팝업 카드 여백으로 읽었다)
+   - **아트워크 좌우도 20**(2026-11-17 확정): 폭 = 화면 − 40(393에서 353). AS-IS: 화면 − 48(345). 공유·더보기 줄은 아트워크 오른쪽 끝에 맞춰 같이 따라간다. 제목 묶음 좌우 20은 그대로 → **피드 화면 좌우 여백이 전부 20**. Figma 「기본」 프레임 아트워크는 345로 그려져 있다 — 이 결정이 우선
+   - 앱: iOS `FeedView.swift` `TrackCardView.artworkSide` 의 `- 48` → `- 40`(픽 재생도 같은 카드) · Android 같은 값
    - 앱: `Localizable.xcstrings` 「Following your likes」 ko 값 · Android `strings.xml`
 4. **첫 실행 광고성 동의 팝업 P02** (`feed-consent`, Components › Popup `row` 신규)
    - AS-IS(1.3.2 초안): 브랜드마크 + 「새 음악 소식, 알림으로 받을까요?」 + 긴 설명 + 세로 버튼 「알림 받기」/「나중에」, 딤 탭 = 거부 저장
