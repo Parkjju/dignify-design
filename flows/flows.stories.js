@@ -55,7 +55,7 @@ export const Discover = { name: '피드에서 발견하기', args: { steps: [
 export const WeeklySet = { name: '이번 주 특집', args: { steps: [
   { screen: 'feed', label: '특집 시작', args: { context: '이번 주 특집 1/5', track: { cover: 'a-seasons', title: 'seasons', artist: 'wave to earth' }, chip: '인디' } },
   { screen: 'feed', label: '특집 마지막', args: { context: '이번 주 특집 5/5', track: { cover: 'a-billann', title: 'Bill Loves Ann', artist: '퍼플웨일' }, chip: '인디' } },
-  { screen: 'feed-consent-night', note: '다 보면 — 광고성 동의 true + 기기 권한 허용 + 야간 미응답일 때만. 아니면 안 띄움' },
+  { screen: 'feed-consent-night', note: '다 보면 — 다음 곡(평소 피드)으로 넘어간 직후 그 위에. 광고성 동의 true + 기기 권한 허용 + 야간 미응답일 때만. 버튼은 팝업만 닫는다(곡 그대로)' },
   { screen: 'feed-toast', label: '결과', args: { track: { cover: 'a-cannons', title: 'Cannons', artist: 'Phil Wickham' }, toast: 'night-on' }, note: '아니요 → 야간 수신거부 토스트. 21시~다음 날 08시 특집 알림도 그 시각에 받는다' },
 ] } }
 
@@ -85,7 +85,7 @@ export const ConsentSettings = { name: '광고성 동의 — 마이 › 알림',
 
 export const ConsentNight = { name: '광고성 동의 — 야간', args: { steps: [
   { screen: 'feed', label: '이번 주 특집 5/5', args: { context: '이번 주 특집 5/5', track: { cover: 'a-billann', title: 'Bill Loves Ann', artist: '퍼플웨일' }, chip: '인디' }, note: '마지막 곡을 위로 넘기면' },
-  { screen: 'feed-consent-night', note: '광고성 동의 true + 기기 권한 허용 + 야간 미응답일 때만. 아니면 안 띄우고 평소 피드. 딤 탭으로 안 닫힘' },
+  { screen: 'feed-consent-night', note: '다음 곡(평소 피드)으로 넘어간 직후 그 위에. 광고성 동의 true + 기기 권한 허용 + 야간 미응답일 때만. 딤 탭으로 안 닫힘, 버튼은 팝업만 닫는다(곡 그대로)' },
   { screen: 'feed-toast', label: '알림 받기', args: { track: { cover: 'a-cannons', title: 'Cannons', artist: 'Phil Wickham' }, toast: 'night-on' }, note: '야간 동의 true → 21시~다음 날 08시 특집 알림도 그 시각에 받는다' },
   { screen: 'feed-toast', label: '아니요', args: { track: { cover: 'a-cannons', title: 'Cannons', artist: 'Phil Wickham' }, toast: 'night-off' }, note: '야간 false 저장 + 수신거부 토스트' },
   { screen: 'notification-settings', label: '마이 › 알림', note: '야간 토글로 언제든 바꿈. 광고성을 끄면 야간도 꺼진다' },

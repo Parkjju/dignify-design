@@ -18,7 +18,7 @@ export const SCREENS = {
   'feed-search': ['피드 검색', Feed.FeedSearchScreen, { track: T.cannons, text: '실리카겔', terms: ['잔나비', 'wave to earth', '혁오'], keyboard: true }],
   'track-detail': ['트랙 상세', Feed.TrackDetailScreen, { track: T.cannons, detail: { genre: 'CCM', released: '2007.06.19' } }],
   'feed-consent': ['첫 실행 · 광고성 동의 팝업', Feed.FeedConsentScreen, { track: T.cannons, kind: 'first', artist: '혁오' }],
-  'feed-consent-night': ['이번 주 특집 끝 · 야간 동의 팝업', Feed.FeedConsentScreen, { track: T.billann, kind: 'night' }],
+  'feed-consent-night': ['이번 주 특집 끝 · 야간 동의 팝업', Feed.FeedConsentScreen, { track: T.cannons, kind: 'night' }],
   'feed-like-sheet': ['좋아요 다음 곡 · 신곡 알림 시트', Feed.FeedLikeSheetScreen, { track: T.tomboy, artist: '혁오', cover: 'a-ohio', legal: true }],
   'feed-toast': ['피드 · 결과 토스트', Feed.FeedScreen, { track: T.cannons, toast: 'on' }],
   'feed-weekly-pick': ['피드 · 이번 주 추천', Feed.FeedScreen, { track: T.ohio, chip: '록', context: '이번 주 추천 1/5' }],

@@ -48,9 +48,9 @@ export const CONSENT = {
   first: a => ({ title: `좋아하는 <em>${a}</em>의 신곡,<br>바로 알려드릴까요?`, message: "'알림 받기'를 누르면 광고성 정보 수신에 동의해요.", decline: '나중에' }),
   night: () => ({ title: '밤에도 아티스트 소식을 알려드릴까요?', message: "'알림 받기'를 누르면 야간(오전 8:00 ~ 오후9:00)<br>광고성 정보 수신에 동의해요.", decline: '아니요' }),
 }
-export function FeedConsentScreen({ track, kind = 'first', artist = '혁오', os = 'ios', leaving = false } = {}) {
-  const context = kind === 'night' ? '이번 주 특집 5/5' : ''
-  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip: kind === 'night' ? '인디' : '비슷한 곡: Blame', mode: 'following', context }),
+// 팝업은 지금 보고 있는 곡 위에 뜨고, 닫아도 곡은 그대로다. 야간은 특집 마지막 곡을 넘긴 직후 = 평소 피드 첫 곡 위
+export function FeedConsentScreen({ track, kind = 'first', artist = '혁오', os = 'ios', leaving = false, chip = '비슷한 곡: Blame', context = '' } = {}) {
+  return Device({ surface: 'media', tab: 'feed', children: feedLayer({ track, chip, mode: 'following', context }),
     overlay: PopupLayer({ os, leaving, row: true, ...CONSENT[kind](artist) }) })
 }
 

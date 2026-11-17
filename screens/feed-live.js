@@ -45,7 +45,7 @@ export function FeedLive({ coach = true, lead = 'none', leadStart = 1, consent =
     const track = cur()
     el.innerHTML = overlay === 'search' ? FeedSearchScreen({ track, text: '실리카겔', terms })
       : overlay === 'detail' ? TrackDetailScreen({ track, detail: { genre: chip() || '인디', released: '2024.05.10' } })
-      : /^(consent|night)/.test(overlay) ? FeedConsentScreen({ track, os, kind: overlay.startsWith('night') ? 'night' : 'first', artist: '혁오', leaving: overlay.endsWith('-leaving') })
+      : /^(consent|night)/.test(overlay) ? FeedConsentScreen({ track, os, kind: overlay.startsWith('night') ? 'night' : 'first', artist: '혁오', leaving: overlay.endsWith('-leaving'), chip: chip(), context: week ? `${L.label} ${week}/${L.tracks.length}` : '' })
       : overlay === 'sheet' ? FeedLikeSheetScreen({ track, artist: liked.artist, cover: liked.cover, legal })
       : overlay === 'system' ? FeedScreen({ track, chip: chip(), mode, context: week ? `${L.label} ${week}/${L.tracks.length}` : '', system: true })
       : overlay === 'whats-new' ? WhatsNewScreen({ track })
@@ -79,7 +79,7 @@ export function FeedLive({ coach = true, lead = 'none', leadStart = 1, consent =
       const night = overlay === 'night'
       overlay += '-leaving'; draw()
       if (ads) { if (night) ads.night = !!yes; else if (yes) ads.ad = true }
-      setTimeout(() => { overlay = ''; if (night) { week = 0; i++ }; if (yes || night) accepted((night ? 'night-' : '') + (yes ? 'on' : 'off')); draw() }, os === 'android' ? 150 : 200)
+      setTimeout(() => { overlay = ''; if (yes || night) accepted((night ? 'night-' : '') + (yes ? 'on' : 'off')); draw() }, os === 'android' ? 150 : 200)
       return true
     }
     if (overlay === 'sheet') {
@@ -87,7 +87,7 @@ export function FeedLive({ coach = true, lead = 'none', leadStart = 1, consent =
       else if (hit('.ds-consent-sheet__later') || !hit('.sheet')) { overlay = ''; draw() }
       return true
     }
-    if (overlay === 'whats-new') { if (hit('.ds-button') || hit('.ic-xmark')) { overlay = ''; week = 0; i++; draw() } return true }
+    if (overlay === 'whats-new') { if (hit('.ds-button') || hit('.ic-xmark')) { overlay = ''; draw() } return true }
     if (step !== 'feed') return false
     if (hit('.ds-feed-header__search')) { overlay = 'search'; draw(); return true }
     if (hit('.ds-pill--query')) { query = ''; hyped = false; draw(); return true }
@@ -146,7 +146,7 @@ export function FeedLive({ coach = true, lead = 'none', leadStart = 1, consent =
         const was = cur(), hypedWas = hyped && step === 'feed'   // 코치마크 좋아요는 세지 않는다
         step = 'feed'; hyped = false
         const askNight = !ads || (ads.ad && ads.permission === 'on' && ads.night === undefined)
-        if (week) { if (week === L.tracks.length) { if (lead === 'curation' && askNight) overlay = 'night'; else { week = 0; i++ } } else week++ } else i++
+        if (week) { if (week === L.tracks.length) { week = 0; i++; if (lead === 'curation' && askNight) overlay = 'night' } else week++ } else i++
         if (!overlay && hypedWas && !sheetDone && (!ads || ads.permission === 'unset')) { sheetDone = true; liked = was; overlay = 'sheet' }
         draw()
       } else if (dir < 0) { hyped = false; if (week) week--; else i--; draw() }
