@@ -18,8 +18,12 @@ const CSS = `
 const get = (k, d) => { try { return localStorage.getItem('vc:' + k) ?? d } catch { return d } }
 const put = (k, v) => { try { localStorage.setItem('vc:' + k, v) } catch {} }
 const base = v => v === 'current' ? '' : `v/${v}/`
+// main은 배포마다 청크 이름(해시)이 바뀌고 옛 청크는 지워진다. Pages가 iframe.html·index.json을 10분 캐시해서
+// 배포 직후엔 옛 iframe.html이 없는 청크를 불러 「Failed to fetch dynamically imported module」이 났다 → main만 캐시를 건너뛴다(스냅샷은 안 바뀐다)
+const BUST = Date.now()
+const fresh = v => v === 'current' ? `&_=${BUST}` : ''
 const indexes = {}
-const index = v => indexes[v] ||= fetch(base(v) + 'index.json').then(r => r.ok ? r.json() : { entries: {} }).then(j => j.entries || {}).catch(() => ({}))
+const index = v => indexes[v] ||= fetch(base(v) + 'index.json', v === 'current' ? { cache: 'no-store' } : {}).then(r => r.ok ? r.json() : { entries: {} }).then(j => j.entries || {}).catch(() => ({}))
 
 export const Compare = { name: '버전 비교', render: () => {
   const el = document.createElement('div')
@@ -72,7 +76,7 @@ async function start(el) {
   const draw = async () => {
     const cols = await Promise.all(['left', 'right'].map(async side => {
       const v = s[side], ent = (await index(v))[s.story], label = opts.find(o => o.name === v)?.label || v
-      const url = `${base(v)}iframe.html?id=${encodeURIComponent(s.story)}&viewMode=story${s.args ? '&args=' + encodeURIComponent(s.args).replace(/%3A/g, ':').replace(/%3B/g, ';') : ''}`
+      const url = `${base(v)}iframe.html?id=${encodeURIComponent(s.story)}&viewMode=story${fresh(v)}${s.args ? '&args=' + encodeURIComponent(s.args).replace(/%3A/g, ':').replace(/%3B/g, ';') : ''}`
       return `<div class="vc-col"><h3>${side === 'left' ? '왼쪽' : '오른쪽'}<small>${label}</small></h3>
         ${ent ? `<iframe class="vc-frame" src="${url}" width="460" height="920" style="zoom:${s.zoom}"></iframe>` : '<p class="vc-miss">이 버전에는 없는 화면이다(새로 생겼거나 이름이 바뀜)</p>'}</div>`
     }))
